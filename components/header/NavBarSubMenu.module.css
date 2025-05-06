@@ -1,0 +1,25 @@
+.navbarSubmenu {
+  animation: animateMenuOpen 300ms ease;
+  animation-fill-mode: forwards;
+  z-index: 1;
+  opacity: 0; /* Start hidden */
+  transform: translateY(-1.5rem); /* Initial position */
+  pointer-events: none; /* Prevent interaction before visible */
+}
+
+.navbarSubmenuOpen {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+@keyframes animateMenuOpen {
+  0% {
+    opacity: 0;
+    transform: translateY(-1.5rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
