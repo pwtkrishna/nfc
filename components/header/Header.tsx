@@ -8,16 +8,25 @@ import NavBar from "./NavBar";
 
 const Header = () => {
   const [showHeader, setShowHeader] = useState(true);
+  const [showBanner, setShowBanner] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
-      if (currentScrollY < lastScrollY || currentScrollY < 50) {
-        setShowHeader(true); // scrolling up or near top
+      if (currentScrollY < 50) {
+        // Near top: show both
+        setShowHeader(true);
+        setShowBanner(true);
+      } else if (currentScrollY < lastScrollY) {
+        // Scrolling up: show header only
+        setShowHeader(true);
+        setShowBanner(false);
       } else {
-        setShowHeader(false); // scrolling down
+        // Scrolling down: hide both
+        setShowHeader(false);
+        setShowBanner(false);
       }
 
       setLastScrollY(currentScrollY);
@@ -28,20 +37,32 @@ const Header = () => {
   }, [lastScrollY]);
 
   return (
-    <div className="relative z-50">
-      <HeaderBanner />
-      <header
-        className={`fixed top-0 left-0 w-full bg-[#1f2128] py-2 px-6 transition-transform duration-300 ${
+    <>
+      {/* fixed container for header */}
+      <div
+        className={`fixed top-0 left-0 w-full z-50 transition-transform duration-300 ${
           showHeader ? "translate-y-0" : "-translate-y-full"
         }`}
       >
-        <div className="flex items-center justify-between">
-          <Logo />
-          <NavBar />
-          <HeaderIcons />
-        </div>
-      </header>
-    </div>
+        {/* banner is conditionally shown */}
+        {showBanner && (
+          <div className="bg-[#141518]">
+            <HeaderBanner />
+          </div>
+        )}
+
+        <header className="bg-[#1f2128] py-2 px-6">
+          <div className="flex items-center justify-between">
+            <Logo />
+            <NavBar />
+            <HeaderIcons />
+          </div>
+        </header>
+      </div>
+
+      {/* push page content down so it's not under fixed header */}
+      <div className="h-[110px]" />
+    </>
   );
 };
 
