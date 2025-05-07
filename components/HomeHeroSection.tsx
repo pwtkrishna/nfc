@@ -1,5 +1,4 @@
 import Image from "next/image";
-import PhoneImage from "@/data/home-banner.webp";
 import Link from "next/link";
 
 const HomeHeroSection = () => {
@@ -24,13 +23,13 @@ const HomeHeroSection = () => {
           <div className="flex pt-[38px] gap-x-[15px]">
             <Link
               href="#"
-              className="rounded-[50px] text-base font-semibold leading-[19.2px] px-[22px] py-[12px] border border-[#04CEFA] bg-[linear-gradient(94.02deg,_#04CEFA_25.52%,_#A1DBEA_102.01%)]"
+              className="rounded-[50px] text-base font-semibold leading-[19.2px] px-[22px] py-[12px] border border-[#04CEFA] bg-[linear-gradient(94.02deg,_#04CEFA_25.52%,_#A1DBEA_102.01%)] inline-block"
             >
               Get NFC
             </Link>
             <Link
               href="#"
-              className="rounded-[50px] text-base font-semibold leading-[19.2px] px-[22px] py-[12px] text-[#04CEFA] hover:text-black border border-[#04CEFA] hover:bg-[linear-gradient(94.02deg,_#04CEFA_25.52%,_#A1DBEA_102.01%)] transition duration-[0.3s]"
+              className="rounded-[50px] text-base font-semibold leading-[19.2px] px-[22px] py-[12px] text-[#04CEFA] hover:text-black border border-[#04CEFA] hover:bg-[linear-gradient(94.02deg,_#04CEFA_25.52%,_#A1DBEA_102.01%)] transition duration-[0.3s] inline-block"
             >
               Create my Profile
             </Link>
@@ -39,9 +38,11 @@ const HomeHeroSection = () => {
         <div className="w-[45%] max-md:w-[60%] max-sm:w-[100%]">
           <div>
             <Image
-              src={PhoneImage}
+              src="/home-banner.webp"
               alt="NFC Showcase"
-              className="w-full"
+              width={500}
+              height={500}
+              className="w-full h-auto"
               priority
             />
           </div>

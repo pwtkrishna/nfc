@@ -1,11 +1,12 @@
 import styles from "./TrustedCarousel.module.css";
-import Mercedees from "@/data/icons-carousel/Frame_1171275439.webp";
-import Honda from "@/data/icons-carousel/Frame_1171275445.webp";
-import Hemleys from "@/data/icons-carousel/Frame_1171275447.webp";
-import FarziCafe from "@/data/icons-carousel/Frame_1171275448.webp";
 import Image from "next/image";
 
-const logos = [Mercedees, Honda, Hemleys, FarziCafe];
+const logos = [
+  "/icons-carousel/Frame_1171275439.webp",
+  "/icons-carousel/Frame_1171275445.webp",
+  "/icons-carousel/Frame_1171275447.webp",
+  "/icons-carousel/Frame_1171275448.webp",
+];
 
 const TrustedCarousel = () => {
   return (
@@ -26,7 +27,7 @@ const TrustedCarousel = () => {
             {[...logos, ...logos].map((img, i) => (
               <div key={i} className={styles.logoBox}>
                 <Image
-                  src={img.src}
+                  src={img}
                   alt={`logo-${i}`}
                   height={100}
                   width={100}

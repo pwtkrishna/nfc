@@ -1,15 +1,133 @@
 @import "tailwindcss";
 
 .home-hero-banner {
-  background-image: url("../data/Desktophome.webp");
+  background-image: url("/Desktophome.webp");
   background-position: center;
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }
 
+.nfc-card-1 {
+  background: url("/home-grid/1.webp");
+  background-size: 100% 100%;
+  background-color: #2b2e39;
+}
+
+.nfc-card-2 {
+  background: url("/home-grid/2.webp");
+  background-size: 100% 100%;
+}
+
+.nfc-card-3 {
+  background: url("/home-grid/3.webp");
+  background-size: 100% 100%;
+}
+
+.nfc-card-4 {
+  background: url("/home-grid/4.webp");
+  background-size: 100% 100%;
+  background-color: #2b2e39;
+}
+
+.nfc-card-5 {
+  background: url("/home-grid/5.webp");
+  background-size: 100% 100%;
+  background-color: #2b2e39;
+}
+
+.nfc-card-6 {
+  background: url("/home-grid/6.webp");
+  background-size: 100% 100%;
+}
+
+@media (max-width: 649px) {
+  .bestseller-cards-container {
+    flex-wrap: wrap !important;
+    margin-right: -5px !important;
+    margin-left: -5px !important;
+    row-gap: 10px !important;
+  }
+
+  .smart-product-link {
+    flex: unset !important;
+    overflow: hidden !important;
+    margin: 0 5px !important;
+    line-height: 0 !important;
+    width: calc(50% - 10px) !important;
+    position: relative;
+  }
+
+  .nfc-card {
+    padding: 16px !important;
+  }
+
+  .nfc-card-1 {
+    background: url("/home-grid/M1.webp");
+    background-size: 100% 100%;
+    background-color: #2b2e39;
+  }
+
+  .nfc-card-2 {
+    background: url("/home-grid/M2.webp");
+    background-size: 100% 100%;
+  }
+
+  .nfc-card-3 {
+    background: url("/home-grid/M3.webp");
+    background-size: 100% 100%;
+  }
+
+  .nfc-card-4 {
+    background: url("/home-grid/M4.webp");
+    background-size: 100% 100%;
+    background-color: #2b2e39;
+  }
+
+  .nfc-card-5 {
+    background: url("/home-grid/M5.webp");
+    background-size: 100% 100%;
+    background-color: #2b2e39;
+    align-items: start;
+  }
+
+  .nfc-card-6 {
+    background: url("/home-grid/M6.webp");
+    background-size: 100% 100%;
+  }
+
+  .nfc-card-1,
+  .nfc-card-4,
+  .nfc-card-5 {
+    min-height: 500px;
+  }
+
+  .nfc-card-2,
+  .nfc-card-3,
+  .nfc-card-6 {
+    min-height: 455px;
+  }
+}
+
 @media (max-width: 767px) {
   .home-hero-banner {
-    background-image: url("../data/mobilehome.webp");
+    background-image: url("/mobilehome.webp");
     background-size: 100% 100%;
+  }
+}
+
+@media (max-width: 792px) {
+  .affiliate-card {
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 800px) {
+  .nfc-card-1,
+  .nfc-card-2,
+  .nfc-card-3,
+  .nfc-card-4,
+  .nfc-card-5,
+  .nfc-card-6 {
+    width: calc(100% - 20px) !important;
   }
 }

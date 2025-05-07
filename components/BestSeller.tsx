@@ -1,21 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
-import BusinessCard from "@/data/bestseller/business.webp";
-import SmartStandee from "@/data/bestseller/smart-standee.webp";
-import SmartReview from "@/data/bestseller/smart-review.webp";
-import BundleCards from "@/data/bestseller/bundle-cards.webp";
 
 const images = [
-  { title: "NFC Business Cards", href: "", image: BusinessCard },
-  { title: "Smart Standee", href: "", image: SmartStandee },
-  { title: "Review Card", href: "", image: SmartReview },
-  { title: "Bundle Cards", href: "", image: BundleCards },
+  { title: "NFC Business Cards", href: "", image: "/bestseller/business.webp" },
+  { title: "Smart Standee", href: "", image: "/bestseller/smart-standee.webp" },
+  { title: "Review Card", href: "", image: "/bestseller/smart-review.webp" },
+  { title: "Bundle Cards", href: "", image: "/bestseller/bundle-cards.webp" },
 ];
 
 const BestSeller = () => {
   return (
     <section>
-      <div className="container flex flex-col items-center justify-between max-w-[1320px] m-auto py-[35px] px-[20px]">
+      <div className="container flex flex-col items-center justify-between max-w-[1320px] w-full m-auto py-[35px] px-[20px] overflow-hidden">
         <div className="bestseller-text-container flex flex-col items-center justify-between w-full">
           <span className="text-center uppercase text-[#A1DBEA] text-[18px] font-normal leading-[24px]">
             Bestsellers
@@ -27,12 +23,15 @@ const BestSeller = () => {
             Smart, Custom-Designed NFC Products for Instant Sharing
           </p>
         </div>
-        <div className="bestseller-cards-container flex pt-[20px] w-full">
+        <div
+          className="bestseller-cards-container w-full flex pt-[20px] mr-[-20px] max-md:flex-wrap max-md:gap-y-[10px]"
+          style={{ overflow: "overlay" }}
+        >
           {images.map((img, i) => (
             <Link
               href={img.href}
               key={i}
-              className="basis-[300px] rounded-[20px] mx-[10px] relative"
+              className="smart-product-link basis-[300px] shrink-0 grow-0 rounded-[20px] mx-[10px] relative overflow-hidden"
             >
               <span className="absolute text-white text-[20px] font-semibold leading-[24px] text-center pb-1.5 w-full top-[20px]">
                 {img.title}
