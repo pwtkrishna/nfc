@@ -16,7 +16,7 @@ const NavBarItem = ({ item, isOpen, onToggle }: Props) => {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (itemRef.current && !itemRef.current.contains(event.target as Node)) {
-        if (isOpen) onToggle(); // close if open
+        if (isOpen) onToggle();
       }
     };
 

@@ -4,7 +4,7 @@ export type EveryOneType = {
   image: string;
 };
 
-export const EveryOneCardData: EveryOneType[] = [
+export const everyOneCardData: EveryOneType[] = [
   {
     title: "Teams",
     description:

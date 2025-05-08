@@ -12,47 +12,49 @@ export default function Home() {
     <>
       <HomeHeroSection />
       <TrustedCarousel />
-      <section className=" m-auto bg-[#1F2128]">
-        <div className="container flex items-center justify-between gap-[65px] p-[20px] max-w-[1320px] max-md:flex-col">
-          <div className="w-[50%] max-md:w-full">
-            <h2 className="text-white text-[42px] font-semibold leading-[50.4px] text-left pr-[84px] max-sm:text-[32px] max-[468px]:text-[24px] max-sm:leading-[38px]">
-              Why a Digital Profile is Important?
-            </h2>
-            <div className="pt-[28px]">
-              <p className="text-[#9E9FA7] text-[18px] leading-[27px] text-left font-normal">
-                In today’s fast-paced world, your first impression matters more
-                than ever. TapOnn’s smart digital profile ensures every
-                interaction is unique, professional, and memorable. Replace the
-                hassle of sharing multiple links or repeating details with just
-                one powerful scan or tap. Share everything in one go—contact
-                details, social profiles, review links, documents, and more.
-                Literally, anything you need to connect or impress can be added
-                to your TapOnn profile.
-              </p>
-              <br />
-              <p className="text-[#9E9FA7] text-[18px] leading-[27px] text-left font-normal">
-                Build smarter, faster, and more meaningful connections globally.
-                Whether you’re networking at an event, meeting a client, or
-                connecting online, TapOnn ensures seamless sharing anytime,
-                anywhere.
-              </p>
+      <section className=" bg-[#1F2128]">
+        <div className="p-[20px] max-w-[1320px] w-full m-auto">
+          <div className=" flex items-center justify-between gap-[65px]  max-md:flex-col">
+            <div className="w-[50%] max-md:w-full">
+              <h2 className="text-white text-[42px] font-semibold leading-[50.4px] text-left pr-[84px] max-sm:text-[32px] max-[468px]:text-[24px] max-sm:leading-[38px]">
+                Why a Digital Profile is Important?
+              </h2>
+              <div className="pt-[28px]">
+                <p className="text-[#9E9FA7] text-[18px] leading-[27px] text-left font-normal">
+                  In today’s fast-paced world, your first impression matters
+                  more than ever. TapOnn’s smart digital profile ensures every
+                  interaction is unique, professional, and memorable. Replace
+                  the hassle of sharing multiple links or repeating details with
+                  just one powerful scan or tap. Share everything in one
+                  go—contact details, social profiles, review links, documents,
+                  and more. Literally, anything you need to connect or impress
+                  can be added to your TapOnn profile.
+                </p>
+                <br />
+                <p className="text-[#9E9FA7] text-[18px] leading-[27px] text-left font-normal">
+                  Build smarter, faster, and more meaningful connections
+                  globally. Whether you’re networking at an event, meeting a
+                  client, or connecting online, TapOnn ensures seamless sharing
+                  anytime, anywhere.
+                </p>
+              </div>
             </div>
-          </div>
-          <div className="w-[38%] max-md:w-full">
-            <Image
-              src="/digital_profile_with_text_1.webp"
-              alt="Digital Profile"
-              height={500}
-              width={500}
-              className="w-full h-auto"
-            />
+            <div className="w-[38%] max-md:w-full">
+              <Image
+                src="/digital_profile_with_text_1.webp"
+                alt="Digital Profile"
+                height={500}
+                width={500}
+                className="w-full h-auto"
+              />
+            </div>
           </div>
         </div>
       </section>
       <BestSeller />
       <section>
         <div className="container pt-[95px] pb-[35px] px-[20px] max-w-[1320px] w-full m-auto">
-          <div className="flex max-md:flex-wrap max-md:gap-[14px]">
+          <div className="flex justify-between max-md:flex-wrap max-md:gap-[14px]">
             <div className="w-[50%] max-md:w-full">
               <h2 className="text-white text-[42px] font-semibold leading-[50.4px] text-left">
                 TapOnn – Your One-Stop Solution !
@@ -317,10 +319,9 @@ export default function Home() {
                   Need a Bulk Order? Get in Touch Now!
                 </h2>
                 <p className="text-base font-normal leading-[19.2px] text-left text-[#9E9FA7] ">
-                  We’re ready to provide the perfect solution for your business.
-                  Let's talk!
+                  We&rsquo;re ready to provide the perfect solution for your
+                  business. Let&apos;s talk!
                 </p>
-
                 <Link
                   href="#"
                   className="rounded-[50px] text-base font-semibold leading-[19.2px] px-[22px] py-[12px] border border-[#04CEFA] bg-[linear-gradient(94.02deg,_#04CEFA_25.52%,_#A1DBEA_102.01%)] inline-block my-[18px]"

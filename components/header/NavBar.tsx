@@ -1,32 +1,8 @@
 "use client";
-import type { NavBarType } from "@/types/NavBarItemTypes";
+
+import { navBarItems } from "@/data/navBarItemsData";
 import NavBarItem from "./NavBarItem";
 import { useState } from "react";
-
-const navBarItems: NavBarType = [
-  { title: "Home", href: "/" },
-  {
-    title: "Shop Now",
-    subMenu: [
-      { title: "NFC Card", href: "/all-collection/#nfc-card" },
-      {
-        title: "Standees and Review cards",
-        href: "/all-collection/#product-card",
-      },
-      { title: "Bundle Offer", href: "/all-collection/#bundle-offer" },
-    ],
-  },
-  { title: "For Teams", href: "/for-teams" },
-  {
-    title: "Company",
-    subMenu: [
-      { title: "About Us", href: "/about" },
-      { title: "FAQs", href: "/faqs" },
-      { title: "Blogs", href: "/blogs" },
-      { title: "In the news", href: "/in-the-news" },
-    ],
-  },
-];
 
 const NavBar = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -36,7 +12,7 @@ const NavBar = () => {
   };
 
   return (
-    <nav>
+    <nav className="flex items-center justify-center max-[967px]:hidden">
       <ul className="flex space-x-6 p-4">
         {navBarItems.map((item, index) => (
           <NavBarItem

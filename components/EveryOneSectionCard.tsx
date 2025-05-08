@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
-import { EveryOneCardData, EveryOneType } from "@/data/EveryOneCardData";
+import { everyOneCardData, EveryOneType } from "@/data/everyOneCardData";
 import { useState } from "react";
 
 const EveryOneCards = () => {
@@ -33,7 +33,7 @@ const EveryOneCards = () => {
         </h2>
 
         <div ref={sliderRef} className="keen-slider pt-[15px]">
-          {EveryOneCardData.map((card: EveryOneType, index: number) => (
+          {everyOneCardData.map((card: EveryOneType, index: number) => (
             <div
               key={index}
               className="keen-slider__slide bg-[#2B2E39] p-[20px] rounded-[12px]"
@@ -59,7 +59,7 @@ const EveryOneCards = () => {
 
         {/* Dots */}
         <div className="hidden justify-center mt-4 gap-2 max-lg:flex">
-          {EveryOneCardData.map((_, idx) => (
+          {everyOneCardData.map((_, idx) => (
             <button
               key={idx}
               onClick={() => instanceRef.current?.moveToIdx(idx)}

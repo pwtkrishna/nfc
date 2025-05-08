@@ -33,7 +33,7 @@ const BestSeller = () => {
               key={i}
               className="smart-product-link basis-[300px] shrink-0 grow-0 rounded-[20px] mx-[10px] relative overflow-hidden"
             >
-              <span className="absolute text-white text-[20px] font-semibold leading-[24px] text-center pb-1.5 w-full top-[20px]">
+              <span className="absolute text-white text-[20px] font-semibold leading-[24px] text-center pb-1.5 w-full top-[20px] max-[425px]:text-[16px]">
                 {img.title}
               </span>
               <Image
