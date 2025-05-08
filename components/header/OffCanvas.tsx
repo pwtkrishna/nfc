@@ -1,10 +1,12 @@
 "use client";
 
-import { navBarItems } from "@/data/navBarItemsData";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useEffect } from "react";
+import { navBarItems } from "@/data/navBarItemsData";
 
 const OffCanvas = ({ isOpen }: { isOpen: boolean }) => {
+  const [openSubMenuIndex, setOpenSubMenuIndex] = useState<number | null>(null);
+
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "auto";
     return () => {
@@ -12,62 +14,101 @@ const OffCanvas = ({ isOpen }: { isOpen: boolean }) => {
     };
   }, [isOpen]);
 
+  // Main menu
+  const renderMainMenu = () => (
+    <ul className="space-y-4 text-white text-lg">
+      {navBarItems.map((item, i) => (
+        <li key={i}>
+          {item.href ? (
+            <Link
+              href={item.href}
+              className="py-[8px] px-12 text-[18px] text-white cursor-pointer block"
+            >
+              {item.title}
+            </Link>
+          ) : (
+            <button
+              className="py-[8px] px-12 text-[18px] text-white cursor-pointer flex items-center justify-between w-full bg-transparent border-none"
+              onClick={() => setOpenSubMenuIndex(i)}
+            >
+              {item.title}
+              <span className="w-[15px] h-[20px] text-[#A1DBEA]">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  className="icon icon-arrow w-full h-full"
+                  viewBox="0 0 14 10"
+                >
+                  <path
+                    fill="currentColor"
+                    fillRule="evenodd"
+                    d="M8.537.808a.5.5 0 0 1 .817-.162l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 1 1-.708-.708L11.793 5.5H1a.5.5 0 0 1 0-1h10.793L8.646 1.354a.5.5 0 0 1-.109-.546"
+                    clipRule="evenodd"
+                  ></path>
+                </svg>
+              </span>
+            </button>
+          )}
+        </li>
+      ))}
+    </ul>
+  );
+
+  // Submenu panel
+  const renderSubMenu = (index: number) => {
+    const item = navBarItems[index];
+    if (!item.subMenu) return null;
+    return (
+      <div>
+        <button
+          className="flex items-center gap-2 py-2 px-4 text-white"
+          onClick={() => setOpenSubMenuIndex(null)}
+        >
+          <span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              className="icon icon-arrow"
+              viewBox="0 0 14 10"
+            >
+              <path
+                fill="currentColor"
+                fillRule="evenodd"
+                d="M8.537.808a.5.5 0 0 1 .817-.162l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 1 1-.708-.708L11.793 5.5H1a.5.5 0 0 1 0-1h10.793L8.646 1.354a.5.5 0 0 1-.109-.546"
+                clipRule="evenodd"
+              ></path>
+            </svg>
+          </span>
+          <span className="font-medium">{item.title}</span>
+        </button>
+        <ul className="space-y-4 text-white text-lg mt-4">
+          {item.subMenu.map((subItem, idx) => (
+            <li key={idx}>
+              <Link
+                href={subItem.href}
+                className="py-[8px] px-12 text-[18px] text-white cursor-pointer block"
+              >
+                {subItem.title}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  };
+
   return (
     <div
-      className={`
-    max-[767px]:w-full 
-    max-[969px]:w-1/2 
-    fixed 
-    top-[100%] 
-    left-0 
-    h-[calc(100vh-100%)] 
-    bg-[#1f2128] 
-    z-40 
-    overflow-y-auto
-    transition-all 
-    duration-500 
-    ease-in-out 
-    ${isOpen ? "translate-x-0 opacity-100" : "-translate-x-full opacity-0"}
-    ${isOpen ? "pointer-events-auto" : "pointer-events-none delay-200"}
-  `}
+      className={`max-[767px]:w-full max-[969px]:w-1/2 fixed top-[100%] left-0 h-[calc(100vh-100%)] bg-[#1f2128] z-40 overflow-y-auto transition-all duration-500 ease-in-out ${
+        isOpen ? "translate-x-0 opacity-100" : "-translate-x-full opacity-0"
+      } ${isOpen ? "pointer-events-auto" : "pointer-events-none delay-200"}`}
     >
       <div className="h-full flex flex-col justify-between">
         <nav className="py-[2rem]">
-          <ul className="space-y-4 text-white text-lg">
-            {navBarItems.map((item, i) => (
-              <li key={i}>
-                {item.href ? (
-                  <Link
-                    href={item.href}
-                    className="py-[8px] px-12 text-[18px] text-white cursor-pointer"
-                  >
-                    {item.title}
-                  </Link>
-                ) : (
-                  <p className="py-[8px] px-12 text-[18px] text-white cursor-pointer flex items-center justify-between">
-                    {item.title}
-                    <span className="w-[15px] h-[20px] text-[#A1DBEA] transition ease-in-out duration-300">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        className="icon icon-arrow w-full h-full"
-                        viewBox="0 0 14 10"
-                      >
-                        <path
-                          fill="currentColor"
-                          fillRule="evenodd"
-                          d="M8.537.808a.5.5 0 0 1 .817-.162l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 1 1-.708-.708L11.793 5.5H1a.5.5 0 0 1 0-1h10.793L8.646 1.354a.5.5 0 0 1-.109-.546"
-                          clipRule="evenodd"
-                        ></path>
-                      </svg>
-                    </span>
-                  </p>
-                )}
-              </li>
-            ))}
-          </ul>
+          {openSubMenuIndex === null
+            ? renderMainMenu()
+            : renderSubMenu(openSubMenuIndex)}
         </nav>
-
         <div className="px-8 py-6 bg-[#ffffff08]">
           <ul className="flex items-center">
             <li>

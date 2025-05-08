@@ -39,7 +39,7 @@ const HeaderBanner = () => {
 
   return (
     <div className="border-b-[0.1rem] border-[rgba(255,255,255,0.08)] bg-[#1f2128]">
-      <div className="container max-w-[1320px] mx-auto px-[20px] flex items-center justify-between h-[50px]">
+      <div className="max-w-[1320px] mx-auto px-[20px] flex items-center justify-between h-[58px]">
         {/* Previous Button */}
         <div onClick={prevSlide} className="cursor-pointer" role="button">
           <span className="w-[20px] h-[20px] text-[#A1DBEA] flex items-center justify-center hover:text-[#04CEFA]">

@@ -48,20 +48,20 @@ const HomeHeroSection = () => {
           </div>
         </div>
         <div className="w-[10%] flex flex-col max-md:flex-row justify-end max-md:justify-between gap-[25px] max-md:w-full max-md:order-3 ">
-          <div className="text-[#ffffff99] text-[18px] font-normal leading-[21.6px] flex flex-col text-left max-md:flex max-md:flex-col max-md:w-full">
-            <span className="text-[#A1DBEA] text-[32px] leading-[38.4px] text-left font-semibold">
+          <div className="text-[#ffffff99] text-[18px] font-normal leading-[21.6px] flex flex-col text-left max-md:flex max-md:flex-col max-md:w-full max-sm:text-[15px]">
+            <span className="text-[#A1DBEA] text-[32px] max-sm:text-[24px] leading-[38.4px] max-sm:leading-[32.4px] text-left font-semibold">
               1M+
             </span>
             Connections Made
           </div>
-          <div className="text-[#ffffff99] text-[18px] font-normal leading-[21.6px] flex flex-col text-left pr-[17px] max-md:flex max-md:flex-col max-md:w-full">
-            <span className="text-[#A1DBEA] text-[32px] leading-[38.4px] text-left font-semibold">
+          <div className="text-[#ffffff99] text-[18px] font-normal leading-[21.6px] flex flex-col text-left pr-[17px] max-md:flex max-md:flex-col max-md:w-full max-sm:text-[15px]">
+            <span className="text-[#A1DBEA] text-[32px] max-sm:text-[24px] leading-[38.4px] max-sm:leading-[32.4px] text-left font-semibold">
               100k+
             </span>
             Active Users
           </div>
-          <div className="text-[#ffffff99] text-[18px] font-normal leading-[21.6px] flex flex-col text-left max-md:flex max-md:flex-col max-md:w-full">
-            <span className="text-[#A1DBEA] text-[32px] leading-[38.4px] text-left font-semibold">
+          <div className="text-[#ffffff99] text-[18px] font-normal leading-[21.6px] flex flex-col text-left max-md:flex max-md:flex-col max-md:w-full max-sm:text-[15px]">
+            <span className="text-[#A1DBEA] text-[32px] max-sm:text-[24px] leading-[38.4px] max-sm:leading-[32.4px] text-left font-semibold">
               100+
             </span>
             Global Brands
