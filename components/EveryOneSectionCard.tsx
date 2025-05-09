@@ -1,10 +1,10 @@
 "use client";
 
-import Image from "next/image";
+import { useState } from "react";
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
+import Image from "next/image";
 import { everyOneCardData, EveryOneType } from "@/data/everyOneCardData";
-import { useState } from "react";
 
 const EveryOneCards = () => {
   const [currentSlide, setCurrentSlide] = useState(0);

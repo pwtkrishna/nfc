@@ -4,8 +4,8 @@ import Image from "next/image";
 import BestSeller from "@/components/BestSeller";
 import ForTeamsSection from "@/components/ForTeamsSection";
 import EveryOneSectionCard from "@/components/EveryOneSectionCard";
-import Link from "next/link";
 import Faqs from "@/components/Faqs";
+import FilledLink from "@/components/FilledLink";
 
 export default function Home() {
   return (
@@ -294,12 +294,7 @@ export default function Home() {
               >
                 Start earning while making a positive impact today!
               </p>
-              <Link
-                href="https://taponnaffiliates.goaffpro.com/"
-                className="rounded-[50px] text-base font-semibold leading-[19.2px] px-[22px] py-[12px] border border-[#04CEFA] bg-[linear-gradient(94.02deg,_#04CEFA_25.52%,_#A1DBEA_102.01%)] inline-block my-[18px]"
-              >
-                Join now
-              </Link>
+              <FilledLink href="#">Join now</FilledLink>
             </div>
             <div
               className="affiliate-card  rounded-[12px] overflow-x-hidden py-[25px] px-[50px] max-md:w-full"
@@ -318,16 +313,11 @@ export default function Home() {
                 <h2 className="text-[32px] font-semibold leading-[38.4px] text-left text-white py-[10px] ">
                   Need a Bulk Order? Get in Touch Now!
                 </h2>
-                <p className="text-base font-normal leading-[19.2px] text-left text-[#9E9FA7] ">
+                <p className="text-base font-normal leading-[19.2px] text-left text-[#9E9FA7] mb-[18px]">
                   We&rsquo;re ready to provide the perfect solution for your
                   business. Let&apos;s talk!
                 </p>
-                <Link
-                  href="#"
-                  className="rounded-[50px] text-base font-semibold leading-[19.2px] px-[22px] py-[12px] border border-[#04CEFA] bg-[linear-gradient(94.02deg,_#04CEFA_25.52%,_#A1DBEA_102.01%)] inline-block my-[18px]"
-                >
-                  Get a quote
-                </Link>
+                <FilledLink href="#">Get a quote</FilledLink>
               </div>
             </div>
           </div>

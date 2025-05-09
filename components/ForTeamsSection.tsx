@@ -1,5 +1,6 @@
 import Image from "next/image";
-import Link from "next/link";
+import LightLink from "./LightLink";
+import FilledLink from "./FilledLink";
 
 const ForTeamsSection = () => {
   return (
@@ -34,19 +35,8 @@ const ForTeamsSection = () => {
               effortlessly with CRM/ERP systems.
             </p>
             <div className="flex mt-[25px]">
-              <Link
-                href="https://calendly.com/dhruvjolly/30min"
-                className="rounded-[50px] text-base font-semibold leading-[19.2px] px-[22px] py-[12px] border border-[#04CEFA] bg-[linear-gradient(94.02deg,_#04CEFA_25.52%,_#A1DBEA_102.01%)] inline-block"
-              >
-                Book demo
-              </Link>
-              <Link
-                href="https://taponn.digital/pages/for-teams"
-                style={{ marginLeft: "6px" }}
-                className="rounded-[50px] text-base font-semibold leading-[19.2px] px-[22px] py-[12px] text-[#04CEFA] hover:text-black border border-[#04CEFA] hover:bg-[linear-gradient(94.02deg,_#04CEFA_25.52%,_#A1DBEA_102.01%)] transition duration-[0.3s] inline-block"
-              >
-                Explore more
-              </Link>
+              <LightLink href="#">Book Demo</LightLink>
+              <FilledLink href="#">Explore more</FilledLink>
             </div>
           </div>
         </div>

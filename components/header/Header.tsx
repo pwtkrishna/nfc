@@ -97,7 +97,7 @@ const Header = () => {
         <OffCanvas isOpen={isOpen} />
       </div>
 
-      <div className="h-[110px]" />
+      <div className="h-[150px]" />
     </>
   );
 };

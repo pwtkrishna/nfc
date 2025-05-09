@@ -1,9 +1,10 @@
 import Image from "next/image";
-import Link from "next/link";
+import LightLink from "./LightLink";
+import FilledLink from "./FilledLink";
 
 const HomeHeroSection = () => {
   return (
-    <section className="home-hero-banner">
+    <section className="hero-banner">
       <div className="container flex max-md:flex-col max-md:items-center max-md:gap-[20px] py-[35px] px-[20px] max-w-[1320px] mx-auto ">
         <div className="w-[45%] max-md:w-full max-md:order-2">
           <div>
@@ -21,18 +22,8 @@ const HomeHeroSection = () => {
             </p>
           </div>
           <div className="flex pt-[38px] gap-x-[15px] max-[328px]:flex-col max-[328px]:items-start max-[328px]:gap-2">
-            <Link
-              href="#"
-              className="rounded-[50px] text-base font-semibold leading-[19.2px] px-[22px] py-[12px] border border-[#04CEFA] bg-[linear-gradient(94.02deg,_#04CEFA_25.52%,_#A1DBEA_102.01%)] inline-block"
-            >
-              Get NFC
-            </Link>
-            <Link
-              href="#"
-              className="rounded-[50px] text-base font-semibold leading-[19.2px] px-[22px] py-[12px] text-[#04CEFA] hover:text-black border border-[#04CEFA] hover:bg-[linear-gradient(94.02deg,_#04CEFA_25.52%,_#A1DBEA_102.01%)] transition duration-[0.3s] inline-block"
-            >
-              Create my Profile
-            </Link>
+            <LightLink href="#">Get NFC</LightLink>
+            <FilledLink href="#">Create my Profile</FilledLink>
           </div>
         </div>
         <div className="w-[45%] max-md:w-[60%] max-sm:w-[100%]">
