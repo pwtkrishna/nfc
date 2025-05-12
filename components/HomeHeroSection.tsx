@@ -22,7 +22,7 @@ const HomeHeroSection = () => {
             </p>
           </div>
           <div className="flex pt-[38px] gap-x-[15px] max-[328px]:flex-col max-[328px]:items-start max-[328px]:gap-2">
-            <LightLink href="#">Get NFC</LightLink>
+            <LightLink href="/all-collection">Get NFC</LightLink>
             <FilledLink href="#">Create my Profile</FilledLink>
           </div>
         </div>
