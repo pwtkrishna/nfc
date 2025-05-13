@@ -4,6 +4,7 @@ import ProductPrice from "./ProductPrice";
 import ProductTags from "./ProductTags";
 import { getAverageRating } from "@/utils/review-utils";
 import { ProductProps } from "@/types/productProps";
+import ColorSelector from "./ColorSelector";
 
 const ProductDetails = ({ product }: ProductProps) => {
   return (
@@ -36,6 +37,7 @@ const ProductDetails = ({ product }: ProductProps) => {
         <strong>{product.description}</strong>
       </p>
       <ProductTags tags={product.tags} />
+      <ColorSelector colors={product.colors} />
     </div>
   );
 };

@@ -20,13 +20,13 @@ export const productsData: Product[] = [
     regularPrice: 34.99,
     discount: 29,
     offers: ["Free engraving", "10% off on 3+ cards"],
-    color: "Matte Black",
+    colors: ["Matte Black", "Gold", "Silver"],
     quantity: 30,
     image: "/products/metal-card-black.webp",
     imageGallery: [
       { type: "image", src: "/products/metal-card.webp" },
-      { type: "image", src: "/products/metal-card-silver.webp" },
       { type: "image", src: "/products/metal-card-yellow.webp" },
+      { type: "image", src: "/products/metal-card-silver.webp" },
       { type: "image", src: "/products/metal-card.webp" },
       { type: "image", src: "/products/metal-card-silver.webp" },
       { type: "image", src: "/products/metal-card-yellow.webp" },
@@ -74,7 +74,7 @@ export const productsData: Product[] = [
     regularPrice: 44.99,
     discount: 33,
     offers: ["Free shipping", "2-year chip warranty"],
-    color: "Gold",
+    colors: ["Gold", "Gold", "Silver"],
     quantity: 20,
     image: "/products/metal-card-black.webp",
     imageGallery: [
@@ -123,7 +123,7 @@ export const productsData: Product[] = [
     regularPrice: 19.99,
     discount: 25,
     offers: ["Plant a tree with each card", "Buy 4 get 1 free"],
-    color: "White",
+    colors: ["White", "Gold", "Silver"],
     quantity: 100,
     image: "/products/metal-card-black.webp",
     imageGallery: [
@@ -168,7 +168,7 @@ export const productsData: Product[] = [
     regularPrice: 69.99,
     discount: 28,
     offers: ["Free lanyards included", "Custom branding available"],
-    color: "Assorted",
+    colors: ["Assorted", "Gold", "Silver"],
     quantity: 40,
     image: "/products/metal-card-black.webp",
     imageGallery: [

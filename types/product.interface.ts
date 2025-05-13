@@ -13,7 +13,7 @@ export interface Product {
   regularPrice: number;
   discount: number;
   offers: string[];
-  color: string;
+  colors: string[];
   quantity: number;
   image: string;
   imageGallery: { type: "image" | "video"; src: string }[];
