@@ -2,14 +2,17 @@
 
 import { ColorProps } from "@/types/productProps";
 import Button from "../Button";
-import { useState } from "react";
+// import { useState } from "react";
 
-const ColorSelector = ({ colors }: ColorProps) => {
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(0);
+interface Props extends ColorProps {
+  selectedColor: string;
+  onColorSelect: (color: string) => void;
+}
 
-  function handleColorSelect(index: number) {
-    setSelectedIndex(index);
-  }
+const ColorSelector: React.FC<Props> = ({ colors = [], selectedColor, onColorSelect }) => {
+  // const [selectedIndex, setSelectedIndex] = useState<number | null>(0);
+
+
 
   return (
     <div className="flex flex-col my-[1.2rem]">
@@ -17,16 +20,16 @@ const ColorSelector = ({ colors }: ColorProps) => {
         Color
       </span>
       <div>
-        {colors.map((color, index) => (
+        {colors?.map((color, index) => (
           <Button
             key={index}
             variant="color"
-            onClick={() => handleColorSelect(index)}
-            className={`${
-              selectedIndex === index
-                ? "border-[#04cefa]"
-                : "border-[#ffffff8c]"
-            }`}
+            onClick={() => onColorSelect(color)}
+            title={color}
+            className={`${selectedColor === color
+              ? "border-[#04cefa]"
+              : "border-[#ffffff8c]"
+              }`}
           >
             {color}
           </Button>

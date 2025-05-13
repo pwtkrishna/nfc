@@ -1,10 +1,10 @@
+import ProductPageContent from "@/components/Product/ProductPageContent";
 import { getProductBySlug } from "@/lib/products";
 import { notFound } from "next/navigation";
-import ProductDetails from "@/components/Product/ProductDetails";
-import ProductDetailsImage from "@/components/Product/ProductDetailsImage";
+
 
 type Props = {
-  params: { slug: string };
+  params: { slug: string; };
 };
 
 const Page = async ({ params }: Props) => {
@@ -13,16 +13,7 @@ const Page = async ({ params }: Props) => {
   if (!product) return notFound();
 
   return (
-    <section>
-      <div className="max-w-[1320px] w-full py-[35px] px-[20px] m-auto">
-        <div>
-          <div className="flex flex-wrap">
-            <ProductDetailsImage product={product} />
-            <ProductDetails product={product} />
-          </div>
-        </div>
-      </div>
-    </section>
+    <ProductPageContent product={product} />
   );
 };
 

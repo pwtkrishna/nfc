@@ -6,7 +6,13 @@ import { getAverageRating } from "@/utils/review-utils";
 import { ProductProps } from "@/types/productProps";
 import ColorSelector from "./ColorSelector";
 
-const ProductDetails = ({ product }: ProductProps) => {
+type ProductDetailsProps = ProductProps & {
+  selectedColor: string;
+  onColorSelect: (color: string) => void;
+};
+
+
+const ProductDetails: React.FC<ProductDetailsProps> = ({ product, selectedColor, onColorSelect }) => {
   return (
     <div className="product-info-wrapper pl-[3rem]">
       <h2 className="text-white text-[42px] font-semibold leading-[50.4px] text-left mb-[1.1rem]">
@@ -37,7 +43,9 @@ const ProductDetails = ({ product }: ProductProps) => {
         <strong>{product.description}</strong>
       </p>
       <ProductTags tags={product.tags} />
-      <ColorSelector colors={product.colors} />
+      <ColorSelector colors={product.colors}
+        selectedColor={selectedColor}
+        onColorSelect={onColorSelect} />
     </div>
   );
 };
