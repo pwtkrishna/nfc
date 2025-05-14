@@ -2,19 +2,18 @@ import ProductPageContent from "@/components/Product/ProductPageContent";
 import { getProductBySlug } from "@/lib/products";
 import { notFound } from "next/navigation";
 
-
-type Props = {
-  params: { slug: string; };
+type PageProps = {
+  params: {
+    slug: string;
+  };
 };
 
-const Page = async ({ params }: Props) => {
+const Page = async ({ params }: PageProps) => {
   const product = await getProductBySlug(params.slug);
 
   if (!product) return notFound();
 
-  return (
-    <ProductPageContent product={product} />
-  );
+  return <ProductPageContent product={product} />;
 };
 
 export default Page;
