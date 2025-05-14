@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ProductProps } from "@/types/productProps";
 import ProductDetailMainImage from "./ProductDetailMainImage";
 import ProductImageGallery from "./ProductImageGallery";
@@ -9,26 +9,33 @@ type ProductDetailsImageProps = ProductProps & {
   selectedColor: string;
 };
 
-const ProductDetailsImage = ({ product, selectedColor }: ProductDetailsImageProps) => {
+const ProductDetailsImage = ({
+  product,
+  selectedColor,
+}: ProductDetailsImageProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const index = product.imageGallery.findIndex(
+      (img) => img.color?.toLowerCase() === selectedColor.toLowerCase()
+    );
+    if (index !== -1) {
+      setCurrentIndex(index);
+    } else {
+      setCurrentIndex(0);
+    }
+  }, [selectedColor, product.imageGallery]);
+
   const activeMedia = product.imageGallery[currentIndex];
 
-  const displayedImage = product.imageGallery.find(
-    img => img.color?.toLowerCase() === selectedColor.toLowerCase()
-  ) || product.imageGallery[0];
-
-
-
   return (
-    <div className="product-image-wrapper">
-      <div className="block lg:sticky lg:top-[3rem]">
-        <ProductDetailMainImage media={displayedImage} title={product.title} />
-        <ProductImageGallery
-          product={product}
-          currentIndex={currentIndex}
-          setCurrentIndex={setCurrentIndex}
-        />
-      </div>
+    <div className="">
+      <ProductDetailMainImage media={activeMedia} title={product.title} />
+      <ProductImageGallery
+        product={product}
+        currentIndex={currentIndex}
+        setCurrentIndex={setCurrentIndex}
+      />
     </div>
   );
 };

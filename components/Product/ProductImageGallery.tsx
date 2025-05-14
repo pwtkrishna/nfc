@@ -10,7 +10,6 @@ type GalleryProps = ProductProps & {
   setCurrentIndex: Dispatch<SetStateAction<number>>;
 };
 
-
 const ProductImageGallery = ({
   product,
   currentIndex,
@@ -20,7 +19,6 @@ const ProductImageGallery = ({
   const itemRefs = useRef<(HTMLLIElement | null)[]>([]);
   const lastIndex = product.imageGallery.length - 1;
 
-  // Scroll to the current thumbnail when it changes
   useEffect(() => {
     const currentItem = itemRefs.current[currentIndex];
     if (currentItem) {
@@ -44,10 +42,11 @@ const ProductImageGallery = ({
   return (
     <div className="flex items-center gap-2 mt-4">
       <Button
-        className={`flex items-center justify-center bg-transparent w-[44px] h-[44px] text-[#ffffffbf] ${currentIndex === 0
+        className={`flex items-center justify-center bg-transparent w-[44px] h-[44px] text-[#ffffffbf] ${
+          currentIndex === 0
             ? "cursor-not-allowed opacity-50"
             : "cursor-pointer"
-          }`}
+        }`}
         onClick={goToPrev}
         disabled={currentIndex === 0}
         variant="none"
@@ -89,10 +88,11 @@ const ProductImageGallery = ({
       </div>
 
       <Button
-        className={`flex items-center justify-center bg-transparent w-[44px] h-[44px] text-[#ffffffbf] ${currentIndex === lastIndex
+        className={`flex items-center justify-center bg-transparent w-[44px] h-[44px] text-[#ffffffbf] ${
+          currentIndex === lastIndex
             ? "cursor-not-allowed opacity-50"
             : "cursor-pointer"
-          }`}
+        }`}
         onClick={goToNext}
         disabled={currentIndex === lastIndex}
         variant="none"
