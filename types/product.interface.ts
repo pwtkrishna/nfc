@@ -13,10 +13,10 @@ export interface Product {
   regularPrice: number;
   discount: number;
   offers: string[];
-  colors: string[];
+  colors?: string[];
   quantity: number;
   image: string;
-  imageGallery: { type: "image" | "video"; src: string }[];
+  imageGallery: { color?: string; type: "image" | "video"; src: string }[];
   category: string;
   brand: string;
   rating: number;

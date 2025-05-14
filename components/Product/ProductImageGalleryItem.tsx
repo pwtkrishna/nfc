@@ -15,6 +15,8 @@ const ProductImageGalleryItem = forwardRef<
       <button
         onClick={onClick}
         className="absolute top-0 left-0 block h-full w-full p-0 text-white cursor-pointer bg-transparent"
+        role="button"
+        tabIndex={0}
       >
         {image.type === "image" ? (
           <Image
