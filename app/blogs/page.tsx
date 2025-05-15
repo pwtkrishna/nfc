@@ -10,7 +10,7 @@ export default async function Page({
   const page = parseInt(searchParams.page || "1", 10);
   const pageSize = 6;
 
-  const { data, total } = await getPaginatedBlogs(page, pageSize);
+  const { data, total } = await getPaginatedBlogs(page, pageSize); // ✅ await here
 
   return (
     <section className="max-w-[1320px] w-full px-5 m-auto">

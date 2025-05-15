@@ -2,16 +2,12 @@ import BlogPageContent from "@/components/BlogPageContent";
 import { getBlogBySlug, getRelatedBlogs } from "@/lib/blogService";
 import { notFound } from "next/navigation";
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
+export default async function Page({ params }: { params: { slug: string } }) {
+  const { slug } = params;
   const blog = await getBlogBySlug(slug);
 
   if (!blog) {
-    notFound(); // throws 404
+    notFound();
   }
 
   const relatedBlogs = await getRelatedBlogs(slug);
