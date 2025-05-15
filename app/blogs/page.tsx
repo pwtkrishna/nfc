@@ -10,7 +10,6 @@ export default async function Page({
   const page = parseInt(searchParams.page || "1", 10);
   const pageSize = 6;
 
-  // Await the async function
   const { data, total } = await getPaginatedBlogs(page, pageSize);
 
   return (

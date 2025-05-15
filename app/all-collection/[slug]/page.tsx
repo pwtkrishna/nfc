@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 
 // No need for a separate PageProps type anymore
 const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
-  const { slug } = await params; // Await the params promise
+  const { slug } = await params;
   const product = await getProductBySlug(slug);
 
   if (!product) return notFound();
