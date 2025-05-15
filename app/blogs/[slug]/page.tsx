@@ -11,9 +11,9 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-export default function Page({ params }: { params: { slug: string } }) {
-  const blog = getBlogBySlug(params.slug);
-  const relatedBlogs = getRelatedBlogs(params.slug);
+export default async function Page({ params }: { params: { slug: string } }) {
+  const blog = await getBlogBySlug(params.slug);
+  const relatedBlogs = await getRelatedBlogs(params.slug);
 
   if (!blog) return notFound();
 

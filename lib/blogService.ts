@@ -1,26 +1,30 @@
 import blogs from "@/data/blog.json";
 import { Blog } from "@/types/blogs";
 
-export function getPaginatedBlogs(
+export async function getPaginatedBlogs(
   page: number,
   pageSize: number
-): {
-  data: Blog[];
-  total: number;
-} {
+): Promise<{ data: Blog[]; total: number }> {
   const start = (page - 1) * pageSize;
   const end = start + pageSize;
   const data = blogs.slice(start, end);
-  return {
+  return Promise.resolve({
     data,
     total: blogs.length,
-  };
+  });
 }
 
-export function getBlogBySlug(slug: string): Blog | undefined {
-  return blogs.find((blog) => blog.slug === slug);
+export async function getBlogBySlug(slug: string): Promise<Blog | undefined> {
+  const blog = blogs.find((blog) => blog.slug === slug);
+  return Promise.resolve(blog);
 }
 
-export function getRelatedBlogs(currentSlug: string, limit = 2) {
-  return blogs.filter((blog) => blog.slug !== currentSlug).slice(0, limit);
+export async function getRelatedBlogs(
+  currentSlug: string,
+  limit = 2
+): Promise<Blog[]> {
+  const related = blogs
+    .filter((blog) => blog.slug !== currentSlug)
+    .slice(0, limit);
+  return Promise.resolve(related);
 }
