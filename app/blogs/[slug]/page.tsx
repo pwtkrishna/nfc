@@ -10,6 +10,7 @@ import {
   Linkedin,
 } from "lucide-react";
 import Link from "next/link";
+import { Key } from "react";
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const blog = await getBlogBySlug(params.slug);
@@ -107,19 +108,21 @@ export default async function Page({ params }: { params: { slug: string } }) {
             <h2 className="text-2xl font-bold mb-6 border-b border-[rgb(4,206,250)] pb-2 inline-block">
               Related Videos
             </h2>
-            {blog.videos.map((video, index) => (
-              <div
-                key={index}
-                className="aspect-video rounded-xl overflow-hidden shadow-lg shadow-[rgba(4,206,250,0.15)]"
-              >
-                <iframe
-                  src={video}
-                  className="w-full h-full"
-                  frameBorder="0"
-                  allowFullScreen
-                ></iframe>
-              </div>
-            ))}
+            {blog.videos.map(
+              (video: string | undefined, index: Key | null | undefined) => (
+                <div
+                  key={index}
+                  className="aspect-video rounded-xl overflow-hidden shadow-lg shadow-[rgba(4,206,250,0.15)]"
+                >
+                  <iframe
+                    src={video}
+                    className="w-full h-full"
+                    frameBorder="0"
+                    allowFullScreen
+                  ></iframe>
+                </div>
+              )
+            )}
           </div>
         )}
 

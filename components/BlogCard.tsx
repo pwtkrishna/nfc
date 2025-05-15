@@ -1,16 +1,16 @@
-import { Blog } from "@/types/blogs";
+import { Blogs } from "@/types/blogs";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function BlogCard({ blog }: { blog: Blog }) {
+export default function BlogCard({ blogs }: { blogs: Blogs }) {
   return (
     <div className="blog-card">
-      <Link href={`/blogs/${blog.slug}`}>
-        {blog.coverImage && (
+      <Link href={`/blogs/${blogs.slug}`}>
+        {blogs.coverImage && (
           <div className="w-full overflow-hidden rounded-md">
             <Image
-              src={blog.coverImage}
-              alt={blog.title}
+              src={blogs.coverImage}
+              alt={blogs.title}
               height={500}
               width={500}
               className="w-full h-80 max-lg:h-full object-cover  transition-transform duration-300 hover:scale-105"
@@ -28,7 +28,7 @@ export default function BlogCard({ blog }: { blog: Blog }) {
               WebkitBoxOrient: "vertical",
             }}
           >
-            {blog.title}
+            {blogs.title}
           </h2>
         </div>
       </Link>

@@ -19,7 +19,7 @@ export default async function Page({
         <h1 className="my-5 text-4xl text-white">Blogs</h1>
         <div className="grid grid-cols-2 max-sm:grid-cols-1 gap-2">
           {data.map((blog) => (
-            <BlogCard key={blog.id} blog={blog} />
+            <BlogCard key={blog.id} blogs={blog} />
           ))}
         </div>
         <Pagination current={page} total={total} pageSize={pageSize} />
