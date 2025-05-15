@@ -143,7 +143,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
         </div>
 
         {/* Related posts */}
-        {getRelatedBlogs.length > 0 && (
+        {relatedBlogs.length > 0 && (
           <div className="border-t border-gray-700 pt-10">
             <h2 className="text-2xl font-bold mb-6">You might also like</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
