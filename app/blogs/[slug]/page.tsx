@@ -2,13 +2,13 @@ import BlogPageContent from "@/components/BlogPageContent";
 import { getBlogBySlug, getRelatedBlogs } from "@/lib/blogService";
 import { notFound } from "next/navigation";
 
-interface PageProps {
+interface BlogSlugPageProps {
   params: {
     slug: string;
   };
 }
 
-export default async function BlogPage({ params }: PageProps) {
+export default async function Page({ params }: BlogSlugPageProps) {
   const blog = await getBlogBySlug(params.slug);
 
   if (!blog) {
