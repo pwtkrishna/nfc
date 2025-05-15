@@ -2,15 +2,15 @@ import BlogCard from "@/components/BlogCard";
 import Pagination from "@/components/Pagination";
 import { getPaginatedBlogs } from "@/lib/blogService";
 
-export default async function Page({
-  searchParams,
-}: {
-  searchParams: { page?: string };
-}) {
-  const page = parseInt(searchParams.page || "1", 10);
-  const pageSize = 6;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default async function Page({ searchParams }: any) {
+  const pageParam = searchParams?.page;
+  const page = Array.isArray(pageParam)
+    ? parseInt(pageParam[0] || "1", 10)
+    : parseInt(pageParam || "1", 10);
 
-  const { data, total } = await getPaginatedBlogs(page, pageSize); // ✅ await here
+  const pageSize = 6;
+  const { data, total } = await getPaginatedBlogs(page, pageSize);
 
   return (
     <section className="max-w-[1320px] w-full px-5 m-auto">

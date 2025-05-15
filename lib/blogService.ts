@@ -15,7 +15,7 @@ export async function getPaginatedBlogs(
 }
 
 export async function getBlogBySlug(slug: string): Promise<Blogs | undefined> {
-  return blogs.find((blog) => blog.slug === slug);
+  return Promise.resolve(blogs.find((blog) => blog.slug === slug));
 }
 
 export async function getRelatedBlogs(

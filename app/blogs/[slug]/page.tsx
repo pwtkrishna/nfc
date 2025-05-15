@@ -1,14 +1,15 @@
+import { notFound } from "next/navigation";
 import BlogPageContent from "@/components/BlogPageContent";
 import { getBlogBySlug, getRelatedBlogs } from "@/lib/blogService";
-import { notFound } from "next/navigation";
 
-export default async function Page({ params }: { params: { slug: string } }) {
-  const { slug } = params;
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
   const blog = await getBlogBySlug(slug);
-
-  if (!blog) {
-    notFound();
-  }
+  if (!blog) notFound();
 
   const relatedBlogs = await getRelatedBlogs(slug);
 
