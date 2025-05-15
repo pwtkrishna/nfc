@@ -156,6 +156,33 @@
   width: calc(25% - 24px);
 }
 
+/* /////////////////////////////// */
+/* ////// Blogs Page ///////// */
+/* ///////////////////////////// */
+
+.blog-card:hover .blog-title {
+  text-decoration: underline;
+}
+
+.pagination-link::after {
+  content: "";
+  display: block;
+  width: 20px;
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translate(-50%);
+  background-color: #fff;
+}
+
+.pagination-link:hover::after {
+  height: 1px;
+}
+
+.pagination-link.active::after {
+  height: 1px;
+}
+
 @media (max-width: 1024px) {
   .all-collection-list {
     width: calc(33.33% - 28px);

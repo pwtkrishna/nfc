@@ -5,7 +5,7 @@ import SocialLinks from "./SocialLinks";
 
 const Footer = () => {
   return (
-    <footer className="pt-[36px] border-0">
+    <footer className="pt-[36px] border-t border-t-[#ffffff14]">
       <div className="max-w-[1320px] w-full m-auto px-[20px] pb-[20px]">
         <div className="flex flex-wrap justify-start max-[800px]:justify-between max-[800px]:gap-y-[3rem]">
           <div className="max-w-[377px]">
@@ -101,7 +101,7 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="/contact"
                   className="text-[14px] font-normal leading-[22px] text-left text-[#808080] hover:text-[#04cefa] transition ease-in-out duration-300 inline-block pb-[0.5rem]"
                 >
                   Contact Us
