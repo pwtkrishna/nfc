@@ -21,9 +21,15 @@ const ProductListItem = ({ product }: ProductListItemProps) => {
         </div>
         <div className="min-h-[50px] bg-[#2B2E39] py-[18px] px-[12px]">
           <h2 className="product-title">{product.title}</h2>
-          <p className="text-[22px] font-medium leading-[36.98px] text-left text-white">
-            Rs. {product.salePrice}
-          </p>
+          {product.salePrice ? (
+            <p className="text-[22px] font-medium leading-[36.98px] text-left text-white">
+              Rs. {product.salePrice}
+            </p>
+          ) : (
+            <p className="text-[22px] font-medium leading-[36.98px] text-left text-white">
+              Rs. {product.regularPrice}
+            </p>
+          )}
         </div>
       </Link>
     </div>

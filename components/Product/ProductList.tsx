@@ -22,10 +22,21 @@ const ProductList = () => {
     {}
   );
 
+  const getSectionId = (sectionName: string) => {
+    return sectionName
+      .toLowerCase()
+      .replace(/\s+/g, "-")
+      .replace(/[^a-z0-9-]/g, "");
+  };
+
   return (
     <div>
       {Object.entries(groupedProducts).map(([sectionName, sectionProducts]) => (
-        <div key={sectionName} className="mb-[80px]">
+        <div
+          key={sectionName}
+          id={getSectionId(sectionName)}
+          className="mb-[80px]"
+        >
           <div className="pb-[60px]">
             <span className="uppercase text-[18px] font-normal text-[#A1DBEA] leading-[24px] text-left">
               Shop

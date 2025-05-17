@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import Button from "@/components/Button";
 import Input from "@/components/Input";
+import Link from "next/link";
 
 export default function ContactPage() {
   const [formState, setFormState] = useState({
@@ -300,30 +301,30 @@ export default function ContactPage() {
                 Connect With Us
               </h3>
               <div className="flex space-x-4">
-                <a
+                <Link
                   href="#"
                   className="h-12 w-12 rounded-full bg-[#282a33] flex items-center justify-center text-white hover:bg-[rgb(4,206,250)] transition-colors"
                 >
                   <Facebook className="h-5 w-5" />
-                </a>
-                <a
+                </Link>
+                <Link
                   href="#"
                   className="h-12 w-12 rounded-full bg-[#282a33] flex items-center justify-center text-white hover:bg-[rgb(4,206,250)] transition-colors"
                 >
                   <Twitter className="h-5 w-5" />
-                </a>
-                <a
+                </Link>
+                <Link
                   href="#"
                   className="h-12 w-12 rounded-full bg-[#282a33] flex items-center justify-center text-white hover:bg-[rgb(4,206,250)] transition-colors"
                 >
                   <Instagram className="h-5 w-5" />
-                </a>
-                <a
+                </Link>
+                <Link
                   href="#"
                   className="h-12 w-12 rounded-full bg-[#282a33] flex items-center justify-center text-white hover:bg-[rgb(4,206,250)] transition-colors"
                 >
                   <Linkedin className="h-5 w-5" />
-                </a>
+                </Link>
               </div>
             </div>
 

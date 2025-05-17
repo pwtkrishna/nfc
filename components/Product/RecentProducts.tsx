@@ -4,14 +4,12 @@ import { productsData } from "@/data/product-data";
 import { Product } from "@/types/product.interface";
 import Image from "next/image";
 import Link from "next/link";
-import AddToCart from "../AddToCart";
+// import AddToCart from "../AddToCart";
 import { getAverageRating } from "@/utils/review-utils";
 
-// Utility to get one random product per section
 const getRandomProductsBySection = (products: Product[]): Product[] => {
   const sectionMap = new Map<string, Product[]>();
 
-  // Group products by sectionName
   products.forEach((product) => {
     if (!sectionMap.has(product.sectionName)) {
       sectionMap.set(product.sectionName, []);
@@ -19,7 +17,6 @@ const getRandomProductsBySection = (products: Product[]): Product[] => {
     sectionMap.get(product.sectionName)!.push(product);
   });
 
-  // Pick one random product from each section
   const randomProducts: Product[] = [];
   sectionMap.forEach((productList) => {
     const randomIndex = Math.floor(Math.random() * productList.length);
@@ -67,13 +64,19 @@ const RecentProducts = () => {
               </p>
               <div className="my-2 font-bold text-[#A1DBEA] flex gap-[4px] items-center">
                 {product.salePrice && (
-                  <span className="text-xl font-semibold leading-[36.98px] text-white">
-                    Rs. {product.salePrice}
-                  </span>
+                  <>
+                    <span className="text-xl font-semibold leading-[36.98px] text-white">
+                      Rs. {product.salePrice}
+                    </span>
+                    <span className="text-[#b0adad] text-lg font-semibold leading-[36.98px] text-left">
+                      Rs.
+                      {product.regularPrice}
+                    </span>
+                  </>
                 )}
 
-                {product.regularPrice && (
-                  <span className="text-[#b0adad] text-lg font-semibold leading-[36.98px] text-left">
+                {!product.salePrice && (
+                  <span className="text-white text-lg font-semibold leading-[36.98px] text-left">
                     Rs.
                     {product.regularPrice}
                   </span>
@@ -106,7 +109,7 @@ const RecentProducts = () => {
                   </div>
                 </div>
               )}
-              <AddToCart className="mt-3 mb-0" />
+              {/* <AddToCart /> */}
             </div>
           </div>
         ))}

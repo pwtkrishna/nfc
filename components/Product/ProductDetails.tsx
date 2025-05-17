@@ -1,3 +1,4 @@
+// @/components/ProductDetails.tsx
 "use client";
 
 import Image from "next/image";
@@ -28,6 +29,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
   const [selectedPack, setSelectedPack] = useState("");
   const [selectedType, setSelectedType] = useState("");
   const [selectedSmartCard, setSelectedSmartCard] = useState("");
+  const [quantity, setQuantity] = useState(1); // Add quantity state
 
   return (
     <div className="product-info-wrapper pl-[3rem] max-[729px]:pl-[0]">
@@ -67,7 +69,6 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
             onColorSelect={onColorSelect}
           />
         )}
-
         <CardVariant
           packs={product.packs ?? []}
           type={product.type ?? []}
@@ -81,15 +82,21 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
             else if (variant === "smartCard") setSelectedSmartCard(value);
           }}
         />
-
-        <Quantity />
+        <Quantity onQuantityChange={setQuantity} />
+        {/* Pass callback to update quantity */}
         <div className="flex max-w-full gap-[16px] mb-6">
-          <AddToCart />
+          <AddToCart
+            product={product}
+            selectedColor={selectedColor}
+            selectedPack={selectedPack}
+            selectedType={selectedType}
+            selectedSmartCard={selectedSmartCard}
+            quantity={quantity}
+          />
           <BuyNow />
           <div className="w-[50%]"></div>
         </div>
         <DeliveryEstimate />
-
         {product.isCustomizable && (
           <div className="my-[24px] rounded-[20px] bg-[#2B2E39] p-[20px]">
             <h3 className="text-[20px] font-medium leading-[24px] text-center text-white">
@@ -102,7 +109,6 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
             </p>
           </div>
         )}
-
         {product.coupoun && <Coupoun coupoun={product.coupoun} />}
       </div>
     </div>

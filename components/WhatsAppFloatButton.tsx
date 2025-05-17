@@ -1,8 +1,9 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const WhatsAppFloatButton = () => {
   return (
-    <a
+    <Link
       href="https://wa.me/919999999999" // Replace with your actual WhatsApp number
       target="_blank"
       rel="noopener noreferrer"
@@ -17,7 +18,7 @@ const WhatsAppFloatButton = () => {
           className="w-full h-auto"
         />
       </div>
-    </a>
+    </Link>
   );
 };
 

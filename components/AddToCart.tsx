@@ -1,18 +1,48 @@
+"use client";
+
 import Button from "./Button";
+import { useCart } from "@/context/CartContext";
+import { Product } from "@/types/product.interface";
 
-type CartBtnProps = {
-  className?: string;
-};
+interface AddToCartProps {
+  product: Product;
+  selectedColor?: string;
+  selectedPack?: string;
+  selectedType?: string;
+  selectedSmartCard?: string;
+  quantity: number;
+}
 
-const AddToCart = ({ className }: CartBtnProps) => {
+const AddToCart: React.FC<AddToCartProps> = ({
+  product,
+  selectedColor,
+  selectedPack,
+  selectedType,
+  selectedSmartCard,
+  quantity,
+}) => {
+  const { addToCart } = useCart();
+
+  const handleAddToCart = () => {
+    addToCart({
+      product,
+      quantity,
+      selectedColor,
+      selectedPack,
+      selectedType,
+      selectedSmartCard,
+    });
+  };
+
   return (
     <Button
+      className="uppercase text-white"
       variant="solid"
       style={{
         minHeight: "calc(45px + 1px * 2)",
         minWidth: "calc(120px + 1px * 2)",
       }}
-      className={className}
+      onClick={handleAddToCart}
     >
       Add to Cart
     </Button>
