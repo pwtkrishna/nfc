@@ -1,4 +1,3 @@
-// @/components/CartSidebar.tsx
 "use client";
 
 import Image from "next/image";
