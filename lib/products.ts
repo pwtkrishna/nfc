@@ -15,3 +15,15 @@ export const getProductBySlug = async (
     }) || null
   );
 };
+
+export const getProductsByRating = async (): Promise<Product[]> => {
+  const avgRating = 3.2;
+
+  const maxRating = productsData.filter(
+    (product) => product.rating >= avgRating
+  );
+
+  console.log(maxRating);
+
+  return maxRating;
+};

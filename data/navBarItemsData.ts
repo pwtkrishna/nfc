@@ -5,12 +5,16 @@ export const navBarItems: NavBarType = [
   {
     title: "Shop Now",
     subMenu: [
-      { title: "NFC Card", href: "/all-collection/#nfc-card" },
       {
-        title: "Standees and Review cards",
-        href: "/all-collection/#product-card",
+        title: "NFC Business Cards",
+        href: "/all-collection/#nfc-business-cards",
       },
-      { title: "Bundle Offer", href: "/all-collection/#bundle-offer" },
+      {
+        title: "Premium Collection",
+        href: "/all-collection/#premium-collection",
+      },
+      { title: "Eco Collection", href: "/all-collection/#eco-collection" },
+      { title: "Bundle Offers", href: "/all-collection/#bundle-offers" },
     ],
   },
   { title: "For Teams", href: "/for-teams" },

@@ -18,9 +18,9 @@ const Button: React.FC<ButtonProps> = ({
     outline:
       "text-[#04CEFA] hover:text-black hover:bg-[linear-gradient(94.02deg,_#04CEFA_25.52%,_#A1DBEA_102.01%)]",
     solid:
-      "text-black bg-[linear-gradient(94.02deg,_#04CEFA_25.52%,_#A1DBEA_102.01%)]",
+      "rounded-[43px] text-base font-medium leading-[19.2px] text-center text-[#1F2128] w-full capitalize flex justify-center items-center border-none px-[30px] cursor-pointer  bg-[linear-gradient(94.02deg,_#04CEFA_25.52%,_#A1DBEA_102.01%)]",
     color:
-      "bg-transparent border-[1px]  text-white rounded-[40px] inline-block mt-[7px] mr-[5px] mb-[2px] ml-[0] py-[10px] px-[20px] tracking-[1px] leading-[1] text-center cursor-pointer relative transition-[border] duration-150 ease-in-out",
+      "bg-transparent border text-white rounded-[40px] py-[10px] px-[20px] tracking-[1px] leading-[1] text-center cursor-pointer relative transition-[border] duration-150 ease-in-out mt-[7px] mr-[5px] mb-[2px]",
     none: "",
   };
 

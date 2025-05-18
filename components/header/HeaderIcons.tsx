@@ -1,7 +1,14 @@
+"use client";
+
+import { useCart } from "@/context/CartContext";
+
 const HeaderIcons = () => {
+  const { setIsCartOpen, cart } = useCart();
+  const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0); // Total items in cart
+
   return (
     <div className="flex gap-2">
-      <div className="search-icon bg-[#35373E] rounded-[8px] h-[44px] w-[44px] flex justify-center items-center max-[870px]:hidden">
+      {/* <div className="search-icon bg-[#35373E] rounded-[8px] h-[44px] w-[44px] flex justify-center items-center max-[870px]:hidden cursor-pointer">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -18,8 +25,8 @@ const HeaderIcons = () => {
             fill="#04CEFA"
           ></path>
         </svg>
-      </div>
-      <div className="user-icon bg-[#35373E] rounded-[8px] h-[44px] w-[44px] flex justify-center items-center max-[870px]:hidden">
+      </div> */}
+      <div className="user-icon bg-[#35373E] rounded-[8px] h-[44px] w-[44px] flex justify-center items-center max-[870px]:hidden cursor-pointer">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="22"
@@ -44,7 +51,10 @@ const HeaderIcons = () => {
         </svg>
       </div>
 
-      <div className="cart-icon bg-[#35373E] rounded-[8px] h-[44px] w-[44px] flex justify-center items-center">
+      <div
+        className="cart-icon bg-[#35373E] rounded-[8px] h-[44px] w-[44px] flex justify-center items-center cursor-pointer"
+        onClick={() => setIsCartOpen(true)}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="22"
@@ -92,6 +102,11 @@ const HeaderIcons = () => {
             strokeLinecap="round"
           ></path>
         </svg>
+        {itemCount > 0 && (
+          <span className="absolute bottom-1.5 right-5 bg-[#04CEFA] text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+            {itemCount}
+          </span>
+        )}
       </div>
     </div>
   );

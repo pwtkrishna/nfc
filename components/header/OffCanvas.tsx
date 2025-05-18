@@ -4,7 +4,12 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { navBarItems } from "@/data/navBarItemsData";
 
-const OffCanvas = ({ isOpen }: { isOpen: boolean }) => {
+type OffCanvasProps = {
+  isOpen: boolean;
+  onClose: () => void;
+};
+
+const OffCanvas: React.FC<OffCanvasProps> = ({ isOpen, onClose }) => {
   const [openSubMenuIndex, setOpenSubMenuIndex] = useState<number | null>(null);
 
   useEffect(() => {
@@ -23,6 +28,9 @@ const OffCanvas = ({ isOpen }: { isOpen: boolean }) => {
             <Link
               href={item.href}
               className="py-[8px] px-12 text-[18px] text-white cursor-pointer block"
+              onClick={() => {
+                if (!item.subMenu) onClose();
+              }}
             >
               {item.title}
             </Link>
@@ -87,6 +95,7 @@ const OffCanvas = ({ isOpen }: { isOpen: boolean }) => {
               <Link
                 href={subItem.href}
                 className="py-[8px] px-12 text-[18px] text-white cursor-pointer block"
+                onClick={onClose}
               >
                 {subItem.title}
               </Link>

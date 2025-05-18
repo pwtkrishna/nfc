@@ -1,0 +1,190 @@
+[
+  {
+    "id": 1,
+    "title": "First Blog Post",
+    "slug": "first-blog-post",
+    "excerpt": "This is the first blog post.",
+    "content": "Full content of the first blog post.",
+    "coverImage": "/blogs/blog.webp",
+    "mainImage": "/blogs/blog.webp",
+    "videos": ["https://www.youtube.com/embed/dQw4w9WgXcQ"]
+  },
+  {
+    "id": 2,
+    "title": "Second Blog Post",
+    "slug": "second-blog-post",
+    "excerpt": "This is the second blog post.",
+    "content": "Full content of the second blog post.",
+    "coverImage": "/blogs/blog.webp"
+  },
+  {
+    "id": 3,
+    "title": "Third Blog Post",
+    "slug": "third-blog-post",
+    "excerpt": "This is the third blog post.",
+    "content": "Full content of the third blog post.",
+    "coverImage": "/blogs/blog.webp",
+    "mainImage": "/blogs/blog.webp"
+  },
+  {
+    "id": 4,
+    "title": "Fourth Blog Post",
+    "slug": "fourth-blog-post",
+    "excerpt": "This is the fourth blog post.",
+    "content": "Full content of the fourth blog post.",
+    "coverImage": "/blogs/blog.webp"
+  },
+  {
+    "id": 5,
+    "title": "Fifth Blog Post",
+    "slug": "fifth-blog-post",
+    "excerpt": "This is the fifth blog post.",
+    "content": "Full content of the fifth blog post.",
+    "coverImage": "/blogs/blog.webp",
+    "videos": ["https://www.youtube.com/embed/example1"]
+  },
+  {
+    "id": 6,
+    "title": "Sixth Blog Post",
+    "slug": "sixth-blog-post",
+    "excerpt": "This is the sixth blog post.",
+    "content": "Full content of the sixth blog post.",
+    "coverImage": "/blogs/blog.webp"
+  },
+  {
+    "id": 7,
+    "title": "Seventh Blog Post",
+    "slug": "seventh-blog-post",
+    "excerpt": "This is the seventh blog post.",
+    "content": "Full content of the seventh blog post.",
+    "coverImage": "/blogs/blog.webp",
+    "mainImage": "/blogs/blog.webp"
+  },
+  {
+    "id": 8,
+    "title": "Eighth Blog Post",
+    "slug": "eighth-blog-post",
+    "excerpt": "This is the eighth blog post.",
+    "content": "Full content of the eighth blog post.",
+    "coverImage": "/blogs/blog.webp"
+  },
+  {
+    "id": 9,
+    "title": "Ninth Blog Post",
+    "slug": "ninth-blog-post",
+    "excerpt": "This is the ninth blog post.",
+    "content": "Full content of the ninth blog post.",
+    "coverImage": "/blogs/blog.webp",
+    "mainImage": "/blogs/blog.webp",
+    "videos": ["https://www.youtube.com/embed/example2"]
+  },
+  {
+    "id": 10,
+    "title": "Tenth Blog Post",
+    "slug": "tenth-blog-post",
+    "excerpt": "This is the tenth blog post.",
+    "content": "Full content of the tenth blog post.",
+    "coverImage": "/blogs/blog.webp"
+  },
+  {
+    "id": 11,
+    "title": "Eleventh Blog Post",
+    "slug": "eleventh-blog-post",
+    "excerpt": "This is the eleventh blog post.",
+    "content": "Full content of the eleventh blog post.",
+    "coverImage": "/blogs/blog.webp"
+  },
+  {
+    "id": 12,
+    "title": "Twelfth Blog Post",
+    "slug": "twelfth-blog-post",
+    "excerpt": "This is the twelfth blog post.",
+    "content": "Full content of the twelfth blog post.",
+    "coverImage": "/blogs/blog.webp"
+  },
+  {
+    "id": 13,
+    "title": "Thirteenth Blog Post",
+    "slug": "thirteenth-blog-post",
+    "excerpt": "This is the thirteenth blog post.",
+    "content": "Full content of the thirteenth blog post.",
+    "coverImage": "/blogs/blog.webp",
+    "mainImage": "/blogs/blog.webp"
+  },
+  {
+    "id": 14,
+    "title": "Fourteenth Blog Post",
+    "slug": "fourteenth-blog-post",
+    "excerpt": "This is the fourteenth blog post.",
+    "content": "Full content of the fourteenth blog post.",
+    "coverImage": "/blogs/blog.webp"
+  },
+  {
+    "id": 15,
+    "title": "Fifteenth Blog Post",
+    "slug": "fifteenth-blog-post",
+    "excerpt": "This is the fifteenth blog post.",
+    "content": "Full content of the fifteenth blog post.",
+    "coverImage": "/blogs/blog.webp",
+    "videos": ["https://www.youtube.com/embed/example3"]
+  },
+  {
+    "id": 16,
+    "title": "Sixteenth Blog Post",
+    "slug": "sixteenth-blog-post",
+    "excerpt": "This is the sixteenth blog post.",
+    "content": "Full content of the sixteenth blog post.",
+    "coverImage": "/blogs/blog.webp"
+  },
+  {
+    "id": 17,
+    "title": "Seventeenth Blog Post",
+    "slug": "seventeenth-blog-post",
+    "excerpt": "This is the seventeenth blog post.",
+    "content": "Full content of the seventeenth blog post.",
+    "coverImage": "/blogs/blog.webp",
+    "mainImage": "/blogs/blog.webp"
+  },
+  {
+    "id": 18,
+    "title": "Eighteenth Blog Post",
+    "slug": "eighteenth-blog-post",
+    "excerpt": "This is the eighteenth blog post.",
+    "content": "Full content of the eighteenth blog post.",
+    "coverImage": "/blogs/blog.webp"
+  },
+  {
+    "id": 19,
+    "title": "Nineteenth Blog Post",
+    "slug": "nineteenth-blog-post",
+    "excerpt": "This is the nineteenth blog post.",
+    "content": "Full content of the nineteenth blog post.",
+    "coverImage": "/blogs/blog.webp",
+    "videos": ["https://www.youtube.com/embed/example4"]
+  },
+  {
+    "id": 20,
+    "title": "Twentieth Blog Post",
+    "slug": "twentieth-blog-post",
+    "excerpt": "This is the twentieth blog post.",
+    "content": "Full content of the twentieth blog post.",
+    "coverImage": "/blogs/blog.webp"
+  },
+  {
+    "id": 21,
+    "title": "Twenty-First Blog Post",
+    "slug": "twenty-first-blog-post",
+    "excerpt": "This is the twenty-first blog post.",
+    "content": "Full content of the twenty-first blog post.",
+    "coverImage": "/blogs/blog.webp",
+    "mainImage": "/blogs/blog.webp"
+  },
+  {
+    "id": 22,
+    "title": "Twenty-Second Blog Post",
+    "slug": "twenty-second-blog-post",
+    "excerpt": "This is the twenty-second blog post.",
+    "content": "Full content of the twenty-second blog post.",
+    "coverImage": "/blogs/blog.webp"
+  }
+]
