@@ -15,7 +15,7 @@ const ProductPageContent = ({ product }: ProductPageContentProps) => {
         <section>
             <div className="max-w-[1320px] w-full py-[35px] px-[20px] m-auto">
                 <div>
-                    <div className="flex flex-wrap">
+                    <div className="flex flex-wrap max-md:flex-col">
                         <ProductDetailsImage product={product} selectedColor={selectedColor} />
                         <ProductDetails product={product}
                             selectedColor={selectedColor}
