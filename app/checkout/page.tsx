@@ -34,11 +34,11 @@ import { useRouter } from "next/navigation";
 export default function CheckoutPage() {
   const {
     cart,
-    removeFromCart,
-    updateQuantity,
-    isCartOpen,
-    setIsCartOpen,
-    getCartTotal,
+    // removeFromCart,
+    // updateQuantity,
+    // isCartOpen,
+    // setIsCartOpen,
+    // getCartTotal,
   } = useCart();
 
   const [step, setStep] = useState(1);
