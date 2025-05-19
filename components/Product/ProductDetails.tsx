@@ -29,7 +29,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
   const [selectedPack, setSelectedPack] = useState("");
   const [selectedType, setSelectedType] = useState("");
   const [selectedSmartCard, setSelectedSmartCard] = useState("");
-  const [quantity, setQuantity] = useState(1); // Add quantity state
+  const [quantity, setQuantity] = useState(1);
 
   return (
     <div className="product-info-wrapper pl-[3rem] max-[729px]:pl-[0]">

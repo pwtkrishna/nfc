@@ -19,7 +19,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "NFC",
-  description: "Designed and developed by Premie Webtech",
+  description: "Designed and developed by Premier Webtech",
 };
 
 export default function RootLayout({

@@ -13,7 +13,7 @@ const TrustedCarousel = () => {
     <section className="bg-white py-[30px]">
       <div className="max-w-[1320px] m-auto w-full overflow-hidden">
         <div className="text-center mb-6">
-          <span className="text-[#04CEFA] text-base font-normal uppercase">
+          <span className="text-[#04CEFA] text-2xl font-bold uppercase">
             Top professionals and team around the world
           </span>
           <h2 className="text-[#1F2128] font-semibold text-[38px] leading-[54px]">

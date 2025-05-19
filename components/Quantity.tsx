@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "./Button";
 
 interface QuantityProps {
@@ -10,20 +10,16 @@ interface QuantityProps {
 const Quantity: React.FC<QuantityProps> = ({ onQuantityChange }) => {
   const [quantity, setQuantity] = useState(1);
 
+  useEffect(() => {
+    onQuantityChange(quantity);
+  }, [onQuantityChange, quantity]);
+
   const handleIncrement = () => {
-    setQuantity((prev) => {
-      const newQuantity = prev + 1;
-      onQuantityChange(newQuantity);
-      return newQuantity;
-    });
+    setQuantity((prev) => prev + 1);
   };
 
   const handleDecrement = () => {
-    setQuantity((prev) => {
-      const newQuantity = prev > 1 ? prev - 1 : 1;
-      onQuantityChange(newQuantity);
-      return newQuantity;
-    });
+    setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
   };
 
   return (

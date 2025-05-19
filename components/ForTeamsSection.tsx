@@ -34,7 +34,7 @@ const ForTeamsSection = () => {
               in one dashboard, update details in real-time, and integrate
               effortlessly with CRM/ERP systems.
             </p>
-            <div className="flex mt-[25px]">
+            <div className="flex mt-[25px] gap-4">
               <LightLink href="#">Book Demo</LightLink>
               <FilledLink href="#">Explore more</FilledLink>
             </div>

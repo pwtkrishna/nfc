@@ -23,7 +23,7 @@ const Faqs = () => {
               className="bg-[#3A3D4A] rounded-[10px] text-white p-5"
             >
               <button
-                className="flex justify-between w-full text-left text-lg font-semibold"
+                className="flex justify-between w-full text-left text-lg font-semibold cursor-pointer"
                 onClick={() => toggle(index)}
               >
                 <span>{faq.question}</span>

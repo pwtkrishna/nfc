@@ -4,8 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import Button from "../Button";
+import { useRouter } from "next/navigation";
 
 const CartSidebar = () => {
+  const router = useRouter();
   const {
     cart,
     removeFromCart,
@@ -13,6 +15,7 @@ const CartSidebar = () => {
     isCartOpen,
     setIsCartOpen,
     getCartTotal,
+    closeCart,
   } = useCart();
 
   if (!isCartOpen) return null;
@@ -47,6 +50,14 @@ const CartSidebar = () => {
           </button>
         </div>
         <div className="flex-1">
+          <div className="flex justify-between items-center mb-[5px] border-b border-b-[#00d9ff]">
+            <div className="text-[10px] tracking-wider uppercase pb-[18px] font-normal text-left text-[#ffffffbf]">
+              Product
+            </div>
+            <div className="text-[10px] tracking-wider uppercase pb-[18px] font-normal text-left text-[#ffffffbf]">
+              Total
+            </div>
+          </div>
           {cart.length === 0 ? (
             <p className="text-white text-center">Your cart is empty</p>
           ) : (
@@ -56,7 +67,7 @@ const CartSidebar = () => {
                   key={`${item.product.id}-${item.selectedColor || ""}-${
                     item.selectedPack || ""
                   }-${item.selectedType || ""}-${item.selectedSmartCard || ""}`}
-                  className="flex items-center gap-4 p-4 bg-[#2B2E39] rounded-[12px]"
+                  className="flex items-center gap-4 p-4 "
                 >
                   <Image
                     src={item.product.image}
@@ -66,22 +77,31 @@ const CartSidebar = () => {
                     className="rounded"
                   />
                   <div className="flex-1">
-                    <h4 className="text-white text-[16px] font-medium">
-                      {item.product.title}
-                    </h4>
+                    <Link href={item.product.slug}>
+                      <h4 className="text-white text-[15px] font-normal hover:underline decoration-2 underline-offset-2">
+                        {item.product.title}
+                      </h4>
+                    </Link>
+
                     <p className="text-[#d9d9d9] text-[14px]">
                       {item.selectedColor && `Color: ${item.selectedColor}`}
-                      {item.selectedPack && `, Pack: ${item.selectedPack}`}
-                      {item.selectedType && `, Type: ${item.selectedType}`}
+                    </p>
+                    <p className="text-[#d9d9d9] text-[14px]">
+                      {item.selectedPack && `Pack: ${item.selectedPack}`}
+                    </p>
+                    <p className="text-[#d9d9d9] text-[14px]">
+                      {item.selectedType && `Type: ${item.selectedType}`}
+                    </p>
+                    <p className="text-[#d9d9d9] text-[14px]">
                       {item.selectedSmartCard &&
-                        `, Smart Card: ${item.selectedSmartCard}`}
+                        `Smart Card: ${item.selectedSmartCard}`}
                     </p>
                     <p className="text-white text-[14px]">
-                      $
+                      Rs.&nbsp;
                       {(
                         item.product.salePrice || item.product.regularPrice
                       ).toFixed(2)}
-                      x {item.quantity} = $
+                      x {item.quantity} = Rs.&nbsp;
                       {(
                         (item.product.salePrice || item.product.regularPrice) *
                         item.quantity
@@ -130,15 +150,17 @@ const CartSidebar = () => {
           <div className="py-4 border-t border-[#fff3]">
             <div className="flex justify-between text-white text-[18px] font-semibold">
               <span>Total:</span>
-              <span>${getCartTotal().toFixed(2)}</span>
+              <span>Rs. &nbsp;{getCartTotal().toFixed(2)}</span>
             </div>
             <Link href="/checkout">
               <Button
+                onClick={() => {
+                  closeCart();
+                  router.push("/checkout");
+                }}
                 className="uppercase text-white w-full mt-4"
                 variant="solid"
-                style={{
-                  minHeight: "calc(45px + 1px * 2)",
-                }}
+                style={{ minHeight: "calc(45px + 1px * 2)" }}
               >
                 Buy Now
               </Button>
