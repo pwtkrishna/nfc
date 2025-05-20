@@ -107,16 +107,26 @@ export const productsData: Product[] = [
     discount: 33,
     offers: ["Free shipping", "2-year chip warranty"],
     coupoun: [
-      { title: "Buy 2 and Get 12% OFF", status: "Auto Applied" },
+      {
+        title: "Buy 2 and Get 12% OFF",
+        status: "active",
+        startDate: "2025-05-20",
+        endDate: "2025-05-21",
+      },
       {
         title: "Buy 5 and Get 15% OFF",
-        status: "Auto Applied",
+        status: "inactive",
+        startDate: "2025-05-15",
+        endDate: "2025-05-20",
       },
       {
         title: "Buy 8 and Get 18% OFF",
-        status: "Auto Applied",
+        status: "active",
+        startDate: "2025-05-15",
+        endDate: "2025-05-20",
       },
     ],
+
     colors: ["Black", "Gold", "Silver"],
     packs: ["20", "50"],
     type: ["circle", "square"],

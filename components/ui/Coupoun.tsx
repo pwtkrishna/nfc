@@ -32,12 +32,12 @@ const Coupoun = ({ coupoun }: CoupounProps) => {
             key={index}
             className="bg-[url('/coupoun-all.webp')] bg-no-repeat bg-[length:100%_100%] py-[30px] px-[50px]"
           >
-            <h4 className="text-[18px] font-medium leading-[18px] text-left text-white mb-[12px]">
+            <h4 className="text-[18px] font-medium leading-[18px] text-left text-white">
               {el.title}
             </h4>
-            <p className="text-sm font-normal text-left text-[#ffffffc7]">
+            {/* <p className="text-sm font-normal text-left text-[#ffffffc7]">
               {el.status}
-            </p>
+            </p> */}
           </div>
         ))}
       </div>

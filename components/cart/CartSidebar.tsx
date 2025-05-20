@@ -2,9 +2,31 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useCart } from "@/context/CartContext";
-import Button from "../Button";
 import { useRouter } from "next/navigation";
+import Button from "../Button";
+import { getApplicableDiscount } from "@/utils/getCoupons";
+import { formatPrice } from "@/utils/format-price";
+import { useCartStore } from "@/store/cartStore";
+import type { CartItem } from "@/store/cartStore";
+
+type Variant = CartItem["variant"];
+
+const variantKeys = ["Color", "Pack", "Type", "SmartCard"] as const;
+
+// type DiscountedItem = {
+//   productId: string;
+//   variant: {
+//     selectedColor: string;
+//     selectedPack: string;
+//     selectedType: string;
+//     selectedSmartCard: string;
+//   };
+//   quantity: number;
+//   basePrice: number;
+//   discountPercent: number;
+//   discountedUnitPrice: number;
+//   totalPrice: number;
+// };
 
 const CartSidebar = () => {
   const router = useRouter();
@@ -16,9 +38,13 @@ const CartSidebar = () => {
     setIsCartOpen,
     getCartTotal,
     closeCart,
-  } = useCart();
+    getProductDiscountedPrice,
+  } = useCartStore();
 
   if (!isCartOpen) return null;
+  const discountedPrices = getProductDiscountedPrice();
+
+  console.log(discountedPrices);
 
   return (
     <div className="fixed z-[9999] top-0 left-0 w-screen h-full flex justify-end bg-[#ffffff80]">
@@ -62,87 +88,172 @@ const CartSidebar = () => {
             <p className="text-white text-center">Your cart is empty</p>
           ) : (
             <div className="flex flex-col gap-4">
-              {cart.map((item) => (
-                <div
-                  key={`${item.product.id}-${item.selectedColor || ""}-${
-                    item.selectedPack || ""
-                  }-${item.selectedType || ""}-${item.selectedSmartCard || ""}`}
-                  className="flex items-center gap-4 p-4 "
-                >
-                  <Image
-                    src={item.product.image}
-                    alt={item.product.title}
-                    width={80}
-                    height={80}
-                    className="rounded"
-                  />
-                  <div className="flex-1">
-                    <Link href={item.product.slug}>
-                      <h4 className="text-white text-[15px] font-normal hover:underline decoration-2 underline-offset-2">
-                        {item.product.title}
-                      </h4>
-                    </Link>
-
-                    <p className="text-[#d9d9d9] text-[14px]">
-                      {item.selectedColor && `Color: ${item.selectedColor}`}
-                    </p>
-                    <p className="text-[#d9d9d9] text-[14px]">
-                      {item.selectedPack && `Pack: ${item.selectedPack}`}
-                    </p>
-                    <p className="text-[#d9d9d9] text-[14px]">
-                      {item.selectedType && `Type: ${item.selectedType}`}
-                    </p>
-                    <p className="text-[#d9d9d9] text-[14px]">
-                      {item.selectedSmartCard &&
-                        `Smart Card: ${item.selectedSmartCard}`}
-                    </p>
-                    <p className="text-white text-[14px]">
-                      Rs.&nbsp;
-                      {(
-                        item.product.salePrice || item.product.regularPrice
-                      ).toFixed(2)}
-                      x {item.quantity} = Rs.&nbsp;
-                      {(
-                        (item.product.salePrice || item.product.regularPrice) *
-                        item.quantity
-                      ).toFixed(2)}
-                    </p>
-                    <div className="flex items-center gap-2 mt-2">
-                      <button
-                        className="w-6 h-6 bg-[#3B3E49] text-white rounded flex items-center justify-center"
-                        onClick={() =>
-                          updateQuantity(item.product.id, item.quantity - 1)
-                        }
-                      >
-                        -
-                      </button>
-                      <span className="text-white">{item.quantity}</span>
-                      <button
-                        className="w-6 h-6 bg-[#3B3E49] text-white rounded flex items-center justify-center"
-                        onClick={() =>
-                          updateQuantity(item.product.id, item.quantity + 1)
-                        }
-                      >
-                        +
-                      </button>
-                    </div>
-                  </div>
-                  <button
-                    className="text-[#A1DBEA]"
-                    onClick={() => removeFromCart(item.product.id)}
+              {cart.map((item) => {
+                const discountedItem = discountedPrices.find(
+                  (price) =>
+                    price.productId === item.product.id &&
+                    JSON.stringify(price.variant) ===
+                      JSON.stringify({
+                        selectedColor: item.variant.selectedColor || "",
+                        selectedPack: item.variant.selectedPack || "",
+                        selectedType: item.variant.selectedType || "",
+                        selectedSmartCard: item.variant.selectedSmartCard || "",
+                      })
+                );
+                return (
+                  <div
+                    key={`${item.product.id}-${
+                      item.variant.selectedColor || ""
+                    }-${item.variant.selectedPack || ""}-${
+                      item.variant.selectedType || ""
+                    }-${item.variant.selectedSmartCard || ""}`}
+                    className="flex gap-4 py-4 "
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="20"
-                      height="20"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
-                    </svg>
-                  </button>
-                </div>
-              ))}
+                    <Image
+                      src={item.product.image}
+                      alt={item.product.title}
+                      width={100}
+                      height={50}
+                      className=""
+                    />
+                    <div className="flex-1 pl-4">
+                      <Link href={item.product.slug}>
+                        <h4 className="text-white text-[15px] font-normal hover:underline decoration-2 underline-offset-2">
+                          {item.product.title}
+                        </h4>
+                      </Link>
+
+                      {variantKeys.map((key) => {
+                        const variantKey = `selected${key}` as keyof Variant;
+                        const value = item.variant[variantKey];
+
+                        return (
+                          value && (
+                            <p key={key} className="text-[#d9d9d9] text-[14px]">
+                              {key}: {value}
+                            </p>
+                          )
+                        );
+                      })}
+
+                      {/* <p className="text-[#d9d9d9] text-[14px]">
+                      {item.variant.selectedColor &&
+                        `Color: ${item.variant.selectedColor}`}
+                    </p>
+                    <p className="text-[#d9d9d9] text-[14px]">
+                      {item.variant.selectedPack &&
+                        `Pack: ${item.variant.selectedPack}`}
+                    </p>
+                    <p className="text-[#d9d9d9] text-[14px]">
+                      {item.variant.selectedType &&
+                        `Type: ${item.variant.selectedType}`}
+                    </p>
+                    <p className="text-[#d9d9d9] text-[14px]">
+                      {item.variant.selectedSmartCard &&
+                        `Smart Card: ${item.variant.selectedSmartCard}`}
+                    </p> */}
+                      {(() => {
+                        const discount = getApplicableDiscount(
+                          item.product,
+                          item.quantity
+                        );
+                        if (discount > 0) {
+                          return (
+                            <p className="mt-1.5 text-[12px] flex items-center text-[#ffffffbf]">
+                              <span>
+                                <svg
+                                  className="icon icon-discount text-white w-3 h-3 mr-1.5 "
+                                  viewBox="0 0 12 12"
+                                >
+                                  <path
+                                    fill="currentColor"
+                                    fillRule="evenodd"
+                                    d="M7 0h3a2 2 0 0 1 2 2v3a1 1 0 0 1-.3.7l-6 6a1 1 0 0 1-1.4 0l-4-4a1 1 0 0 1 0-1.4l6-6A1 1 0 0 1 7 0m2 2a1 1 0 1 0 2 0 1 1 0 0 0-2 0"
+                                    clipRule="evenodd"
+                                  ></path>
+                                </svg>
+                              </span>
+                              {discount}% OFF Applied
+                            </p>
+                          );
+                        }
+                        return null;
+                      })()}
+                      <div className="flex items-center gap-1.5">
+                        <div
+                          className="flex items-center border border-[#04cefa] rounded-[65px] w-[160px] text-white relative mt-2"
+                          style={{ minHeight: "calc((1px * 2) + 45px)" }}
+                        >
+                          <Button
+                            type="button"
+                            variant="none"
+                            className="shrink-0 text-[18px]  flex items-center justify-center cursor-pointer"
+                            style={{ width: "calc(45px / 1.0)" }}
+                            onClick={() =>
+                              updateQuantity(item.product.id, item.quantity - 1)
+                            }
+                          >
+                            -
+                          </Button>
+                          <span className="text-white text-[16px] font-medium opacity-[0.85] text-center px-[5px] w-full shrink grow basis-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none">
+                            {item.quantity}
+                          </span>
+                          <Button
+                            type="button"
+                            variant="none"
+                            className="shrink-0 text-[18px]  flex items-center justify-center cursor-pointer"
+                            style={{ width: "calc(45px / 1.0)" }}
+                            onClick={() =>
+                              updateQuantity(item.product.id, item.quantity + 1)
+                            }
+                          >
+                            +
+                          </Button>
+                        </div>
+                        <button
+                          className="text-[#A1DBEA] mt-4 mr-[4px] cursor-pointer"
+                          onClick={() => removeFromCart(item)}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            fill="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                    {discountedItem && (
+                      <div className="text-sm text-white mt-1 flex flex-col text-right">
+                        {discountedItem.discountPercent > 0 ? (
+                          <>
+                            <span className="text-[#ffffffb3]">
+                              Rs.{" "}
+                              {formatPrice(
+                                discountedItem.basePrice * item.quantity
+                              )}
+                            </span>
+                            <span>
+                              Rs.{" "}
+                              {formatPrice(
+                                discountedItem.discountedUnitPrice *
+                                  item.quantity
+                              )}
+                            </span>
+                          </>
+                        ) : (
+                          <span className="text-[#00d9ff] font-medium">
+                            Rs. {formatPrice(discountedItem.totalPrice)}
+                          </span>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           )}
         </div>
@@ -154,7 +265,8 @@ const CartSidebar = () => {
             </div>
             <Link href="/checkout">
               <Button
-                onClick={() => {
+                onClick={(e) => {
+                  e.preventDefault();
                   closeCart();
                   router.push("/checkout");
                 }}

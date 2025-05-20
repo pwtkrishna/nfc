@@ -1,9 +1,9 @@
 "use client";
 
-import { useCart } from "@/context/CartContext";
+import { useCartStore } from "@/store/cartStore";
 
 const HeaderIcons = () => {
-  const { setIsCartOpen, cart } = useCart();
+  const { setIsCartOpen, cart } = useCartStore();
   const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0); // Total items in cart
 
   return (

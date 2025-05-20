@@ -26,8 +26,8 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
-import { useCart } from "@/context/CartContext";
 import { useRouter } from "next/navigation";
+import { useCartStore } from "@/store/cartStore";
 
 // Mock product data
 
@@ -39,7 +39,7 @@ export default function CheckoutPage() {
     // isCartOpen,
     // setIsCartOpen,
     // getCartTotal,
-  } = useCart();
+  } = useCartStore();
 
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);

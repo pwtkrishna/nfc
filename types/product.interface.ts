@@ -15,7 +15,12 @@ export interface Product {
   regularPrice: number;
   discount: number;
   offers: string[];
-  coupoun?: { title: string; status: string }[];
+  coupoun?: {
+    title: string;
+    status: string;
+    startDate: string;
+    endDate: string;
+  }[];
   colors?: string[];
   packs?: string[];
   type?: string[];

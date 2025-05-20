@@ -1,7 +1,7 @@
 "use client";
 
 import Button from "./Button";
-import { useCart } from "@/context/CartContext";
+import { useCartStore } from "@/store/cartStore";
 import { Product } from "@/types/product.interface";
 
 interface AddToCartProps {
@@ -21,17 +21,23 @@ const AddToCart: React.FC<AddToCartProps> = ({
   selectedSmartCard,
   quantity,
 }) => {
-  const { addToCart } = useCart();
+  const { addToCart, openCart } = useCartStore();
 
   const handleAddToCart = () => {
-    addToCart({
-      product,
+    const cartItem = {
+      productId: product.id,
+      product: product,
+      variant: {
+        selectedColor,
+        selectedPack,
+        selectedType,
+        selectedSmartCard,
+      },
       quantity,
-      selectedColor,
-      selectedPack,
-      selectedType,
-      selectedSmartCard,
-    });
+    };
+
+    addToCart(cartItem);
+    openCart();
   };
 
   return (
