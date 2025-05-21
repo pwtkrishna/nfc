@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useProductStore } from "@/store/productStore";
-import { useCartStore } from "@/store/cartStore";
 import { getAverageRating } from "@/utils/review-utils";
 import { ProductProps } from "@/types/productProps";
 import ReviewStar from "../ReviewStar";
@@ -22,7 +21,6 @@ type ProductDetailsProps = ProductProps;
 const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
   const { setCurrentProduct, setSelectedVariant, setMaxQuantity } =
     useProductStore();
-  const { isCartOpen } = useCartStore();
   const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
@@ -37,6 +35,8 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
       [variant]: value,
     });
   };
+
+  const { selectedVariant }  = useProductStore();
 
   return (
     <div className="product-info-wrapper pl-[3rem] max-[729px]:pl-[0]">
@@ -69,18 +69,15 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
           <strong>{product.description}</strong>
         </p>
         <ProductTags tags={product.tags} />
-        {product.colors && (
+        {product.colors ? (
           <ColorSelector
             colors={product.colors}
-            selectedColor={
-              useProductStore((state) => state.selectedVariant.selectedColor) ||
-              ""
-            }
+            selectedColor={selectedVariant.selectedColor || ""}
             onColorSelect={(color) =>
               handleVariantSelect("selectedColor", color)
             }
           />
-        )}
+        ) : null}
         <CardVariant
           packs={product.packs ?? []}
           type={product.type ?? []}

@@ -1,11 +1,12 @@
 "use client";
 
-import { ProductProps } from "@/types/productProps";
 import ProductImageGalleryItem from "./ProductImageGalleryItem";
 import Button from "../Button";
 import { Dispatch, SetStateAction, useRef, useEffect } from "react";
+import { Product } from "@/types/product.interface";
 
-type GalleryProps = ProductProps & {
+type GalleryProps = {
+  product: Product;
   currentIndex: number;
   setCurrentIndex: Dispatch<SetStateAction<number>>;
 };

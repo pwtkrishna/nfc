@@ -1,11 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ProductProps } from "@/types/productProps";
 import ProductDetailMainImage from "./ProductDetailMainImage";
 import ProductImageGallery from "./ProductImageGallery";
+import { Product } from "@/types/product.interface";
 
-type ProductDetailsImageProps = ProductProps & {
+type ProductDetailsImageProps = {
+  product: Product;
   selectedColor: string;
 };
 

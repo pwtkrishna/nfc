@@ -8,7 +8,6 @@ import { getApplicableDiscount } from "@/utils/getCoupons";
 import { formatPrice } from "@/utils/format-price";
 import { useCartStore } from "@/store/cartStore";
 import type { CartItem } from "@/store/cartStore";
-import Quantity from "../Quantity";
 
 type Variant = CartItem["variant"];
 
