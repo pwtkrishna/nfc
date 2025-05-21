@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { useProductStore } from "@/store/productStore";
+
 import { getAverageRating } from "@/utils/review-utils";
 import { ProductProps } from "@/types/productProps";
+
 import ReviewStar from "../ReviewStar";
 import ProductPrice from "./ProductPrice";
 import ProductTags from "./ProductTags";
@@ -15,28 +16,42 @@ import BuyNow from "../BuyNow";
 import DeliveryEstimate from "./DeliveryEstimate";
 import Coupoun from "../ui/Coupoun";
 import CardVariant from "../ui/CardVariant";
+import { useProductStore } from "@/store/productStore";
 
-type ProductDetailsProps = ProductProps;
+type ProductDetailsProps = ProductProps & {
+  selectedColor: string;
+  onColorSelect: (color: string) => void;
+};
 
-const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
+const ProductDetails: React.FC<ProductDetailsProps> = ({
+  product,
+  selectedColor,
+  onColorSelect,
+}) => {
+  const [selectedPack, setSelectedPack] = useState("");
+  const [selectedType, setSelectedType] = useState("");
+  const [selectedSmartCard, setSelectedSmartCard] = useState("");
+  const [quantity, setQuantity] = useState(1);
+
   const { setCurrentProduct, setSelectedVariant, setMaxQuantity } =
     useProductStore();
-  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     setCurrentProduct(product);
-    setMaxQuantity(product.quantity || 10);
-  }, [product, setCurrentProduct, setMaxQuantity]);
+  }, [product]);
 
-  // Handle variant selections
-  const handleVariantSelect = (variant: string, value: string) => {
-    setSelectedVariant({
-      ...useProductStore.getState().selectedVariant,
-      [variant]: value,
-    });
-  };
+  useEffect(() => {
+    const variant = {
+      selectedColor,
+      selectedPack,
+      selectedType,
+      selectedSmartCard,
+    };
+    setSelectedVariant(variant);
 
-  const { selectedVariant }  = useProductStore();
+    const defaultStock = product.quantity ?? 10;
+    setMaxQuantity(defaultStock);
+  }, [selectedColor, selectedPack, selectedType, selectedSmartCard]);
 
   return (
     <div className="product-info-wrapper pl-[3rem] max-[729px]:pl-[0]">
@@ -69,35 +84,37 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
           <strong>{product.description}</strong>
         </p>
         <ProductTags tags={product.tags} />
-        {product.colors ? (
+        {product.colors && (
           <ColorSelector
             colors={product.colors}
-            selectedColor={selectedVariant.selectedColor || ""}
-            onColorSelect={(color) =>
-              handleVariantSelect("selectedColor", color)
-            }
+            selectedColor={selectedColor}
+            onColorSelect={onColorSelect}
           />
-        ) : null}
+        )}
         <CardVariant
           packs={product.packs ?? []}
           type={product.type ?? []}
           smartCard={product.smartCards ?? []}
-          selectedPack={
-            useProductStore((state) => state.selectedVariant.selectedPack) || ""
-          }
-          selectedType={
-            useProductStore((state) => state.selectedVariant.selectedType) || ""
-          }
-          selectedSmartCard={
-            useProductStore(
-              (state) => state.selectedVariant.selectedSmartCard
-            ) || ""
-          }
-          onSelect={handleVariantSelect}
+          selectedPack={selectedPack}
+          selectedType={selectedType}
+          selectedSmartCard={selectedSmartCard}
+          onSelect={(variant, value) => {
+            if (variant === "packs") setSelectedPack(value);
+            else if (variant === "type") setSelectedType(value);
+            else if (variant === "smartCard") setSelectedSmartCard(value);
+          }}
         />
         <Quantity onQuantityChange={setQuantity} />
+        {/* Pass callback to update quantity */}
         <div className="flex max-w-full gap-[16px] mb-6">
-          <AddToCart product={product} quantity={quantity} />
+          <AddToCart
+            product={product}
+            selectedColor={selectedColor}
+            selectedPack={selectedPack}
+            selectedType={selectedType}
+            selectedSmartCard={selectedSmartCard}
+            quantity={quantity}
+          />
           <BuyNow />
           <div className="w-[50%]"></div>
         </div>

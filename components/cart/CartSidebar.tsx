@@ -8,6 +8,8 @@ import { getApplicableDiscount } from "@/utils/getCoupons";
 import { formatPrice } from "@/utils/format-price";
 import { useCartStore } from "@/store/cartStore";
 import type { CartItem } from "@/store/cartStore";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
 
 type Variant = CartItem["variant"];
 
@@ -41,15 +43,35 @@ const CartSidebar = () => {
     getProductDiscountedPrice,
   } = useCartStore();
 
+  useEffect(() => {
+    if (isCartOpen) {
+      document.body.style.overflow = "hidden";
+      document.body.classList.add("no-scrollbar");
+      document.querySelector(".cartsidebar-container")?.classList.add("mr-0");
+    } else {
+      document.body.style.overflow = "";
+      document.body.classList.remove("no-scrollbar");
+      document
+        .querySelector(".cartsidebar-container")
+        ?.classList.remove("mr-0");
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+      document.body.classList.remove("no-scrollbar");
+      document
+        .querySelector(".cartsidebar-container")
+        ?.classList.remove("mr-0");
+    };
+  }, [isCartOpen]);
+
   if (!isCartOpen) return null;
   const discountedPrices = getProductDiscountedPrice();
 
-  console.log(discountedPrices);
-
   return (
-    <div className="fixed z-[9999] top-0 left-0 w-screen h-full flex justify-end bg-[#ffffff80]">
+    <div className="fixed z-[999] top-0 left-0 w-screen h-full flex justify-end bg-[#ffffff80]">
       <div
-        className="h-full w-[520px] mb-8 m-4 overflow-scroll px-4 border border-[#fff3] flex flex-col rounded-t-[12px] rounded-l-[12px] bg-[#1f2128]"
+        className="cartsidebar-container h-full w-[520px] mb-8 m-4 overflow-scroll px-4 border border-[#fff3] flex flex-col rounded-t-[12px] rounded-l-[12px] bg-[#1f2128]"
         style={{ maxWidth: "calc(100vw - 3rem)" }}
       >
         <div className="flex items-center justify-between py-4">
@@ -107,18 +129,23 @@ const CartSidebar = () => {
                     }-${item.variant.selectedPack || ""}-${
                       item.variant.selectedType || ""
                     }-${item.variant.selectedSmartCard || ""}`}
-                    className="flex gap-4 py-4 "
+                    className="flex justify-between gap-4 py-4 max-sm:gap-0"
                   >
-                    <Image
-                      src={item.product.image}
-                      alt={item.product.title}
-                      width={100}
-                      height={50}
-                      className=""
-                    />
-                    <div className="flex-1 pl-4">
+                    <div className="w-[100px]">
+                      <Image
+                        src={item.product.image}
+                        alt={item.product.title}
+                        width={100}
+                        height={50}
+                        className="w-full h-auto"
+                      />
+                    </div>
+                    <div className="max-[375px]:max-w-[120px] max-[375px]:pl-2">
                       <Link href={item.product.slug}>
-                        <h4 className="text-white text-[15px] font-normal hover:underline decoration-2 underline-offset-2">
+                        <h4
+                          className="text-white text-[15px] font-normal hover:underline decoration-2 underline-offset-2"
+                          style={{ wordBreak: "break-word" }}
+                        >
                           {item.product.title}
                         </h4>
                       </Link>
@@ -179,6 +206,11 @@ const CartSidebar = () => {
                         }
                         return null;
                       })()}
+                      {item.quantity >= item.product.quantity && (
+                        <p className="text-xs text-red-400 mt-1">
+                          Maximum quantity reached
+                        </p>
+                      )}
                       <div className="flex items-center gap-1.5">
                         <div
                           className="flex items-center border border-[#04cefa] rounded-[65px] w-[160px] text-white relative mt-2"
@@ -190,9 +222,22 @@ const CartSidebar = () => {
                             variant="none"
                             className="shrink-0 text-[18px]  flex items-center justify-center cursor-pointer"
                             style={{ width: "calc(45px / 1.0)" }}
-                            onClick={() =>
-                              updateQuantity(item.product.id, item.quantity - 1)
-                            }
+                            onClick={() => {
+                              if (item.quantity <= 1) {
+                                removeFromCart(item);
+                                toast.success(
+                                  `${item.product.title} removed from cart`
+                                );
+                              } else {
+                                updateQuantity(
+                                  item.product.id,
+                                  item.quantity - 1
+                                );
+                                toast.success(
+                                  `Decreased quantity for ${item.product.title}`
+                                );
+                              }
+                            }}
                           >
                             -
                           </Button>
@@ -202,18 +247,25 @@ const CartSidebar = () => {
                           <Button
                             type="button"
                             variant="none"
-                            className="shrink-0 text-[18px]  flex items-center justify-center cursor-pointer"
+                            className="shrink-0 text-[18px] flex items-center justify-center cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                             style={{ width: "calc(45px / 1.0)" }}
                             onClick={() =>
+                              item.quantity < item.product.quantity &&
                               updateQuantity(item.product.id, item.quantity + 1)
                             }
+                            disabled={item.quantity >= item.product.quantity}
                           >
                             +
                           </Button>
                         </div>
                         <button
                           className="text-[#A1DBEA] mt-4 mr-[4px] cursor-pointer"
-                          onClick={() => removeFromCart(item)}
+                          onClick={() => {
+                            removeFromCart(item);
+                            toast.success(
+                              `${item.product.title} removed from cart`
+                            );
+                          }}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -228,7 +280,7 @@ const CartSidebar = () => {
                       </div>
                     </div>
                     {discountedItem && (
-                      <div className="text-sm text-white mt-1 flex flex-col text-right">
+                      <div className="text-sm text-white mt-1 flex flex-col text-right h-full">
                         {discountedItem.discountPercent > 0 ? (
                           <>
                             <span className="text-[#ffffffb3]">

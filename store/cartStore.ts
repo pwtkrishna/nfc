@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { getApplicableDiscount } from "@/utils/getCoupons";
 import { Product } from "@/types/product.interface";
+import toast from "react-hot-toast";
 
 type Variant = {
   selectedColor?: string;
@@ -59,15 +60,26 @@ export const useCartStore = create<CartState>()(
             JSON.stringify(i.variant) === JSON.stringify(item.variant)
         );
 
+        const maxQty = item.product.quantity ?? Infinity;
+        const existingQty =
+          existingIndex !== -1 ? cart[existingIndex].quantity : 0;
+        const newQty = existingQty + item.quantity;
+
+        if (newQty > maxQty) {
+          toast.error(`Only ${maxQty} items available in stock.`);
+          return;
+        }
+
         if (existingIndex !== -1) {
           const updatedCart = [...cart];
-          updatedCart[existingIndex].quantity += item.quantity;
+          updatedCart[existingIndex].quantity = newQty;
           set({ cart: updatedCart });
         } else {
           set({ cart: [...cart, item] });
         }
 
         get().openCart();
+        toast.success("Item added to cart!");
       },
 
       removeFromCart: (item) => {

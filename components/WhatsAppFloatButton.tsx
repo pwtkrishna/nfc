@@ -4,7 +4,7 @@ import Link from "next/link";
 const WhatsAppFloatButton = () => {
   return (
     <Link
-      href="https://wa.me/919999999999" // Replace with your actual WhatsApp number
+      href="https://wa.me/919999999999"
       target="_blank"
       rel="noopener noreferrer"
       className="fixed bottom-5 right-5 z-50"

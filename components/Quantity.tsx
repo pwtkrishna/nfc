@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Button from "./Button";
 import Input from "./Input";
-import { useProductStore } from "@/store/productStore"; // import Zustand store
+import { useProductStore } from "@/store/productStore";
 
 interface QuantityProps {
   onQuantityChange: (quantity: number) => void;
@@ -55,6 +55,7 @@ const Quantity: React.FC<QuantityProps> = ({ onQuantityChange }) => {
           onClick={handleDecrement}
           style={{ width: "45px" }}
           aria-label="Decrease quantity"
+          title="Decrease quantity"
         >
           <span className="text-[#A1DBEA] w-[10px] h-[20px] flex items-center justify-center">
             {/* minus icon */}
@@ -87,9 +88,15 @@ const Quantity: React.FC<QuantityProps> = ({ onQuantityChange }) => {
           type="button"
           variant="none"
           onClick={handleIncrement}
-          className="shrink-0 text-[18px] cursor-pointer flex items-center justify-center"
+          className={`shrink-0 text-[18px] flex items-center justify-center ${
+            maxQuantity && quantity >= maxQuantity
+              ? "cursor-not-allowed opacity-50"
+              : "cursor-pointer"
+          }`}
+          disabled={!!maxQuantity && quantity >= maxQuantity}
           style={{ width: "45px" }}
           aria-label="Increase quantity"
+          title="Increase quantity"
         >
           <span className="text-[#A1DBEA] w-[10px] h-[20px] flex items-center justify-center">
             {/* plus icon */}

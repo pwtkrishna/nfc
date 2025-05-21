@@ -7,6 +7,16 @@ html {
   scroll-behavior: smooth;
 }
 
+.no-scrollbar {
+  overflow: hidden !important;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 .hero-banner {
   background-image: url("/Desktophome.webp");
   background-position: center;
