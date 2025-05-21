@@ -8,6 +8,7 @@ import { getApplicableDiscount } from "@/utils/getCoupons";
 import { formatPrice } from "@/utils/format-price";
 import { useCartStore } from "@/store/cartStore";
 import type { CartItem } from "@/store/cartStore";
+import Quantity from "../Quantity";
 
 type Variant = CartItem["variant"];
 
@@ -184,6 +185,7 @@ const CartSidebar = () => {
                           className="flex items-center border border-[#04cefa] rounded-[65px] w-[160px] text-white relative mt-2"
                           style={{ minHeight: "calc((1px * 2) + 45px)" }}
                         >
+                          {/* <Quantity onQuantityChange={} /> */}
                           <Button
                             type="button"
                             variant="none"

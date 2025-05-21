@@ -1,7 +1,10 @@
+import { Dispatch, SetStateAction } from "react";
 import { Product } from "./product.interface";
 
 export type ProductProps = {
   product: Product;
+  selectedColor: string;
+  onColorSelect: Dispatch<SetStateAction<string>>;
 };
 
 export type ProductImageGalleryType = {

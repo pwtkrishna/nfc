@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Button from "./Button";
+import Input from "./Input";
+import { useProductStore } from "@/store/productStore"; // import Zustand store
 
 interface QuantityProps {
   onQuantityChange: (quantity: number) => void;
@@ -9,17 +11,28 @@ interface QuantityProps {
 
 const Quantity: React.FC<QuantityProps> = ({ onQuantityChange }) => {
   const [quantity, setQuantity] = useState(1);
+  const maxQuantity = useProductStore((state) => state.maxQuantity);
 
   useEffect(() => {
     onQuantityChange(quantity);
   }, [onQuantityChange, quantity]);
 
   const handleIncrement = () => {
-    setQuantity((prev) => prev + 1);
+    setQuantity((prev) =>
+      maxQuantity ? Math.min(prev + 1, maxQuantity) : prev + 1
+    );
   };
 
   const handleDecrement = () => {
     setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = parseInt(e.target.value);
+    if (isNaN(value)) value = 1;
+    if (value < 1) value = 1;
+    if (maxQuantity && value > maxQuantity) value = maxQuantity;
+    setQuantity(value);
   };
 
   return (
@@ -30,19 +43,21 @@ const Quantity: React.FC<QuantityProps> = ({ onQuantityChange }) => {
         </span>
       </div>
       <div
-        className="flex items-center border border-[#04cefa] rounded-[65px] w-[160px] text-white relative "
+        className="flex items-center border border-[#04cefa] rounded-[65px] w-[160px] text-white relative"
         style={{ minHeight: "calc((1px * 2) + 45px)" }}
       >
         <Button
           type="button"
           variant="none"
-          className={`shrink-0 text-[18px]  flex items-center justify-center ${
+          className={`shrink-0 text-[18px] flex items-center justify-center ${
             quantity === 1 ? "cursor-not-allowed" : "cursor-pointer"
           }`}
           onClick={handleDecrement}
-          style={{ width: "calc(45px / 1.0)" }}
+          style={{ width: "45px" }}
+          aria-label="Decrease quantity"
         >
           <span className="text-[#A1DBEA] w-[10px] h-[20px] flex items-center justify-center">
+            {/* minus icon */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -54,22 +69,44 @@ const Quantity: React.FC<QuantityProps> = ({ onQuantityChange }) => {
                 fillRule="evenodd"
                 d="M.5 1C.5.7.7.5 1 .5h8a.5.5 0 1 1 0 1H1A.5.5 0 0 1 .5 1"
                 clipRule="evenodd"
-              ></path>
+              />
             </svg>
           </span>
         </Button>
 
-        <span className="text-white text-[16px] font-medium opacity-[0.85] text-center px-[5px] w-full shrink grow basis-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none">
-          {quantity}
-        </span>
+        <Input
+          type="number"
+          value={quantity}
+          onChange={handleChange}
+          min={1}
+          max={maxQuantity}
+          className="text-white text-[16px] font-medium opacity-[0.85] text-center px-[5px] w-full shrink grow basis-0 appearance-none bg-transparent [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+        />
+
         <Button
           type="button"
           variant="none"
           onClick={handleIncrement}
           className="shrink-0 text-[18px] cursor-pointer flex items-center justify-center"
-          style={{ width: "calc(45px / 1.0)" }}
+          style={{ width: "45px" }}
+          aria-label="Increase quantity"
         >
-          +
+          <span className="text-[#A1DBEA] w-[10px] h-[20px] flex items-center justify-center">
+            {/* plus icon */}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              className="h-full w-full"
+              viewBox="0 0 10 10"
+            >
+              <path
+                fill="currentColor"
+                fillRule="evenodd"
+                d="M1 4.51a.5.5 0 0 0 0 1h3.5l.01 3.5a.5.5 0 0 0 1-.01V5.5l3.5-.01a.5.5 0 0 0-.01-1H5.5L5.49.99a.5.5 0 0 0-1 .01v3.5l-3.5.01z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </span>
         </Button>
       </div>
     </div>

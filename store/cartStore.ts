@@ -1,4 +1,3 @@
-// store/cartStore.ts
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { getApplicableDiscount } from "@/utils/getCoupons";
@@ -120,7 +119,7 @@ export const useCartStore = create<CartState>()(
       },
     }),
     {
-      name: "cart-storage", // Key in localStorage
+      name: "cart-storage",
     }
   )
 );
