@@ -11,8 +11,8 @@ const ProductDetailMainImage = ({ media, title }: Props) => {
     <div className="overflow-hidden rounded-[12px]">
       {media.type === "image" ? (
         <Image
-          key={media.src}
-          src={media.src}
+          key={media.image}
+          src={media.image}
           alt={title}
           height={500}
           width={500}
@@ -20,11 +20,13 @@ const ProductDetailMainImage = ({ media, title }: Props) => {
         />
       ) : (
         <video
-          key={media.src}
-          src={media.src}
+          key={media.image}
+          src={media.image}
           controls
           className="w-full h-auto object-contain rounded-[12px]"
-        >Your browser does not support the video tag.</video>
+        >
+          Your browser does not support the video tag.
+        </video>
       )}
     </div>
   );

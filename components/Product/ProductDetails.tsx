@@ -2,17 +2,14 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-
 import { getAverageRating } from "@/utils/review-utils";
 import { ProductProps } from "@/types/productProps";
-
 import ReviewStar from "../ReviewStar";
 import ProductPrice from "./ProductPrice";
 import ProductTags from "./ProductTags";
 import ColorSelector from "./ColorSelector";
 import Quantity from "../Quantity";
 import AddToCart from "../AddToCart";
-// import BuyNow from "../BuyNow";
 import DeliveryEstimate from "./DeliveryEstimate";
 import Coupoun from "../ui/Coupoun";
 import CardVariant from "../ui/CardVariant";
@@ -71,7 +68,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
     <div className="product-info-wrapper pl-[3rem] max-[729px]:pl-[0]">
       <div className="block lg:sticky lg:top-[3rem]">
         <h2 className="text-white text-[42px] font-semibold leading-[50.4px] text-left mb-[1.1rem]">
-          {product.title}
+          {product.name}
         </h2>
         <div className="flex items-center gap-[8px] mt-[16px] mb-[10px]">
           <ReviewStar rating={getAverageRating(product.reviews)} />
@@ -108,7 +105,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
         <CardVariant
           packs={product.packs ?? []}
           type={product.type ?? []}
-          smartCard={product.smartCards ?? []}
+          smartCard={product.smart_cards ?? []}
           selectedPack={selectedPack}
           selectedType={selectedType}
           selectedSmartCard={selectedSmartCard}
@@ -119,7 +116,6 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
           }}
         />
         <Quantity onQuantityChange={setQuantity} />
-        {/* Pass callback to update quantity */}
         <div className="flex max-w-full gap-[16px] mb-6">
           <AddToCart
             product={product}
@@ -129,11 +125,10 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
             selectedSmartCard={selectedSmartCard}
             quantity={quantity}
           />
-          {/* <BuyNow /> */}
           <div className="w-[50%]"></div>
         </div>
         <DeliveryEstimate />
-        {product.isCustomizable && (
+        {product.is_customizable && (
           <div className="my-[24px] rounded-[20px] bg-[#2B2E39] p-[20px]">
             <h3 className="text-[20px] font-medium leading-[24px] text-center text-white">
               How do I customise/design my card?

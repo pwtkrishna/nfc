@@ -9,25 +9,25 @@ interface ProductListItemProps {
 const ProductListItem = ({ product }: ProductListItemProps) => {
   return (
     <div key={product.id} className="all-collection-list">
-      <Link href={`all-collection/${product.slug}`}>
+      <Link href={`/all-collection/${product.slug}`}>
         <div>
           <Image
-            src={product.image}
-            alt={product.title}
+            src={product.card_image ? product.card_image : "/avatar.webp"}
+            alt={product.name}
             height={500}
             width={500}
-            className="w-ful h-auto"
+            className="w-full h-auto"
           />
         </div>
         <div className="min-h-[50px] bg-[#2B2E39] py-[18px] px-[12px]">
-          <h2 className="product-title">{product.title}</h2>
-          {product.salePrice ? (
+          <h2 className="product-title">{product.name}</h2>
+          {product.sale_price ? (
             <p className="text-[22px] font-medium leading-[36.98px] text-left text-white">
-              Rs. {product.salePrice}
+              Rs. {product.sale_price}
             </p>
           ) : (
             <p className="text-[22px] font-medium leading-[36.98px] text-left text-white">
-              Rs. {product.regularPrice}
+              Rs. {product.regular_price}
             </p>
           )}
         </div>

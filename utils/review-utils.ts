@@ -1,5 +1,5 @@
 // @/lib/products.ts
-import { productsData } from "@/data/product-data";
+import { getAllProducts } from "@/lib/products";
 import { Product } from "@/types/product.interface";
 
 type Review = Product["reviews"][number];
@@ -10,10 +10,13 @@ export const getAverageRating = (reviews: Review[]): number => {
   return parseFloat((total / reviews.length).toFixed(1));
 };
 
-export const getProductsByAverageReviewRating = (
+export const getProductsByAverageReviewRating = async (
   minRating: number = 3.2
-): Product[] => {
-  return productsData
+): Promise<Product[]> => {
+  const products = await getAllProducts();
+  console.log(products);
+
+  return products
     .filter((product) => getAverageRating(product.reviews) >= minRating)
     .sort((a, b) => getAverageRating(b.reviews) - getAverageRating(a.reviews));
 };

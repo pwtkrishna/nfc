@@ -105,7 +105,8 @@ export const useCartStore = create<CartState>()(
 
       getCartTotal: () => {
         return get().cart.reduce((total, item) => {
-          const basePrice = item.product.salePrice ?? item.product.regularPrice;
+          const basePrice =
+            item.product.sale_price ?? item.product.regular_price;
           const discount = getApplicableDiscount(item.product, item.quantity);
           const discountedPrice = basePrice * (1 - discount / 100);
           return total + discountedPrice * item.quantity;
@@ -114,7 +115,8 @@ export const useCartStore = create<CartState>()(
 
       getProductDiscountedPrice: () => {
         return get().cart.map((item) => {
-          const basePrice = item.product.salePrice ?? item.product.regularPrice;
+          const basePrice =
+            item.product.sale_price ?? item.product.regular_price;
           const discount = getApplicableDiscount(item.product, item.quantity);
           const discountedPrice = basePrice * (1 - discount / 100);
 

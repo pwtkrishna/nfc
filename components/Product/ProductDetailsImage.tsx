@@ -17,7 +17,7 @@ const ProductDetailsImage = ({
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    const index = product.imageGallery.findIndex(
+    const index = product.product_galleries.findIndex(
       (img) => img.color?.toLowerCase() === selectedColor.toLowerCase()
     );
     if (index !== -1) {
@@ -25,13 +25,13 @@ const ProductDetailsImage = ({
     } else {
       setCurrentIndex(0);
     }
-  }, [selectedColor, product.imageGallery]);
+  }, [selectedColor, product.product_galleries]);
 
-  const activeMedia = product.imageGallery[currentIndex];
+  const activeMedia = product.product_galleries[currentIndex];
 
   return (
     <div className="">
-      <ProductDetailMainImage media={activeMedia} title={product.title} />
+      <ProductDetailMainImage media={activeMedia} title={product.name} />
       <ProductImageGallery
         product={product}
         currentIndex={currentIndex}

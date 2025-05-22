@@ -21,7 +21,7 @@ const ProductImageGalleryItem = forwardRef<
       >
         {image.type === "image" ? (
           <Image
-            src={image.src}
+            src={image.image}
             alt={title}
             width={80}
             height={80}
@@ -29,7 +29,7 @@ const ProductImageGalleryItem = forwardRef<
           />
         ) : (
           <video
-            src={image.src}
+            src={image.image}
             muted
             playsInline
             className="w-full h-full object-cover"

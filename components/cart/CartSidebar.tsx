@@ -134,7 +134,7 @@ const CartSidebar = () => {
                     <div className="w-[100px]">
                       <Image
                         src={item.product.image}
-                        alt={item.product.title}
+                        alt={item.product.name}
                         width={100}
                         height={50}
                         className="w-full h-auto"
@@ -146,7 +146,7 @@ const CartSidebar = () => {
                           className="text-white text-[15px] font-normal hover:underline decoration-2 underline-offset-2"
                           style={{ wordBreak: "break-word" }}
                         >
-                          {item.product.title}
+                          {item.product.name}
                         </h4>
                       </Link>
 
@@ -226,7 +226,7 @@ const CartSidebar = () => {
                               if (item.quantity <= 1) {
                                 removeFromCart(item);
                                 toast.success(
-                                  `${item.product.title} removed from cart`
+                                  `${item.product.name} removed from cart`
                                 );
                               } else {
                                 updateQuantity(
@@ -234,7 +234,7 @@ const CartSidebar = () => {
                                   item.quantity - 1
                                 );
                                 toast.success(
-                                  `Decreased quantity for ${item.product.title}`
+                                  `Decreased quantity for ${item.product.name}`
                                 );
                               }
                             }}
@@ -263,7 +263,7 @@ const CartSidebar = () => {
                           onClick={() => {
                             removeFromCart(item);
                             toast.success(
-                              `${item.product.title} removed from cart`
+                              `${item.product.name} removed from cart`
                             );
                           }}
                         >

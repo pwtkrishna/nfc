@@ -14,9 +14,21 @@ const ProductList = () => {
 
   const groupedProducts = products.reduce<Record<string, Product[]>>(
     (acc, product) => {
-      const section = product.sectionName || "Other";
-      if (!acc[section]) acc[section] = [];
-      acc[section].push(product);
+      const categories = Array.isArray(product.nfc_product_categories)
+        ? product.nfc_product_categories
+        : [];
+
+      if (categories.length !== 0) {
+        categories.forEach((category) => {
+          const name = category.name || "Other";
+          if (!acc[name]) acc[name] = [];
+          acc[name].push(product);
+        });
+      } else {
+        if (!acc["Other"]) acc["Other"] = [];
+        acc["Other"].push(product);
+      }
+
       return acc;
     },
     {}

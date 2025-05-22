@@ -18,7 +18,7 @@ const ProductImageGallery = ({
 }: GalleryProps) => {
   const listRef = useRef<HTMLUListElement>(null);
   const itemRefs = useRef<(HTMLLIElement | null)[]>([]);
-  const lastIndex = product.imageGallery.length - 1;
+  const lastIndex = product.product_galleries.length - 1;
 
   useEffect(() => {
     const currentItem = itemRefs.current[currentIndex];
@@ -36,7 +36,7 @@ const ProductImageGallery = ({
   };
 
   const goToNext = () => {
-    if (currentIndex < product.imageGallery.length - 1)
+    if (currentIndex < product.product_galleries.length - 1)
       setCurrentIndex(currentIndex + 1);
   };
 
@@ -73,11 +73,11 @@ const ProductImageGallery = ({
           className="flex gap-[10px] transition-transform duration-300 ease-in-out overflow-x-auto "
           style={{ scrollbarWidth: "none" }}
         >
-          {product.imageGallery.map((image, index) => (
+          {product.product_galleries.map((image, index) => (
             <ProductImageGalleryItem
               key={index}
               image={image}
-              title={product.title}
+              title={product.name}
               onClick={() => setCurrentIndex(index)}
               isActive={index === currentIndex}
               ref={(el) => {

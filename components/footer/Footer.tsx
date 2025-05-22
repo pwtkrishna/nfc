@@ -1,7 +1,7 @@
 import Logo from "../Logo";
 import FooterDescription from "./FooterDescription";
 import SocialLinks from "./SocialLinks";
-import FooterShop from "./FooterShop";
+// import FooterShop from "./FooterShop";
 import FooterPolicy from "./FooterPolicy";
 import FooterCopyRight from "./FooterCopyRight";
 
@@ -17,7 +17,7 @@ const Footer = () => {
             <FooterDescription />
             <SocialLinks />
           </div>
-          <FooterShop />
+          {/* <FooterShop /> */}
           <FooterPolicy />
         </div>
       </div>

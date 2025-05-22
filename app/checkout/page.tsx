@@ -75,9 +75,9 @@ export default function CheckoutPage() {
 
   const subtotal = cart.reduce(
     (total, item) =>
-      item.product.salePrice
-        ? total + item.product.salePrice * item.quantity
-        : total + item.product.regularPrice * item.quantity,
+      item.product.sale_price
+        ? total + item.product.sale_price * item.quantity
+        : total + item.product.regular_price * item.quantity,
     0
   );
   const shippingCost =
@@ -248,7 +248,7 @@ export default function CheckoutPage() {
                             <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-md">
                               <Image
                                 src={item.product.image || "/placeholder.svg"}
-                                alt={item.product.title}
+                                alt={item.product.name}
                                 width={80}
                                 height={80}
                                 className="h-full w-full object-cover object-center"
@@ -257,10 +257,11 @@ export default function CheckoutPage() {
 
                             <div className="ml-4 flex-1">
                               <h3 className="text-base font-medium text-white">
-                                {item.product.title}
+                                {item.product.name}
                               </h3>
                               <p className="mt-1 text-sm text-gray-400">
-                                Unit Price: Rs.&nbsp;{item.product.regularPrice}
+                                Unit Price: Rs.&nbsp;
+                                {item.product.regular_price}
                               </p>
                             </div>
 
@@ -289,10 +290,10 @@ export default function CheckoutPage() {
                             <div className="ml-4 text-right">
                               <p className="text-base font-medium text-white">
                                 Rs.&nbsp;
-                                {(!item.product.salePrice
-                                  ? item.product.regularPrice *
+                                {(!item.product.sale_price
+                                  ? item.product.regular_price *
                                     item.product.quantity
-                                  : item.product.salePrice *
+                                  : item.product.sale_price *
                                     item.product.quantity
                                 ).toFixed(2)}
                               </p>
@@ -820,14 +821,14 @@ export default function CheckoutPage() {
                         {item.product.quantity}
                       </span>
                       <span className="text-sm text-gray-300 truncate max-w-[180px]">
-                        {item.product.title}
+                        {item.product.name}
                       </span>
                     </div>
                     <span className="text-white">
                       $
-                      {(!item.product.salePrice
-                        ? item.product.regularPrice
-                        : item.product.salePrice * item.product.quantity
+                      {(!item.product.sale_price
+                        ? item.product.regular_price
+                        : item.product.sale_price * item.product.quantity
                       ).toFixed(2)}
                     </span>
                   </div>

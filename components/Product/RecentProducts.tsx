@@ -1,20 +1,19 @@
-"use client";
-
-import { productsData } from "@/data/product-data";
+// import { productsData } from "@/data/product-data";
 import { Product } from "@/types/product.interface";
 import Image from "next/image";
 import Link from "next/link";
 // import AddToCart from "../AddToCart";
 import { getAverageRating } from "@/utils/review-utils";
+import { getAllProducts } from "@/lib/products";
 
 const getRandomProductsBySection = (products: Product[]): Product[] => {
   const sectionMap = new Map<string, Product[]>();
 
   products.forEach((product) => {
-    if (!sectionMap.has(product.sectionName)) {
-      sectionMap.set(product.sectionName, []);
+    if (!sectionMap.has(product.nfc_product_categories.name)) {
+      sectionMap.set(product.nfc_product_categories.name, []);
     }
-    sectionMap.get(product.sectionName)!.push(product);
+    sectionMap.get(product.nfc_product_categories.name)!.push(product);
   });
 
   const randomProducts: Product[] = [];
@@ -26,8 +25,9 @@ const getRandomProductsBySection = (products: Product[]): Product[] => {
   return randomProducts;
 };
 
-const RecentProducts = () => {
-  const recommendedProducts = getRandomProductsBySection(productsData);
+const RecentProducts = async () => {
+  const products = await getAllProducts();
+  const recommendedProducts = getRandomProductsBySection(products);
 
   return (
     <section className="max-w-[1320px] w-full py-[35px] px-[20px] m-auto">
@@ -50,7 +50,7 @@ const RecentProducts = () => {
               <Link href={`/all-collection/${product.slug}`} className="h-full">
                 <Image
                   src={product.image}
-                  alt={product.title}
+                  alt={product.name}
                   width={500}
                   height={500}
                   className="w-full h-full"
@@ -58,27 +58,27 @@ const RecentProducts = () => {
               </Link>
             </div>
             <div className="bg-[#2B2E39] py-[18px] px-3">
-              <h3 className="product-title">{product.title}</h3>
+              <h3 className="product-title">{product.name}</h3>
               <p className="text-sm text-gray-300 mt-1">
-                {product.sectionName}
+                {product.nfc_product_categories.name}
               </p>
               <div className="my-2 font-bold text-[#A1DBEA] flex gap-[4px] items-center">
-                {product.salePrice && (
+                {product.sale_price && (
                   <>
                     <span className="text-xl font-semibold leading-[36.98px] text-white">
-                      Rs. {product.salePrice}
+                      Rs. {product.sale_price}
                     </span>
                     <span className="text-[#b0adad] text-lg font-semibold leading-[36.98px] text-left">
                       Rs.
-                      {product.regularPrice}
+                      {product.regular_price}
                     </span>
                   </>
                 )}
 
-                {!product.salePrice && (
+                {!product.sale_price && (
                   <span className="text-white text-lg font-semibold leading-[36.98px] text-left">
                     Rs.
-                    {product.regularPrice}
+                    {product.regular_price}
                   </span>
                 )}
               </div>

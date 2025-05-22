@@ -100,7 +100,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   const getProductDiscountedPrice = () => {
     return cart.map((item) => {
-      const basePrice = item.product.salePrice ?? item.product.regularPrice;
+      const basePrice = item.product.sale_price ?? item.product.regular_price;
       const discount = getApplicableDiscount(item.product, item.quantity);
       const discountedPrice = basePrice * (1 - discount / 100);
       return {
@@ -122,7 +122,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   const getCartTotal = () => {
     return cart.reduce((total, item) => {
-      const price = item.product.salePrice || item.product.regularPrice;
+      const price = item.product.sale_price || item.product.regular_price;
       const discount = getApplicableDiscount(item.product, item.quantity);
       const discountedPrice = price * (1 - discount / 100);
       return total + discountedPrice * item.quantity;

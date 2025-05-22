@@ -9,7 +9,7 @@ export type ProductProps = {
 
 export type ProductImageGalleryType = {
   type: "image" | "video";
-  src: string;
+  image: string;
 };
 
 export type ColorProps = {
@@ -19,7 +19,7 @@ export type ColorProps = {
 export type CardVariantProps = {
   packs: Product["packs"];
   type: Product["type"];
-  smartCard: Product["smartCards"];
+  smartCard: Product["smart_cards"];
 };
 
 export interface ProductImageGalleryProps {
