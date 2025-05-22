@@ -16,7 +16,7 @@ type AuthStore = {
   setGuest: () => void;
 };
 
-export const useStore = create<AuthStore>()(
+export const useAuthStore = create<AuthStore>()(
   persist(
     (set) => ({
       user: null,

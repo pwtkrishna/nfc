@@ -1,6 +1,7 @@
 "use client";
 
 import { useCartStore } from "@/store/cartStore";
+import Link from "next/link";
 
 const HeaderIcons = () => {
   const { setIsCartOpen, cart } = useCartStore();
@@ -26,30 +27,32 @@ const HeaderIcons = () => {
           ></path>
         </svg>
       </div> */}
-      <div className="user-icon bg-[#35373E] rounded-[8px] h-[44px] w-[44px] flex justify-center items-center max-[870px]:hidden cursor-pointer">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="22"
-          height="22"
-          viewBox="0 0 22 22"
-          fill="none"
-        >
-          <path
-            d="M11.0003 11C13.5316 11 15.5837 8.94797 15.5837 6.41666C15.5837 3.88536 13.5316 1.83333 11.0003 1.83333C8.46902 1.83333 6.41699 3.88536 6.41699 6.41666C6.41699 8.94797 8.46902 11 11.0003 11Z"
-            stroke="#04CEFA"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          ></path>
-          <path
-            d="M18.8743 20.1667C18.8743 16.6192 15.3451 13.75 11.0001 13.75C6.65514 13.75 3.12598 16.6192 3.12598 20.1667"
-            stroke="#04CEFA"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          ></path>
-        </svg>
-      </div>
+      <Link href="/login">
+        <div className="user-icon bg-[#35373E] rounded-[8px] h-[44px] w-[44px] flex justify-center items-center max-[870px]:hidden cursor-pointer">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="22"
+            height="22"
+            viewBox="0 0 22 22"
+            fill="none"
+          >
+            <path
+              d="M11.0003 11C13.5316 11 15.5837 8.94797 15.5837 6.41666C15.5837 3.88536 13.5316 1.83333 11.0003 1.83333C8.46902 1.83333 6.41699 3.88536 6.41699 6.41666C6.41699 8.94797 8.46902 11 11.0003 11Z"
+              stroke="#04CEFA"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            ></path>
+            <path
+              d="M18.8743 20.1667C18.8743 16.6192 15.3451 13.75 11.0001 13.75C6.65514 13.75 3.12598 16.6192 3.12598 20.1667"
+              stroke="#04CEFA"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            ></path>
+          </svg>
+        </div>
+      </Link>
 
       <div
         className="cart-icon bg-[#35373E] rounded-[8px] h-[44px] w-[44px] flex justify-center items-center cursor-pointer"

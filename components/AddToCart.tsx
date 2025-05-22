@@ -42,11 +42,11 @@ const AddToCart: React.FC<AddToCartProps> = ({
 
   return (
     <Button
-      className="uppercase text-white"
+      className="uppercase text-white w-3"
       variant="solid"
       style={{
         minHeight: "calc(45px + 1px * 2)",
-        minWidth: "calc(120px + 1px * 2)",
+        // maxWidth: "calc(120px + 1px * 2)",
       }}
       onClick={handleAddToCart}
     >

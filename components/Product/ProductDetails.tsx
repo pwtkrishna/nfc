@@ -12,11 +12,12 @@ import ProductTags from "./ProductTags";
 import ColorSelector from "./ColorSelector";
 import Quantity from "../Quantity";
 import AddToCart from "../AddToCart";
-import BuyNow from "../BuyNow";
+// import BuyNow from "../BuyNow";
 import DeliveryEstimate from "./DeliveryEstimate";
 import Coupoun from "../ui/Coupoun";
 import CardVariant from "../ui/CardVariant";
 import { useProductStore } from "@/store/productStore";
+import { formatDateNow } from "@/utils/format-date";
 
 type ProductDetailsProps = ProductProps & {
   selectedColor: string;
@@ -36,9 +37,14 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
   const { setCurrentProduct, setSelectedVariant, setMaxQuantity } =
     useProductStore();
 
+  const presentDate = formatDateNow();
+
+  const validCoupons =
+    product.coupoun?.filter((c) => c.endDate > presentDate) ?? [];
+
   useEffect(() => {
     setCurrentProduct(product);
-  }, [product]);
+  }, [product, setCurrentProduct]);
 
   useEffect(() => {
     const variant = {
@@ -51,7 +57,15 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
 
     const defaultStock = product.quantity ?? 10;
     setMaxQuantity(defaultStock);
-  }, [selectedColor, selectedPack, selectedType, selectedSmartCard]);
+  }, [
+    selectedColor,
+    selectedPack,
+    selectedType,
+    selectedSmartCard,
+    setSelectedVariant,
+    product.quantity,
+    setMaxQuantity,
+  ]);
 
   return (
     <div className="product-info-wrapper pl-[3rem] max-[729px]:pl-[0]">
@@ -115,7 +129,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
             selectedSmartCard={selectedSmartCard}
             quantity={quantity}
           />
-          <BuyNow />
+          {/* <BuyNow /> */}
           <div className="w-[50%]"></div>
         </div>
         <DeliveryEstimate />
@@ -131,7 +145,9 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
             </p>
           </div>
         )}
-        {product.coupoun && <Coupoun coupoun={product.coupoun} />}
+        {validCoupons?.length > 0 && product.coupoun && (
+          <Coupoun coupoun={product.coupoun} />
+        )}
       </div>
     </div>
   );

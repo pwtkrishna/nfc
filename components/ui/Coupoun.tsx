@@ -1,8 +1,11 @@
 import { CoupounProps } from "@/types/productProps";
+import { formatDateNow } from "@/utils/format-date";
 import { useState } from "react";
 
 const Coupoun = ({ coupoun }: CoupounProps) => {
   const [isActive, setIsActive] = useState(false);
+
+  const presentDate = formatDateNow();
 
   return (
     <div>
@@ -27,19 +30,22 @@ const Coupoun = ({ coupoun }: CoupounProps) => {
           isActive ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        {coupoun?.map((el, index) => (
-          <div
-            key={index}
-            className="bg-[url('/coupoun-all.webp')] bg-no-repeat bg-[length:100%_100%] py-[30px] px-[50px]"
-          >
-            <h4 className="text-[18px] font-medium leading-[18px] text-left text-white">
-              {el.title}
-            </h4>
-            {/* <p className="text-sm font-normal text-left text-[#ffffffc7]">
-              {el.status}
-            </p> */}
-          </div>
-        ))}
+        {coupoun?.map(
+          (el, index) =>
+            el.endDate > presentDate && (
+              <div
+                key={index}
+                className="bg-[url('/coupoun-all.webp')] bg-no-repeat bg-[length:100%_100%] py-[30px] px-[50px]"
+              >
+                <h4 className="text-[18px] font-medium leading-[18px] text-left text-white">
+                  {el.title}
+                </h4>
+                <p className="text-sm font-normal text-left text-[#ffffffc7]">
+                  From {el.startDate} to {el.endDate}
+                </p>
+              </div>
+            )
+        )}
       </div>
     </div>
   );

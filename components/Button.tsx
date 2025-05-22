@@ -2,7 +2,6 @@ import React from "react";
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: "outline" | "solid" | "color" | "none";
-  className?: string;
 };
 
 const Button: React.FC<ButtonProps> = ({
