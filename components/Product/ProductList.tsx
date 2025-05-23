@@ -17,15 +17,16 @@ const ProductList = () => {
       .finally(() => setLoading(false));
   }, []);
 
+  // Group products by category
   const groupedProducts = products.reduce<Record<string, Product[]>>(
     (acc, product) => {
       const categories = Array.isArray(product.nfc_product_categories)
         ? product.nfc_product_categories
         : [];
 
-      if (categories.length !== 0) {
+      if (categories.length > 0) {
         categories.forEach((category) => {
-          const name = category.name || "Other";
+          const name = category?.name?.trim() || "Other";
           if (!acc[name]) acc[name] = [];
           acc[name].push(product);
         });
@@ -33,18 +34,17 @@ const ProductList = () => {
         if (!acc["Other"]) acc["Other"] = [];
         acc["Other"].push(product);
       }
-
       return acc;
     },
     {}
   );
 
-  const getSectionId = (sectionName: string) => {
-    return sectionName
+  // Helper to generate section IDs
+  const getSectionId = (sectionName: string) =>
+    sectionName
       .toLowerCase()
       .replace(/\s+/g, "-")
       .replace(/[^a-z0-9-]/g, "");
-  };
 
   if (loading) {
     return <ProductListSkeleton />;
@@ -58,9 +58,28 @@ const ProductList = () => {
     );
   }
 
+  // Get all section names except "Other"
+  const otherSections = Object.keys(groupedProducts).filter(
+    (name) => name !== "Other"
+  );
+
+  // Sort other sections as you wish (alphabetically here)
+  otherSections.sort((a, b) =>
+    a.localeCompare(b, undefined, { sensitivity: "base" })
+  );
+
+  // Final array: all other sections, then "Other" (if exists)
+  const orderedSections = [
+    ...otherSections,
+    ...(groupedProducts["Other"] ? ["Other"] : []),
+  ];
+
+  // DEBUG: Log the order to ensure correctness
+  // console.log("Ordered Sections:", orderedSections);
+
   return (
     <div>
-      {Object.entries(groupedProducts).map(([sectionName, sectionProducts]) => (
+      {orderedSections.map((sectionName) => (
         <div
           key={sectionName}
           id={getSectionId(sectionName)}
@@ -75,7 +94,7 @@ const ProductList = () => {
             </h2>
           </div>
           <div className="allCollection-list-wrapp">
-            {sectionProducts.map((product) => (
+            {groupedProducts[sectionName].map((product) => (
               <ProductListItem key={product.id} product={product} />
             ))}
           </div>

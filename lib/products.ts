@@ -1,6 +1,6 @@
 import { Product } from "@/types/product.interface";
 
-const isServer = typeof window === "undefined";
+// const isServer = typeof window === "undefined";
 // const vercelUrl = process.env.VERCEL_URL
 //   ? `https://${process.env.VERCEL_URL}`
 //   : null;
@@ -15,9 +15,7 @@ const isServer = typeof window === "undefined";
 // }
 
 function getApiUrl(path: string) {
-  return isServer
-    ? `https://nfc-ecru.vercel.app${path}`
-    : "https://nfc-ecru.vercel.app";
+  return `https://nfc-ecru.vercel.app${path}`;
 }
 
 export const getAllProducts = async (): Promise<Product[]> => {
