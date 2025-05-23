@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // No @ts-expect-error needed here!
 export async function GET(request: NextRequest, context: any) {
-  const { slug } = context.params;
+  const { slug } = await context.params;
 
   // Fetch all products
   const url = `https://nfc.aardana.com/api/nfc-products/`;
