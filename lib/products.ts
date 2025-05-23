@@ -15,7 +15,9 @@ const isServer = typeof window === "undefined";
 // }
 
 function getApiUrl(path: string) {
-  return isServer ? `nfc-ecru.vercel.app${path}` : "nfc-ecru.vercel.app";
+  return isServer
+    ? `https://nfc-ecru.vercel.app${path}`
+    : "https://nfc-ecru.vercel.app";
 }
 
 export const getAllProducts = async (): Promise<Product[]> => {
