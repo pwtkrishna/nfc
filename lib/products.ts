@@ -1,17 +1,21 @@
 import { Product } from "@/types/product.interface";
 
 const isServer = typeof window === "undefined";
-const vercelUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : null;
+// const vercelUrl = process.env.VERCEL_URL
+//   ? `https://${process.env.VERCEL_URL}`
+//   : null;
 
-const baseUrl =
-  (isServer && vercelUrl) ||
-  process.env.NEXT_PUBLIC_SITE_URL ||
-  "http://localhost:3000";
+// const baseUrl =
+//   (isServer && vercelUrl) ||
+//   process.env.NEXT_PUBLIC_SITE_URL ||
+//   "http://localhost:3000";
+
+// function getApiUrl(path: string) {
+//   return isServer ? `${baseUrl}${path}` : path;
+// }
 
 function getApiUrl(path: string) {
-  return isServer ? `${baseUrl}${path}` : path;
+  return isServer ? `nfc-ecru.vercel.app${path}` : "nfc-ecru.vercel.app";
 }
 
 export const getAllProducts = async (): Promise<Product[]> => {
