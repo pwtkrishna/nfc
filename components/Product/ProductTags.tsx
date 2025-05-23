@@ -5,15 +5,16 @@ type ProductTagProps = {
 };
 
 const ProductTags = ({ tags }: ProductTagProps) => {
+  if (!Array.isArray(tags) || tags.length === 0) return null;
   return (
     <div className="flex flex-wrap items-center">
       {tags.map((tag, index) => (
         <span
-          key={index}
+          key={tag.id}
           className="text-white text-[14px] font-medium capitalize"
         >
-          {`✅${tag} |`}
-          {index === tags.length - 1 && `✅${tag}`}
+          {`✅${tag.name}`}
+          {index < tags.length - 1 && " | "}
         </span>
       ))}
     </div>

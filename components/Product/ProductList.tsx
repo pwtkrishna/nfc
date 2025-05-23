@@ -4,12 +4,17 @@ import { getAllProducts } from "@/lib/products";
 import { Product } from "@/types/product.interface";
 import { useEffect, useState } from "react";
 import ProductListItem from "./ProductListItem";
+import ProductListSkeleton from "./skeleton/ProductListSkeleton";
 
 const ProductList = () => {
   const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getAllProducts().then(setProducts);
+    setLoading(true);
+    getAllProducts()
+      .then(setProducts)
+      .finally(() => setLoading(false));
   }, []);
 
   const groupedProducts = products.reduce<Record<string, Product[]>>(
@@ -40,6 +45,18 @@ const ProductList = () => {
       .replace(/\s+/g, "-")
       .replace(/[^a-z0-9-]/g, "");
   };
+
+  if (loading) {
+    return <ProductListSkeleton />;
+  }
+
+  if (products.length === 0) {
+    return (
+      <div className="flex justify-center py-10">
+        <span className="text-white text-lg">No products found.</span>
+      </div>
+    );
+  }
 
   return (
     <div>

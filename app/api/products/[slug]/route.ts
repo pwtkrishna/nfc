@@ -1,28 +1,25 @@
-// app/api/products/[slug]/route.ts
 import { NextRequest, NextResponse } from "next/server";
-import axios from "axios";
-import { Product } from "@/types/product.interface";
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ slug: string }> }
-) {
-  const { slug } = await params;
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// No @ts-expect-error needed here!
+export async function GET(request: NextRequest, context: any) {
+  const { slug } = context.params;
 
-  const token = request.cookies.get("auth-token")?.value;
-  if (!token)
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  // Fetch all products
+  const url = `https://nfc.aardana.com/api/nfc-products/`;
+  const apiRes = await fetch(url);
 
-  const response = await axios.get(
-    "https://nfc.aardana.com/api/nfc-products/",
-    {
-      headers: { Authorization: `Bearer ${token}` },
-    }
-  );
+  if (!apiRes.ok) {
+    return NextResponse.json(
+      { error: "Failed to fetch" },
+      { status: apiRes.status }
+    );
+  }
 
-  // Specify Product type instead of any
-  const products: Product[] = response.data.data;
-  const product = products.find((p) => p.slug === slug);
+  const result = await apiRes.json();
+  const product = Array.isArray(result.data)
+    ? result.data.find((p: { slug: string }) => p.slug === slug)
+    : null;
 
   if (!product)
     return NextResponse.json({ error: "Not found" }, { status: 404 });

@@ -1,4 +1,3 @@
-// import { productsData } from "@/data/product-data";
 import { Product } from "@/types/product.interface";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,10 +9,10 @@ const getRandomProductsBySection = (products: Product[]): Product[] => {
   const sectionMap = new Map<string, Product[]>();
 
   products.forEach((product) => {
-    if (!sectionMap.has(product.nfc_product_categories.name)) {
-      sectionMap.set(product.nfc_product_categories.name, []);
+    if (!sectionMap.has(product.nfc_product_categories[0]?.name)) {
+      sectionMap.set(product.nfc_product_categories[0]?.name, []);
     }
-    sectionMap.get(product.nfc_product_categories.name)!.push(product);
+    sectionMap.get(product.nfc_product_categories[0]?.name)!.push(product);
   });
 
   const randomProducts: Product[] = [];
@@ -44,12 +43,12 @@ const RecentProducts = async () => {
         {recommendedProducts.map((product) => (
           <div
             key={product.id}
-            className="recent-product rounded-xl m-[12px] border border-[#A1DBEA26] overflow-hidden"
+            className="recent-product flex flex-col rounded-xl m-[12px] border border-[#A1DBEA26] overflow-hidden"
           >
             <div style={{ aspectRatio: "1 /1" }}>
               <Link href={`/all-collection/${product.slug}`} className="h-full">
                 <Image
-                  src={product.image}
+                  src={product.image ? product.image : "/avatar.webp"}
                   alt={product.name}
                   width={500}
                   height={500}
@@ -57,10 +56,10 @@ const RecentProducts = async () => {
                 />
               </Link>
             </div>
-            <div className="bg-[#2B2E39] py-[18px] px-3">
+            <div className="bg-[#2B2E39] py-[18px] px-3 flex-[1]">
               <h3 className="product-title">{product.name}</h3>
               <p className="text-sm text-gray-300 mt-1">
-                {product.nfc_product_categories.name}
+                {product.nfc_product_categories[0]?.name}
               </p>
               <div className="my-2 font-bold text-[#A1DBEA] flex gap-[4px] items-center">
                 {product.sale_price && (

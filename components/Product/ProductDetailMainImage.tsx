@@ -9,10 +9,10 @@ type Props = {
 const ProductDetailMainImage = ({ media, title }: Props) => {
   return (
     <div className="overflow-hidden rounded-[12px]">
-      {media.type === "image" ? (
+      {media?.type === "image" ? (
         <Image
-          key={media.image}
-          src={media.image}
+          // key={media.image}
+          src={media.image ? media.image : "/avatar.webp"}
           alt={title}
           height={500}
           width={500}
@@ -20,8 +20,8 @@ const ProductDetailMainImage = ({ media, title }: Props) => {
         />
       ) : (
         <video
-          key={media.image}
-          src={media.image}
+          // key={media.image}
+          src={media?.image ? media.image : "/avatar.webp"}
           controls
           className="w-full h-auto object-contain rounded-[12px]"
         >

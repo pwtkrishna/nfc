@@ -12,7 +12,7 @@ const ProductListItem = ({ product }: ProductListItemProps) => {
       <Link href={`/all-collection/${product.slug}`}>
         <div>
           <Image
-            src={product.card_image ? product.card_image : "/avatar.webp"}
+            src={product.image ? product.image : "/avatar.webp"}
             alt={product.name}
             height={500}
             width={500}

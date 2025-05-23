@@ -46,8 +46,6 @@ export default function CheckoutPage() {
   const [orderComplete, setOrderComplete] = useState(false);
   const [cartItems, setCart] = useState(cart);
 
-  console.log(cartItems);
-
   // Form states
   const [shippingInfo, setShippingInfo] = useState({
     firstName: "",
@@ -238,8 +236,6 @@ export default function CheckoutPage() {
                   <>
                     <div className="space-y-4">
                       {cart.map((item) => {
-                        console.log(item);
-
                         return (
                           <div
                             key={item.product.id}

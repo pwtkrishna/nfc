@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import ProductDetails from "./ProductDetails";
 import ProductDetailsImage from "./ProductDetailsImage";
 import TrustedCarousel from "../TrustedCarousel";
-import Faqs from "../Faqs";
 import Testimonials from "../Testimonials";
-import RecentProducts from "./RecentProducts";
-import CartSidebar from "../cart/CartSidebar";
+
 import { Product } from "@/types/product.interface";
 import { getProductBySlug } from "@/lib/products";
+import ProductDetailsImageSkeleton from "./skeleton/ProductDetailsImageSkeleton ";
+import ProductDetailsSkeleton from "./skeleton/ProductDetailsSkeleton ";
 
 type ProductPageContentProps = {
   slug: string;
@@ -43,7 +43,13 @@ const ProductPageContent = ({ slug }: ProductPageContentProps) => {
     fetchProduct();
   }, [slug]);
 
-  if (loading) return <div className="text-center py-10">Loading...</div>;
+  if (loading)
+    return (
+      <div className="flex max-[729px]:flex-col">
+        <ProductDetailsImageSkeleton />
+        <ProductDetailsSkeleton />
+      </div>
+    );
   if (error)
     return <div className="text-center text-red-500 py-10">{error}</div>;
   if (!product)
@@ -72,9 +78,6 @@ const ProductPageContent = ({ slug }: ProductPageContentProps) => {
       </section>
       <TrustedCarousel />
       <Testimonials reviews={product.reviews || []} />
-      <Faqs />
-      <RecentProducts />
-      <CartSidebar />
     </>
   );
 };

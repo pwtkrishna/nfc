@@ -32,11 +32,14 @@ const ProductDetailsImage = ({
   return (
     <div className="">
       <ProductDetailMainImage media={activeMedia} title={product.name} />
-      <ProductImageGallery
-        product={product}
-        currentIndex={currentIndex}
-        setCurrentIndex={setCurrentIndex}
-      />
+
+      {activeMedia && (
+        <ProductImageGallery
+          product={product}
+          currentIndex={currentIndex}
+          setCurrentIndex={setCurrentIndex}
+        />
+      )}
     </div>
   );
 };

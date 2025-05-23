@@ -7,7 +7,6 @@ const baseUrl =
   (process.env.VERCEL_URL && `https://${process.env.VERCEL_URL}`) ||
   "http://localhost:3000";
 
-// Helper to get the correct URL
 function getApiUrl(path: string) {
   return isServer ? `${baseUrl}${path}` : path;
 }
@@ -27,16 +26,17 @@ export const getAllProducts = async (): Promise<Product[]> => {
 export const getProductBySlug = async (
   slug: string
 ): Promise<Product | null> => {
-  const url = `/api/products?slug=${encodeURIComponent(slug)}`;
+  const url = getApiUrl(`/api/products/${encodeURIComponent(slug)}`);
   const response = await fetch(url, {
     method: "GET",
-    credentials: "include", // ensures cookies are sent
+    credentials: "include",
   });
-  if (!response.ok) throw new Error("Failed to fetch product by slug");
+  if (!response.ok) {
+    if (response.status === 404) return null;
+    throw new Error("Failed to fetch product by slug");
+  }
   const result = await response.json();
-  return Array.isArray(result.data) && result.data.length > 0
-    ? result.data[0]
-    : null;
+  return result && !result.error ? result : null;
 };
 
 export const getProductsByRating = async (): Promise<Product[]> => {

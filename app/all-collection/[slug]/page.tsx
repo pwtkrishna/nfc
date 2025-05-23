@@ -1,19 +1,29 @@
+import CartSidebar from "@/components/cart/CartSidebar";
+import Faqs from "@/components/Faqs";
 import ProductPageContent from "@/components/Product/ProductPageContent";
+import RecentProducts from "@/components/Product/RecentProducts";
 import { getProductBySlug } from "@/lib/products";
 import { notFound } from "next/navigation";
 
-// No need for a separate PageProps type anymore
-const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
-  const { slug } = await params;
-  console.log("Requested slug:", slug);
-  const product = await getProductBySlug(slug);
-  console.log(slug);
+interface Props {
+  params: Promise<{ slug: string }>;
+}
 
-  console.log(product);
+const Page = async ({ params }: Props) => {
+  const { slug } = await params;
+
+  const product = await getProductBySlug(slug);
 
   if (!product) return notFound();
 
-  return <ProductPageContent slug={slug} />;
+  return (
+    <>
+      <ProductPageContent slug={slug} />
+      <Faqs />
+      <RecentProducts />
+      <CartSidebar />
+    </>
+  );
 };
 
 export default Page;

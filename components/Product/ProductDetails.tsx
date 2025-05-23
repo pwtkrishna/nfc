@@ -91,30 +91,45 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
           </div>
         </div>
         <ProductPrice product={product} />
-        <p className="text-white text-[18px] font-normal tracking-wide">
-          <strong>{product.description}</strong>
-        </p>
+        <div
+          className="text-white text-[18px] font-normal tracking-wide"
+          dangerouslySetInnerHTML={{ __html: product.description }}
+        />
+
         <ProductTags tags={product.tags} />
-        {product.colors && (
-          <ColorSelector
-            colors={product.colors}
-            selectedColor={selectedColor}
-            onColorSelect={onColorSelect}
+        {Array.isArray(product.colors) &&
+          product.colors.filter((c) => c && c.trim() !== "").length > 0 && (
+            <ColorSelector
+              colors={product.colors}
+              selectedColor={selectedColor}
+              onColorSelect={onColorSelect}
+            />
+          )}
+
+        {((Array.isArray(product.packs) &&
+          product.packs.length > 0 &&
+          product.packs.some((p) => p && p !== "")) ||
+          (Array.isArray(product.type) &&
+            product.type.length > 0 &&
+            product.type.some((t) => t && t !== "")) ||
+          (Array.isArray(product.smart_cards) &&
+            product.smart_cards.length > 0 &&
+            product.smart_cards.some((s) => s && s !== ""))) && (
+          <CardVariant
+            packs={product.packs ?? []}
+            type={product.type ?? []}
+            smartCard={product.smart_cards ?? []}
+            selectedPack={selectedPack}
+            selectedType={selectedType}
+            selectedSmartCard={selectedSmartCard}
+            onSelect={(variant, value) => {
+              if (variant === "packs") setSelectedPack(value);
+              else if (variant === "type") setSelectedType(value);
+              else if (variant === "smartCard") setSelectedSmartCard(value);
+            }}
           />
         )}
-        <CardVariant
-          packs={product.packs ?? []}
-          type={product.type ?? []}
-          smartCard={product.smart_cards ?? []}
-          selectedPack={selectedPack}
-          selectedType={selectedType}
-          selectedSmartCard={selectedSmartCard}
-          onSelect={(variant, value) => {
-            if (variant === "packs") setSelectedPack(value);
-            else if (variant === "type") setSelectedType(value);
-            else if (variant === "smartCard") setSelectedSmartCard(value);
-          }}
-        />
+
         <Quantity onQuantityChange={setQuantity} />
         <div className="flex max-w-full gap-[16px] mb-6">
           <AddToCart
