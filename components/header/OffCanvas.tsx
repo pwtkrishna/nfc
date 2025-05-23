@@ -4,6 +4,13 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { navBarItems } from "@/data/navBarItemsData";
 
+type Category = {
+  id: number;
+  name: string;
+  slug: string;
+  icon: string;
+};
+
 type OffCanvasProps = {
   isOpen: boolean;
   onClose: () => void;
@@ -11,6 +18,8 @@ type OffCanvasProps = {
 
 const OffCanvas: React.FC<OffCanvasProps> = ({ isOpen, onClose }) => {
   const [openSubMenuIndex, setOpenSubMenuIndex] = useState<number | null>(null);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loadingCategories, setLoadingCategories] = useState(false);
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "auto";
@@ -18,6 +27,22 @@ const OffCanvas: React.FC<OffCanvasProps> = ({ isOpen, onClose }) => {
       document.body.style.overflow = "auto";
     };
   }, [isOpen]);
+
+  // Fetch categories only when Shop Now submenu is opened
+  useEffect(() => {
+    if (
+      openSubMenuIndex !== null &&
+      navBarItems[openSubMenuIndex].title === "Shop Now"
+    ) {
+      setLoadingCategories(true);
+      fetch("https://nfc.aardana.com/api/nfc-product-categories")
+        .then((res) => res.json())
+        .then((data) => {
+          setCategories(Array.isArray(data.data) ? data.data : []);
+        })
+        .finally(() => setLoadingCategories(false));
+    }
+  }, [openSubMenuIndex]);
 
   // Main menu
   const renderMainMenu = () => (
@@ -41,19 +66,7 @@ const OffCanvas: React.FC<OffCanvasProps> = ({ isOpen, onClose }) => {
             >
               {item.title}
               <span className="w-[15px] h-[20px] text-[#A1DBEA]">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  className="icon icon-arrow w-full h-full"
-                  viewBox="0 0 14 10"
-                >
-                  <path
-                    fill="currentColor"
-                    fillRule="evenodd"
-                    d="M8.537.808a.5.5 0 0 1 .817-.162l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 1 1-.708-.708L11.793 5.5H1a.5.5 0 0 1 0-1h10.793L8.646 1.354a.5.5 0 0 1-.109-.546"
-                    clipRule="evenodd"
-                  ></path>
-                </svg>
+                {/* arrow svg */}
               </span>
             </button>
           )}
@@ -65,6 +78,51 @@ const OffCanvas: React.FC<OffCanvasProps> = ({ isOpen, onClose }) => {
   // Submenu panel
   const renderSubMenu = (index: number) => {
     const item = navBarItems[index];
+    // Dynamic Shop Now submenu
+    if (item.title === "Shop Now") {
+      return (
+        <div>
+          <button
+            className="flex items-center gap-2 py-2 px-4 text-white"
+            onClick={() => setOpenSubMenuIndex(null)}
+          >
+            {/* back arrow svg */}
+            <span className="font-medium">{item.title}</span>
+          </button>
+          <ul className="space-y-4 text-white text-lg mt-4">
+            {loadingCategories ? (
+              <li className="py-[8px] px-12">Loading...</li>
+            ) : (
+              <>
+                {categories.map((cat) => (
+                  <li key={cat.id}>
+                    <Link
+                      href={`/all-collection#${cat.slug}`}
+                      className="py-[8px] px-12 text-[18px] text-white cursor-pointer block"
+                      onClick={onClose}
+                    >
+                      {cat.name}
+                    </Link>
+                  </li>
+                ))}
+                {/* "Other" section link */}
+                <li>
+                  <Link
+                    href="/all-collection#other"
+                    className="py-[8px] px-12 text-[18px] text-white cursor-pointer block"
+                    onClick={onClose}
+                  >
+                    Other
+                  </Link>
+                </li>
+              </>
+            )}
+          </ul>
+        </div>
+      );
+    }
+
+    // Static submenu for other items
     if (!item.subMenu) return null;
     return (
       <div>
@@ -72,21 +130,7 @@ const OffCanvas: React.FC<OffCanvasProps> = ({ isOpen, onClose }) => {
           className="flex items-center gap-2 py-2 px-4 text-white"
           onClick={() => setOpenSubMenuIndex(null)}
         >
-          <span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              className="icon icon-arrow"
-              viewBox="0 0 14 10"
-            >
-              <path
-                fill="currentColor"
-                fillRule="evenodd"
-                d="M8.537.808a.5.5 0 0 1 .817-.162l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 1 1-.708-.708L11.793 5.5H1a.5.5 0 0 1 0-1h10.793L8.646 1.354a.5.5 0 0 1-.109-.546"
-                clipRule="evenodd"
-              ></path>
-            </svg>
-          </span>
+          {/* back arrow svg */}
           <span className="font-medium">{item.title}</span>
         </button>
         <ul className="space-y-4 text-white text-lg mt-4">
@@ -118,6 +162,7 @@ const OffCanvas: React.FC<OffCanvasProps> = ({ isOpen, onClose }) => {
             ? renderMainMenu()
             : renderSubMenu(openSubMenuIndex)}
         </nav>
+
         <div className="px-8 py-6 bg-[#ffffff08]">
           <ul className="flex items-center">
             <li>

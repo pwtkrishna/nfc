@@ -1,14 +1,29 @@
+// app/components/BestSeller.tsx
 import Image from "next/image";
 import Link from "next/link";
 
-const images = [
-  { title: "NFC Business Cards", href: "", image: "/bestseller/business.webp" },
-  { title: "Smart Standee", href: "", image: "/bestseller/smart-standee.webp" },
-  { title: "Review Card", href: "", image: "/bestseller/smart-review.webp" },
-  { title: "Bundle Cards", href: "", image: "/bestseller/bundle-cards.webp" },
-];
+interface Category {
+  id: number;
+  name: string;
+  slug: string;
+  icon: string;
+}
 
-const BestSeller = () => {
+async function getCategories(): Promise<Category[]> {
+  const res = await fetch(
+    "https://nfc.aardana.com/api/nfc-product-categories",
+    {
+      cache: "no-store", // or "force-cache" if you want caching
+    }
+  );
+  if (!res.ok) return [];
+  const data = await res.json();
+  return Array.isArray(data.data) ? data.data : [];
+}
+
+const BestSeller = async () => {
+  const categories = await getCategories();
+
   return (
     <section>
       <div className="container flex flex-col items-center justify-between max-w-[1320px] w-full m-auto py-[35px] px-[20px] overflow-hidden">
@@ -27,18 +42,21 @@ const BestSeller = () => {
           className="bestseller-cards-container w-full flex pt-[20px] mr-[-20px] max-md:flex-wrap max-md:gap-y-[10px]"
           style={{ overflow: "overlay" }}
         >
-          {images.map((img, i) => (
+          {categories.length === 0 && (
+            <span className="text-white">No categories found.</span>
+          )}
+          {categories.map((cat) => (
             <Link
-              href={img.href}
-              key={i}
+              href={`/all-collection/${cat.slug}`}
+              key={cat.id}
               className="smart-product-link basis-[300px] shrink-0 grow-0 rounded-[20px] mx-[10px] relative overflow-hidden"
             >
               <span className="absolute text-white text-[20px] font-semibold leading-[24px] text-center pb-1.5 w-full top-[20px] max-[425px]:text-[16px]">
-                {img.title}
+                {cat.name}
               </span>
               <Image
-                src={img.image}
-                alt={`logo-${i}`}
+                src={cat.icon}
+                alt={cat.name}
                 height={500}
                 width={500}
                 className="w-full h-auto"

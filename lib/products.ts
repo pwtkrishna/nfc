@@ -5,13 +5,10 @@ import { Product } from "@/types/product.interface";
 //   ? `https://${process.env.VERCEL_URL}`
 //   : null;
 
-// const baseUrl =
-//   (isServer && vercelUrl) ||
-//   process.env.NEXT_PUBLIC_SITE_URL ||
-//   "http://localhost:3000";
+// const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 // function getApiUrl(path: string) {
-//   return isServer ? `${baseUrl}${path}` : path;
+//   return `${baseUrl}${path}`;
 // }
 
 function getApiUrl(path: string) {

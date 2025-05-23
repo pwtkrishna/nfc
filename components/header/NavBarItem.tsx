@@ -65,11 +65,12 @@ const NavBarItem = ({ item, isOpen, onToggle }: Props) => {
         </span>
       )}
 
-      {item.subMenu && (
+      {(item.subMenu || item.title === "Shop Now") && (
         <NavBarSubMenu
           subMenu={item.subMenu}
           isOpen={isOpen}
           onClose={onToggle}
+          showCategories={item.title === "Shop Now"}
         />
       )}
     </li>
