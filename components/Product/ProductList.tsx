@@ -74,9 +74,6 @@ const ProductList = () => {
     ...(groupedProducts["Other"] ? ["Other"] : []),
   ];
 
-  // DEBUG: Log the order to ensure correctness
-  // console.log("Ordered Sections:", orderedSections);
-
   return (
     <div>
       {orderedSections.map((sectionName) => (

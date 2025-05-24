@@ -12,7 +12,7 @@ const ProductDetailMainImage = ({ media, title }: Props) => {
       {media?.type === "image" ? (
         <Image
           // key={media.image}
-          src={media.image ? media.image : "/avatar.webp"}
+          src={media.image || "/avatar.webp"}
           alt={title}
           height={500}
           width={500}

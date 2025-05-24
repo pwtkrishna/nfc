@@ -133,7 +133,7 @@ const CartSidebar = () => {
                   >
                     <div className="w-[100px]">
                       <Image
-                        src={item.product.image}
+                        src={item.product.image || "/avatar.webp"}
                         alt={item.product.name}
                         width={100}
                         height={50}

@@ -14,8 +14,6 @@ export const getProductsByAverageReviewRating = async (
 ): Promise<Product[]> => {
   const products = await getAllProducts();
 
-  console.log(products);
-
   return products
     .filter((product) => getAverageRating(product.reviews) >= minRating)
     .sort((a, b) => getAverageRating(b.reviews) - getAverageRating(a.reviews));

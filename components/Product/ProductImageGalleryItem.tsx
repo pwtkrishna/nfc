@@ -21,7 +21,7 @@ const ProductImageGalleryItem = forwardRef<
       >
         {image.type === "image" ? (
           <Image
-            src={image.image}
+            src={image.image || "/avatar.webp"}
             alt={title}
             width={80}
             height={80}

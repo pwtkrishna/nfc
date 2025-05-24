@@ -21,8 +21,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         type={type}
         className={clsx(
           `border-none focus:outline-none focus:border-none outline-0 ,
-          ${className},
-          ${variants[variant]}`
+          ${variants[variant]}
+          ${className} `
         )}
         {...props}
       />
