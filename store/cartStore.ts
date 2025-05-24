@@ -12,14 +12,14 @@ type Variant = {
 };
 
 export type CartItem = {
-  productId: string;
+  productId: number;
   quantity: number;
   variant: Variant;
   product: Product;
 };
 
 type DiscountedItem = {
-  productId: string;
+  productId: number;
   variant: Variant;
   quantity: number;
   basePrice: number;
@@ -36,7 +36,7 @@ type CartState = {
   closeCart: () => void;
   addToCart: (item: CartItem) => void;
   removeFromCart: (item: CartItem) => void;
-  updateQuantity: (productId: string, quantity: number) => void;
+  updateQuantity: (productId: number, quantity: number) => void;
   clearCart: () => void;
   getCartTotal: () => number;
   getProductDiscountedPrice: () => DiscountedItem[];

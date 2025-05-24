@@ -20,10 +20,10 @@ import Input from "@/components/Input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { useRouter } from "next/navigation";
-import { useCartStore } from "@/store/cartStore";
+import { CartItem, useCartStore } from "@/store/cartStore";
 
 export default function CheckoutPage() {
-  const { cart } = useCartStore();
+  const { cart, removeFromCart } = useCartStore();
 
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -47,10 +47,10 @@ export default function CheckoutPage() {
   const router = useRouter();
 
   useEffect(() => {
-    if (cartItems.length === 0) {
+    if (cart.length === 0) {
       router.push("/all-collection");
     }
-  }, [cartItems, router]);
+  }, [cart, router]);
 
   const subtotal = cart.reduce(
     (total, item) =>
@@ -62,7 +62,7 @@ export default function CheckoutPage() {
 
   const total = subtotal;
 
-  const handleQuantityChange = (id: string, change: number) => {
+  const handleQuantityChange = (id: number, change: number) => {
     setCart(
       cartItems.map((item) => {
         if (item.product.id === id) {
@@ -74,8 +74,8 @@ export default function CheckoutPage() {
     );
   };
 
-  const handleRemoveItem = (id: string) => {
-    setCart(cartItems.filter((item) => item.product.id !== id));
+  const handleRemoveItem = (item: CartItem) => {
+    removeFromCart(item);
   };
 
   const handleShippingInfoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -303,9 +303,7 @@ export default function CheckoutPage() {
                                 ).toFixed(2)}
                               </p>
                               <button
-                                onClick={() =>
-                                  handleRemoveItem(item.product.id)
-                                }
+                                onClick={() => handleRemoveItem(item)}
                                 className="mt-1 text-sm text-[rgb(4,206,250)] hover:underline cursor-pointer"
                               >
                                 Remove
