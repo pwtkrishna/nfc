@@ -5,7 +5,7 @@ import { Product } from "@/types/product.interface";
 //   ? `https://${process.env.VERCEL_URL}`
 //   : null;
 
-const baseUrl = process.env.VERCEL_URL || "http://localhost:3000";
+const baseUrl = `https://${process.env.VERCEL_URL}` || "http://localhost:3000";
 
 function getApiUrl(path: string) {
   return `${baseUrl}${path}`;
