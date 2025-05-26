@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { Card } from "@/components/ui/card";
@@ -9,25 +11,48 @@ import {
   Download,
   Share2,
   MessageCircle,
-  // ExternalLink,
+  ExternalLink,
   Briefcase,
   Eye,
 } from "lucide-react";
 import Button from "../Button";
+import { generateVCard } from "@/utils/vcard";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function UserProfilePage({ profile }: any) {
+  console.log(profile);
+
   const socialLinks = [
     { name: "LinkedIn", url: profile.linkedin_url, icon: "💼" },
     { name: "Instagram", url: profile.instagram_url, icon: "📷" },
+    { name: "Threads", url: profile.threads_url, icon: "💻" },
     { name: "Facebook", url: profile.facebook_url, icon: "👥" },
     { name: "Twitter", url: profile.twitter_url, icon: "🐦" },
     { name: "YouTube", url: profile.youtube_url, icon: "📺" },
-    { name: "GitHub", url: profile.github_url, icon: "💻" },
+    { name: "Snapchat", url: profile.snapchat_url, icon: "💻" },
+    { name: "Tik Tok", url: profile.tiktok_url, icon: "💻" },
+    { name: "Behance", url: profile.behance_url, icon: "💻" },
+    { name: "Dribble", url: profile.dribble_url, icon: "💻" },
+    { name: "Pinterest", url: profile.pinterest_url, icon: "💻" },
   ].filter((link) => link.url);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  function handleDownloadVCard(profile: any) {
+    const vcf = generateVCard(profile);
+    const blob = new Blob([vcf], { type: "text/vcard" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${profile.name?.replace(/\s+/g, "_") || "contact"}.vcf`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
   return (
-    <div className="min-h-screen bg-[#1f2128] text-white">
+    <div className="min-h-screen bg-[#1f2128] text-white my-14">
       {/* Cover Photo */}
       <div className="relative h-64 md:h-80 w-full">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#1f2128] z-10"></div>
@@ -43,22 +68,32 @@ export default function UserProfilePage({ profile }: any) {
           <div className="w-full h-full bg-gradient-to-br from-[rgb(4,206,250)] to-[#1f2128]"></div>
         )}
 
+        <Button
+          variant="outline"
+          className="bg-black/50 border-white/20 text-white hover:bg-black/70 z-[9999] fixed bottom-6 left-2/4  flex items-center px-4 py-2"
+          onClick={() => handleDownloadVCard(profile)}
+        >
+          <Download className="h-4 w-4 mr-2" />
+          Save Contact
+        </Button>
+
         {/* Profile Actions */}
-        <div className="absolute top-4 right-4 z-20 flex space-x-2">
+        <div className="absolute top-4 right-4  flex space-x-2">
           <Button
             variant="outline"
-            className="bg-black/50 border-white/20 text-white hover:bg-black/70"
+            className="bg-black/50 border-white/20 text-white hover:bg-black/70  "
           >
             <Share2 className="h-4 w-4 mr-2" />
             Share
           </Button>
-          <Button
+          {/* <Button
             variant="outline"
-            className="bg-black/50 border-white/20 text-white hover:bg-black/70"
+            className="bg-black/50 border-white/20 text-white hover:bg-black/70 z-[9999] fixed bottom-6 left-2/4  flex items-center px-4 py-2"
+            onClick={() => handleDownloadVCard(profile)}
           >
             <Download className="h-4 w-4 mr-2" />
             Save Contact
-          </Button>
+          </Button> */}
         </div>
 
         {/* View Counter */}
@@ -76,14 +111,14 @@ export default function UserProfilePage({ profile }: any) {
               {profile.profile_picture ? (
                 <Image
                   src={profile.profile_picture || "/placeholder.svg"}
-                  alt={profile.full_name}
+                  alt={profile.name}
                   width={128}
                   height={128}
                   className="object-cover w-full h-full"
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-4xl font-bold text-gray-400">
-                  {profile.full_name}
+                  {profile.name}
                 </div>
               )}
             </div>
@@ -91,7 +126,7 @@ export default function UserProfilePage({ profile }: any) {
 
           <div className="flex-1">
             <h1 className="text-3xl md:text-4xl font-bold mb-2">
-              {profile.full_name}
+              {profile.name}
             </h1>
             {profile.headline && (
               <p className="text-lg text-gray-300 mb-3">{profile.headline}</p>
@@ -126,7 +161,7 @@ export default function UserProfilePage({ profile }: any) {
             {/* About Section */}
             {profile.bio && (
               <Card className="bg-[#282a33] border-none p-6 rounded-xl">
-                <h2 className="text-xl font-bold mb-4">About</h2>
+                <h2 className="text-xl font-bold text-white mb-4">About</h2>
                 <p className="text-gray-300 leading-relaxed">{profile.bio}</p>
               </Card>
             )}
@@ -134,16 +169,16 @@ export default function UserProfilePage({ profile }: any) {
             {/* Skills Section */}
             {profile.skills.length > 0 && (
               <Card className="bg-[#282a33] border-none p-6 rounded-xl">
-                <h2 className="text-xl font-bold mb-4">Skills</h2>
+                <h2 className="text-xl font-bold mb-4 text-white">Skills</h2>
                 <div className="flex flex-wrap gap-2">
-                  {/* {profile.skills.map((skill: string, index: number) => (
+                  {profile.skills.map((skill: string, index: number) => (
                     <span
                       key={index}
                       className="px-3 py-1 bg-[rgba(4,206,250,0.1)] text-[rgb(4,206,250)] rounded-full text-sm border border-[rgba(4,206,250,0.3)]"
                     >
                       {skill}
                     </span>
-                  ))} */}
+                  ))}
                 </div>
               </Card>
             )}
@@ -151,9 +186,9 @@ export default function UserProfilePage({ profile }: any) {
             {/* Gallery Section */}
             {profile.gallery.length > 0 && (
               <Card className="bg-[#282a33] border-none p-6 rounded-xl">
-                <h2 className="text-xl font-bold mb-4">Gallery</h2>
+                <h2 className="text-xl font-bold mb-4 text-white">Gallery</h2>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  {/* {profile.gallery.map((image: string, index: number) => (
+                  {profile.gallery.map((image: string, index: number) => (
                     <div
                       key={index}
                       className="aspect-square rounded-lg overflow-hidden"
@@ -166,7 +201,7 @@ export default function UserProfilePage({ profile }: any) {
                         className="object-cover w-full h-full hover:scale-105 transition-transform"
                       />
                     </div>
-                  ))} */}
+                  ))}
                 </div>
               </Card>
             )}
@@ -174,9 +209,9 @@ export default function UserProfilePage({ profile }: any) {
             {/* Custom Links */}
             {profile.custom_links.length > 0 && (
               <Card className="bg-[#282a33] border-none p-6 rounded-xl">
-                <h2 className="text-xl font-bold mb-4">Links</h2>
+                <h2 className="text-xl font-bold mb-4 text-white">Links</h2>
                 <div className="space-y-3">
-                  {/* {profile.custom_links.map(
+                  {profile.custom_links.map(
                     (
                       link: { url: string; icon: string; label: string },
                       index: number
@@ -195,7 +230,7 @@ export default function UserProfilePage({ profile }: any) {
                         <ExternalLink className="h-4 w-4 text-gray-400 group-hover:text-[rgb(4,206,250)]" />
                       </Link>
                     )
-                  )} */}
+                  )}
                 </div>
               </Card>
             )}
@@ -205,7 +240,9 @@ export default function UserProfilePage({ profile }: any) {
           <div className="space-y-6">
             {/* Contact Information */}
             <Card className="bg-[#282a33] border-none p-6 rounded-xl">
-              <h2 className="text-xl font-bold mb-4">Contact Info</h2>
+              <h2 className="text-xl font-bold mb-4 text-white">
+                Contact Info
+              </h2>
               <div className="space-y-4">
                 {profile.email && (
                   <div className="flex items-center">
@@ -248,7 +285,9 @@ export default function UserProfilePage({ profile }: any) {
             {/* Social Media */}
             {socialLinks.length > 0 && (
               <Card className="bg-[#282a33] border-none p-6 rounded-xl">
-                <h2 className="text-xl font-bold mb-4">Social Media</h2>
+                <h2 className="text-xl font-bold mb-4 text-white">
+                  Social Media
+                </h2>
                 <div className="grid grid-cols-2 gap-3">
                   {socialLinks.map((social, index) => (
                     <Link
@@ -268,7 +307,7 @@ export default function UserProfilePage({ profile }: any) {
 
             {/* Download Actions */}
             <Card className="bg-[#282a33] border-none p-6 rounded-xl">
-              <h2 className="text-xl font-bold mb-4">Downloads</h2>
+              <h2 className="text-xl font-bold mb-4 text-white">Downloads</h2>
               <div className="space-y-3">
                 <Button
                   variant="outline"
@@ -295,7 +334,9 @@ export default function UserProfilePage({ profile }: any) {
 
             {/* QR Code */}
             <Card className="bg-[#282a33] border-none p-6 rounded-xl text-center">
-              <h2 className="text-xl font-bold mb-4">Share Profile</h2>
+              <h2 className="text-xl font-bold mb-4 text-white">
+                Share Profile
+              </h2>
               <div className="w-32 h-32 mx-auto bg-white rounded-lg p-2 mb-4">
                 <Image
                   src={
