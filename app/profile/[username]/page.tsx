@@ -1,6 +1,10 @@
 import UserProfilePage from "@/components/user-profile/UserProfilePage";
 import { notFound } from "next/navigation";
 
+interface Props {
+  params: Promise<{ username: string }>;
+}
+
 async function getUser(username: string) {
   const res = await fetch(
     // `https://nfc.aardana.com/api/users/${encodeURIComponent(username)}`
@@ -11,12 +15,9 @@ async function getUser(username: string) {
   return data;
 }
 
-export default async function Page({
-  params,
-}: {
-  params: { username: string };
-}) {
-  const user = await getUser(params.username);
+export default async function Page({ params }: Props) {
+  const { username } = await params;
+  const user = await getUser(username);
   if (!user) return notFound();
 
   // Map API user to your profile component props if needed
