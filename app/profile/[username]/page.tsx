@@ -2,7 +2,6 @@ import UserProfilePage from "@/components/user-profile/UserProfilePage";
 import { notFound } from "next/navigation";
 
 async function getUser(username: string) {
-  username = "johndoe123";
   const res = await fetch(
     // `https://nfc.aardana.com/api/users/${encodeURIComponent(username)}`
     `https://nfc.aardana.com/api/users/${encodeURIComponent(username)}`
