@@ -1,4 +1,3 @@
-// app/api/login/route.ts (Next.js App Router)
 import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
 
@@ -13,7 +12,7 @@ export async function POST(req: NextRequest) {
     login_type: "email",
   });
 
-  const token = response.data.token; // adjust if your token is in a different field
+  const token = response.data.token;
 
   // Set HTTP-only cookie
   const res = NextResponse.json({ success: true });
@@ -22,7 +21,7 @@ export async function POST(req: NextRequest) {
     secure: process.env.NODE_ENV === "production",
     sameSite: "strict",
     path: "/",
-    maxAge: 60 * 60 * 24 * 7, // 1 week
+    maxAge: 60 * 60 * 24 * 7,
   });
 
   return res;

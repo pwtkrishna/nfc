@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
         hostname: "nfc.aardana.com",
         // pathname: "/**", // Optional: allows all paths
       },
+      {
+        protocol: "https",
+        hostname: "johndoe.com",
+        // pathname: "/**", // Optional: allows all paths
+      },
     ],
   },
 };

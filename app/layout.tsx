@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "NFC",
+  title: "Taponn Solutions",
   description: "Designed and developed by Premier Webtech",
 };
 

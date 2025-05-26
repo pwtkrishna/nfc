@@ -96,7 +96,6 @@ export default function LoginPage() {
         throw new Error("Invalid credentials");
       }
 
-      // Token is now stored in HTTP-only cookie, nothing to do here
       router.push("/");
     } catch {
       setErrors({
