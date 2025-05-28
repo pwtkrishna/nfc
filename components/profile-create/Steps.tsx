@@ -170,7 +170,7 @@ const Steps = ({
           <ImageUploadSection
             label="Profile Picture"
             value={profilePic}
-            onChange={(file, objectUrl) => setProfilePic(file)}
+            onChange={(file) => setProfilePic(file)}
             // Optionally, pass a user icon as placeholderIcon
           />
         </div>
@@ -710,7 +710,7 @@ const Steps = ({
             <ImageUploadSection
               label="Cover Photo"
               value={coverPhoto}
-              onChange={(file, objectUrl) => setCoverPhoto(file)}
+              onChange={(file) => setCoverPhoto(file)}
               width={400}
               height={128}
               rounded={false}
@@ -720,9 +720,9 @@ const Steps = ({
             {/* <div className="space-y-2">
               <Label className="text-white">Cover Photo</Label>
               <div className="w-full h-32 bg-[#1f2128] border-2 border-dashed border-gray-700 rounded-lg flex items-center justify-center">
-                {profileData.avatar_original ? (
+                {profileData.profile_photo_path ? (
                   <Image
-                    src={profileData.avatar_original || "/placeholder.svg"}
+                    src={profileData.profile_photo_path || "/placeholder.svg"}
                     alt="Cover"
                     width={400}
                     height={128}
