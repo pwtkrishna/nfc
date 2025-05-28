@@ -1,29 +1,19 @@
-export interface CustomLink {
-  label: string;
-  url: string;
-  icon: string;
-}
-
-export interface UserProfile {
-  // Basic Info
+export interface ProfileData {
   name: string;
   username: string;
   email: string;
-  email_verified: boolean;
+  email_verified?: boolean;
   phone: string;
-  whatsapp_number: string | null;
+  whatsapp_number?: string | null;
   avatar: string;
-  profile_photo_path: string;
-  user_type: string;
+  avatar_original?: string;
+  user_type?: string;
   about: string;
-  gender: string;
-  dob: string;
+  status?: string;
   state: string;
   country: string;
   city: string;
   area: string;
-
-  // Professional
   website_url: string;
   headline: string;
   bio: string;
@@ -31,8 +21,6 @@ export interface UserProfile {
   job_title: string;
   industry: string;
   skills: string[];
-
-  // Social Media
   linkedin_url: string;
   instagram_url: string;
   facebook_url: string;
@@ -45,22 +33,18 @@ export interface UserProfile {
   dribbble_url: string;
   pinterest_url: string;
   threads_url: string;
-
-  // Custom Links
-  custom_links: CustomLink[];
-
-  // Media & Files
-  vcard_url: string;
-  pdf_resume_url: string;
+  custom_links: Array<{ label: string; url: string; icon: string }>;
+  vcard_url?: string;
+  pdf_resume_url?: string;
   gallery: string[];
-  nfc_card_id: number;
-  slug: string;
+  nfc_card_id?: number;
+  slug?: string;
   profile_type: string;
   is_public: boolean;
   allow_contact_form: boolean;
   dark_mode_enabled: boolean;
   custom_theme_color: string;
-  qr_code_url: string;
+  qr_code_url?: string;
   seo_title: string;
   seo_description: string;
 }

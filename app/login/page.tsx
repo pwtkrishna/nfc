@@ -96,7 +96,13 @@ export default function LoginPage() {
         throw new Error("Invalid credentials");
       }
 
-      router.push("/");
+      // Optional: You can check the response JSON for success
+      const data = await res.json();
+      if (data.success) {
+        router.push("/account"); // <--- Redirect to account page
+      } else {
+        throw new Error("Login failed");
+      }
     } catch {
       setErrors({
         ...errors,
@@ -106,6 +112,7 @@ export default function LoginPage() {
       setLoading(false);
     }
   };
+
   return (
     <div className="min-h-screen bg-[#1f2128] text-white flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">

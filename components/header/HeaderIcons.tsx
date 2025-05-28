@@ -27,7 +27,7 @@ const HeaderIcons = () => {
           ></path>
         </svg>
       </div> */}
-      <Link href="/login">
+      <Link href="/account">
         <div className="user-icon bg-[#35373E] rounded-[8px] h-[44px] w-[44px] flex justify-center items-center max-[870px]:hidden cursor-pointer">
           <svg
             xmlns="http://www.w3.org/2000/svg"

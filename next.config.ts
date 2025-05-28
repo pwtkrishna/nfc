@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "nfc.aardana.com",
-        // pathname: "/**", // Optional: allows all paths
+        pathname: "/storage/**",
       },
       {
         protocol: "https",
