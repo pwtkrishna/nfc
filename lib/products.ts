@@ -5,18 +5,17 @@ import { Product } from "@/types/product.interface";
 //   ? `https://${process.env.VERCEL_URL}`
 //   : null;
 
-const baseUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : "http://localhost:3000";
-
-function getApiUrl(path: string) {
-  return `${baseUrl}${path}`;
-}
-// dxkjgdskj
+// const baseUrl = process.env.VERCEL_URL
+//   ? `https://${process.env.VERCEL_URL}`
+//   : "http://localhost:3000";
 
 // function getApiUrl(path: string) {
-//   return `https://nfc-ecru.vercel.app${path}`;
+//   return `${baseUrl}${path}`;
 // }
+
+function getApiUrl(path: string) {
+  return `https://nfc-ecru.vercel.app${path}`;
+}
 
 export const getAllProducts = async (): Promise<Product[]> => {
   const url = getApiUrl("/api/products");
