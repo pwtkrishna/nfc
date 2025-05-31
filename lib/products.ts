@@ -12,6 +12,7 @@ const baseUrl = process.env.VERCEL_URL
 function getApiUrl(path: string) {
   return `${baseUrl}${path}`;
 }
+// dxkjgdskj
 
 // function getApiUrl(path: string) {
 //   return `https://nfc-ecru.vercel.app${path}`;
