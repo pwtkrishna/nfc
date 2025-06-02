@@ -1,39 +1,40 @@
 "use client";
 
-import { getAllProducts } from "@/lib/products";
-import { Product } from "@/types/product.interface";
-import { useEffect, useState } from "react";
+import useSWR from "swr";
 import ProductListItem from "./ProductListItem";
 import ProductListSkeleton from "./skeleton/ProductListSkeleton";
+import { Product } from "@/types/product.interface";
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 const ProductList = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
+  // Use SWR to fetch products from your API route
+  const { data, error, isLoading } = useSWR("/api/products", fetcher, {
+    refreshInterval: 10000,
+  });
 
-  useEffect(() => {
-    setLoading(true);
-    getAllProducts()
-      .then(setProducts)
-      .finally(() => setLoading(false));
-  }, []);
+  // Your API returns { data: [...] }
+  const products: Product[] = data?.data ?? [];
 
-  // Group products by category
   const groupedProducts = products.reduce<Record<string, Product[]>>(
     (acc, product) => {
-      const categories = Array.isArray(product.nfc_product_categories)
-        ? product.nfc_product_categories
+      // Filter only active categories
+      const activeCategories = Array.isArray(product.nfc_product_categories)
+        ? product.nfc_product_categories.filter(
+            (cat) => cat.is_active === "Yes"
+          )
         : [];
 
-      if (categories.length > 0) {
-        categories.forEach((category) => {
-          const name = category?.name?.trim() || "Other";
-          if (!acc[name]) acc[name] = [];
-          acc[name].push(product);
-        });
-      } else {
-        if (!acc["Other"]) acc["Other"] = [];
-        acc["Other"].push(product);
-      }
+      // If no active categories, skip this product
+      if (activeCategories.length === 0) return acc;
+
+      // Group by each active category
+      activeCategories.forEach((category) => {
+        const name = category?.name?.trim() || "Other";
+        if (!acc[name]) acc[name] = [];
+        acc[name].push(product);
+      });
+
       return acc;
     },
     {}
@@ -46,8 +47,16 @@ const ProductList = () => {
       .replace(/\s+/g, "-")
       .replace(/[^a-z0-9-]/g, "");
 
-  if (loading) {
+  if (isLoading) {
     return <ProductListSkeleton />;
+  }
+
+  if (error) {
+    return (
+      <div className="flex justify-center py-10">
+        <span className="text-white text-lg">Failed to load products.</span>
+      </div>
+    );
   }
 
   if (products.length === 0) {

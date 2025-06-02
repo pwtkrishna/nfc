@@ -9,6 +9,7 @@ type Category = {
   name: string;
   slug: string;
   icon: string;
+  product_count: number;
 };
 
 type OffCanvasProps = {
@@ -38,7 +39,10 @@ const OffCanvas: React.FC<OffCanvasProps> = ({ isOpen, onClose }) => {
       fetch("https://nfc.aardana.com/api/nfc-product-categories")
         .then((res) => res.json())
         .then((data) => {
-          setCategories(Array.isArray(data.data) ? data.data : []);
+          const filter = Array.isArray(data.data)
+            ? data.data.filter((item: Category) => item.product_count >= 1)
+            : [];
+          setCategories(filter);
         })
         .finally(() => setLoadingCategories(false));
     }
@@ -91,7 +95,10 @@ const OffCanvas: React.FC<OffCanvasProps> = ({ isOpen, onClose }) => {
           </button>
           <ul className="space-y-4 text-white text-lg mt-4">
             {loadingCategories ? (
-              <li className="py-[8px] px-12">Loading...</li>
+              <>
+                <div className="animate-pulse h-4 bg-gray-700 rounded w-3/4 mx-auto my-2" />
+                <div className="animate-pulse h-4 bg-gray-700 rounded w-1/2 mx-auto my-2" />
+              </>
             ) : (
               <>
                 {categories.map((cat) => (
@@ -105,8 +112,7 @@ const OffCanvas: React.FC<OffCanvasProps> = ({ isOpen, onClose }) => {
                     </Link>
                   </li>
                 ))}
-                {/* "Other" section link */}
-                <li>
+                {/* <li>
                   <Link
                     href="/all-collection#other"
                     className="py-[8px] px-12 text-[18px] text-white cursor-pointer block"
@@ -114,7 +120,7 @@ const OffCanvas: React.FC<OffCanvasProps> = ({ isOpen, onClose }) => {
                   >
                     Other
                   </Link>
-                </li>
+                </li> */}
               </>
             )}
           </ul>

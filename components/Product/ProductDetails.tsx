@@ -26,10 +26,12 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
   selectedColor,
   onColorSelect,
 }) => {
+  const disabled = product.quantity === 0 || product.in_stock === "No";
+
   const [selectedPack, setSelectedPack] = useState("");
   const [selectedType, setSelectedType] = useState("");
   const [selectedSmartCard, setSelectedSmartCard] = useState("");
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(disabled ? 0 : 1);
 
   const { setCurrentProduct, setSelectedVariant, setMaxQuantity } =
     useProductStore();
@@ -130,7 +132,13 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
           />
         )}
 
-        <Quantity onQuantityChange={setQuantity} />
+        {disabled && (
+          <div className="text-red-500 font-semibold mt-2 -mb-6">
+            Out of Stock
+          </div>
+        )}
+
+        <Quantity onQuantityChange={setQuantity} disabled={disabled} />
         <div className="flex max-w-full gap-[16px] mb-6">
           <AddToCart
             product={product}
@@ -139,6 +147,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
             selectedType={selectedType}
             selectedSmartCard={selectedSmartCard}
             quantity={quantity}
+            disabled={disabled}
           />
           <div className="w-[50%]"></div>
         </div>

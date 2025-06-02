@@ -1,31 +1,75 @@
+"use client";
+
+import useSWR from "swr";
 import { Product } from "@/types/product.interface";
 import Image from "next/image";
 import Link from "next/link";
-// import AddToCart from "../AddToCart";
 import { getAverageRating } from "@/utils/review-utils";
-import { getAllProducts } from "@/lib/products";
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 const getRandomProductsBySection = (products: Product[]): Product[] => {
   const sectionMap = new Map<string, Product[]>();
 
   products.forEach((product) => {
-    if (!sectionMap.has(product.nfc_product_categories[0]?.name)) {
-      sectionMap.set(product.nfc_product_categories[0]?.name, []);
+    const sectionName = product.nfc_product_categories[0]?.name || "Other";
+    if (!sectionMap.has(sectionName)) {
+      sectionMap.set(sectionName, []);
     }
-    sectionMap.get(product.nfc_product_categories[0]?.name)!.push(product);
+    sectionMap.get(sectionName)!.push(product);
   });
 
+  // Pick one random product from each section
   const randomProducts: Product[] = [];
   sectionMap.forEach((productList) => {
     const randomIndex = Math.floor(Math.random() * productList.length);
     randomProducts.push(productList[randomIndex]);
   });
 
-  return randomProducts;
+  // If less than 4 products, fill up with random products from the original list (no duplicates)
+  if (randomProducts.length < 4) {
+    // Make a set of already picked product IDs
+    const pickedIds = new Set(randomProducts.map((p) => p.id));
+    // Shuffle the products array (Fisher-Yates shuffle)
+    const shuffled = [...products].sort(() => Math.random() - 0.5);
+    for (const product of shuffled) {
+      if (randomProducts.length >= 4) break;
+      if (!pickedIds.has(product.id)) {
+        randomProducts.push(product);
+        pickedIds.add(product.id);
+      }
+    }
+  }
+
+  // If there are less than 4 products in total, just return all available
+  return randomProducts.slice(0, Math.min(4, products.length));
 };
 
-const RecentProducts = async () => {
-  const products = await getAllProducts();
+const RecentProducts = () => {
+  const { data, error, isLoading } = useSWR("/api/products", fetcher);
+
+  if (isLoading) {
+    return (
+      <section className="max-w-[1320px] w-full py-[35px] px-[20px] m-auto">
+        <h2 className="text-[42px] font-medium leading-[50.4px] text-white my-[6px]">
+          Loading...
+        </h2>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className="max-w-[1320px] w-full py-[35px] px-[20px] m-auto">
+        <h2 className="text-[42px] font-medium leading-[50.4px] text-white my-[6px]">
+          Failed to load products.
+        </h2>
+      </section>
+    );
+  }
+
+  // Your API returns { data: [...] }
+  const products: Product[] = data?.data ?? [];
   const recommendedProducts = getRandomProductsBySection(products);
 
   return (

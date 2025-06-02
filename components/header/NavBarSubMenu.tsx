@@ -14,6 +14,7 @@ type Category = {
   name: string;
   slug: string;
   icon: string;
+  product_count: number;
 };
 
 type Props = {
@@ -33,7 +34,10 @@ const NavBarSubMenu = ({ subMenu, isOpen, onClose, showCategories }: Props) => {
       fetch("https://nfc.aardana.com/api/nfc-product-categories")
         .then((res) => res.json())
         .then((data) => {
-          setCategories(Array.isArray(data.data) ? data.data : []);
+          const filter = Array.isArray(data.data)
+            ? data.data.filter((item: Category) => item.product_count >= 1)
+            : [];
+          setCategories(filter);
         })
         .finally(() => setLoading(false));
     }
@@ -50,23 +54,21 @@ const NavBarSubMenu = ({ subMenu, isOpen, onClose, showCategories }: Props) => {
           <li className="text-white px-4 py-2.5">Loading...</li>
         ) : (
           <>
-            {categories.length > 0 ? (
-              categories.map((cat) => (
-                <li key={cat.id}>
-                  <Link
-                    href={`/all-collection#${cat.slug}`}
-                    className="text-white hover:text-[#a1dbea] flex items-center justify-between py-2.5 px-4 text-[15px] leading-5 font-semibold"
-                    onClick={onClose}
-                  >
-                    <span>{cat.name}</span>
-                  </Link>
-                </li>
-              ))
-            ) : (
-              <li className="text-white px-4 py-2.5">No categories found.</li>
-            )}
+            {categories.length > 0
+              ? categories.map((cat) => (
+                  <li key={cat.id}>
+                    <Link
+                      href={`/all-collection#${cat.slug}`}
+                      className="text-white hover:text-[#a1dbea] flex items-center justify-between py-2.5 px-4 text-[15px] leading-5 font-semibold"
+                      onClick={onClose}
+                    >
+                      <span>{cat.name}</span>
+                    </Link>
+                  </li>
+                ))
+              : ""}
             {/* Add the "Other" section link at the end */}
-            <li>
+            {/* <li>
               <Link
                 href="/all-collection#other"
                 className="text-white hover:text-[#a1dbea] flex items-center justify-between py-2.5 px-4 text-[15px] leading-5 font-semibold"
@@ -74,7 +76,7 @@ const NavBarSubMenu = ({ subMenu, isOpen, onClose, showCategories }: Props) => {
               >
                 <span>Other</span>
               </Link>
-            </li>
+            </li> */}
           </>
         )
       ) : (
