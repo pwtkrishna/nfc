@@ -132,25 +132,26 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
           />
         )}
 
-        {disabled && (
+        {disabled ? (
           <div className="text-red-500 font-semibold mt-2 -mb-6">
             Out of Stock
           </div>
+        ) : (
+          <>
+            <Quantity onQuantityChange={setQuantity} />
+            <div className="flex max-w-full gap-[16px] mb-6">
+              <AddToCart
+                product={product}
+                selectedColor={selectedColor}
+                selectedPack={selectedPack}
+                selectedType={selectedType}
+                selectedSmartCard={selectedSmartCard}
+                quantity={quantity}
+              />
+              <div className="w-[50%]"></div>
+            </div>
+          </>
         )}
-
-        <Quantity onQuantityChange={setQuantity} disabled={disabled} />
-        <div className="flex max-w-full gap-[16px] mb-6">
-          <AddToCart
-            product={product}
-            selectedColor={selectedColor}
-            selectedPack={selectedPack}
-            selectedType={selectedType}
-            selectedSmartCard={selectedSmartCard}
-            quantity={quantity}
-            disabled={disabled}
-          />
-          <div className="w-[50%]"></div>
-        </div>
         <DeliveryEstimate />
         {product.is_customizable && (
           <div className="my-[24px] rounded-[20px] bg-[#2B2E39] p-[20px]">
