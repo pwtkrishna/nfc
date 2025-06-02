@@ -6,7 +6,7 @@ import { Product } from "@/types/product.interface";
 //   : null;
 
 const baseUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
+  ? `https://nfc-ecru.vercel.app`
   : "http://localhost:3000";
 
 function getApiUrl(path: string) {

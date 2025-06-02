@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import styles from "./NavBarSubMenu.module.css";
-import { useEffect, useState } from "react";
+import useSWR from "swr";
 
 type SubMenuItem = {
   title: string;
@@ -24,24 +24,21 @@ type Props = {
   showCategories?: boolean;
 };
 
-const NavBarSubMenu = ({ subMenu, isOpen, onClose, showCategories }: Props) => {
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [loading, setLoading] = useState(false);
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-  useEffect(() => {
-    if (showCategories && isOpen) {
-      setLoading(true);
-      fetch("https://nfc.aardana.com/api/nfc-product-categories")
-        .then((res) => res.json())
-        .then((data) => {
-          const filter = Array.isArray(data.data)
-            ? data.data.filter((item: Category) => item.product_count >= 1)
-            : [];
-          setCategories(filter);
-        })
-        .finally(() => setLoading(false));
-    }
-  }, [showCategories, isOpen]);
+const NavBarSubMenu = ({ subMenu, isOpen, onClose, showCategories }: Props) => {
+  // SWR hook (fetches only if showCategories && isOpen)
+  const { data, isLoading } = useSWR(
+    showCategories && isOpen
+      ? "https://nfc.aardana.com/api/nfc-product-categories"
+      : null,
+    fetcher
+  );
+
+  // Filter categories with at least 1 product
+  const categories: Category[] = Array.isArray(data?.data)
+    ? data.data.filter((item: Category) => item.product_count >= 1)
+    : [];
 
   if (!isOpen) return null;
 
@@ -50,7 +47,7 @@ const NavBarSubMenu = ({ subMenu, isOpen, onClose, showCategories }: Props) => {
       className={`absolute py-3 bg-[#1f2128] border border-[rgba(255,255,255,0.2)] w-[14rem] mt-2 z-50 ${styles.navbarSubmenu} ${styles.navbarSubmenuOpen}`}
     >
       {showCategories ? (
-        loading ? (
+        isLoading ? (
           <li className="text-white px-4 py-2.5">Loading...</li>
         ) : (
           <>
@@ -67,7 +64,7 @@ const NavBarSubMenu = ({ subMenu, isOpen, onClose, showCategories }: Props) => {
                   </li>
                 ))
               : ""}
-            {/* Add the "Other" section link at the end */}
+            {/* Optionally add the "Other" section link */}
             {/* <li>
               <Link
                 href="/all-collection#other"

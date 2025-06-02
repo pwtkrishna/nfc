@@ -47,7 +47,7 @@ const BestSeller = async () => {
           )}
           {categories.map((cat) => (
             <Link
-              href={`/all-collection/${cat.slug}`}
+              href={`/all-collection#${cat.slug}`}
               key={cat.id}
               className="smart-product-link basis-[300px] shrink-0 grow-0 rounded-[20px] mx-[10px] relative overflow-hidden"
             >

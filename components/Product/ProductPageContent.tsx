@@ -1,13 +1,12 @@
 "use client";
 
+import useSWR from "swr";
 import { useEffect, useState } from "react";
 import ProductDetails from "./ProductDetails";
 import ProductDetailsImage from "./ProductDetailsImage";
 import TrustedCarousel from "../TrustedCarousel";
 import Testimonials from "../Testimonials";
-
 import { Product } from "@/types/product.interface";
-import { getProductBySlug } from "@/lib/products";
 import ProductDetailsImageSkeleton from "./skeleton/ProductDetailsImageSkeleton ";
 import ProductDetailsSkeleton from "./skeleton/ProductDetailsSkeleton ";
 
@@ -15,46 +14,42 @@ type ProductPageContentProps = {
   slug: string;
 };
 
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
 const ProductPageContent = ({ slug }: ProductPageContentProps) => {
-  const [product, setProduct] = useState<Product | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { data, error, isLoading } = useSWR(`/api/products/${slug}`, fetcher, {
+    refreshInterval: 10000,
+  });
+
+  // Always define hooks at the top!
+  // Use fallback values if data is not ready yet
+  const product: Product | undefined = data?.data ?? data;
   const [selectedColor, setSelectedColor] = useState<string>("");
 
   useEffect(() => {
-    const fetchProduct = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const prod = await getProductBySlug(slug);
-        if (!prod) {
-          setError("Product not found.");
-        } else {
-          setProduct(prod);
-          setSelectedColor(prod.colors?.[0] || "");
-        }
-      } catch {
-        setError("Failed to load product.");
-      } finally {
-        setLoading(false);
-      }
-    };
+    if (product?.colors?.[0]) {
+      setSelectedColor(product.colors[0]);
+    }
+  }, [product?.colors]);
 
-    fetchProduct();
-  }, [slug]);
-
-  if (loading)
+  // Now do your conditional rendering
+  if (isLoading)
     return (
       <div className="flex max-[729px]:flex-col">
         <ProductDetailsImageSkeleton />
         <ProductDetailsSkeleton />
       </div>
     );
-  if (error)
-    return <div className="text-center text-red-500 py-10">{error}</div>;
+
+  if (error || data?.error)
+    return (
+      <div className="text-center text-red-500 py-10">
+        {data?.error || "Failed to load product."}
+      </div>
+    );
+
   if (!product)
     return <div className="text-center py-10">No product found.</div>;
-
   return (
     <>
       <section>
