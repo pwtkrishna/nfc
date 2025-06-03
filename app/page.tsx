@@ -6,10 +6,18 @@ import ForTeamsSection from "@/components/ForTeamsSection";
 import EveryOneSectionCard from "@/components/EveryOneSectionCard";
 import Faqs from "@/components/Faqs";
 import FilledLink from "@/components/FilledLink";
+import Footer from "@/components/footer/Footer";
+import WhatsAppFloatButton from "@/components/WhatsAppFloatButton";
+import Header from "@/components/header/Header";
+import { Toaster } from "react-hot-toast";
+import CartSidebar from "@/components/cart/CartSidebar";
 
 export default function Home() {
   return (
     <>
+      <Header />
+      <Toaster position="top-center" containerClassName="z-[999999]" />
+      <CartSidebar />
       <HomeHeroSection />
       <TrustedCarousel />
       <section className=" bg-[#1F2128]">
@@ -324,6 +332,8 @@ export default function Home() {
         </div>
       </section>
       <Faqs />
+      <Footer />
+      <WhatsAppFloatButton />
     </>
   );
 }

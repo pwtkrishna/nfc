@@ -23,11 +23,11 @@ const ProductListItem = ({ product }: ProductListItemProps) => {
           <h2 className="product-title">{product.name}</h2>
           {product.sale_price ? (
             <p className="text-[22px] font-medium leading-[36.98px] text-left text-white">
-              Rs. {product.sale_price}
+              ${product.sale_price}
             </p>
           ) : (
             <p className="text-[22px] font-medium leading-[36.98px] text-left text-white">
-              Rs. {product.regular_price}
+              ${product.regular_price}
             </p>
           )}
         </div>

@@ -10,6 +10,7 @@ import { useCartStore } from "@/store/cartStore";
 import type { CartItem } from "@/store/cartStore";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
+import Quantity from "../Quantity";
 
 type Variant = CartItem["variant"];
 
@@ -212,12 +213,19 @@ const CartSidebar = () => {
                         </p>
                       )}
                       <div className="flex items-center gap-1.5">
-                        <div
+                        {/* <div
                           className="flex items-center border border-[#04cefa] rounded-[65px] w-[160px] text-white relative mt-2"
                           style={{ minHeight: "calc((1px * 2) + 45px)" }}
-                        >
-                          {/* <Quantity onQuantityChange={} /> */}
-                          <Button
+                        > */}
+                        <Quantity
+                          productId={item.product.id}
+                          allowZero={true}
+                          onQuantityChange={(productId) =>
+                            updateQuantity(productId, item.quantity)
+                          }
+                        />
+
+                        {/* <Button
                             type="button"
                             variant="none"
                             className="shrink-0 text-[18px]  flex items-center justify-center cursor-pointer"
@@ -256,8 +264,9 @@ const CartSidebar = () => {
                             disabled={item.quantity >= item.product.quantity}
                           >
                             +
-                          </Button>
-                        </div>
+                          </Button> */}
+                        {/* </div> */}
+
                         <button
                           className="text-[#A1DBEA] mt-4 mr-[4px] cursor-pointer"
                           onClick={() => {
@@ -284,13 +293,13 @@ const CartSidebar = () => {
                         {discountedItem.discountPercent > 0 ? (
                           <>
                             <span className="text-[#ffffffb3]">
-                              Rs.{" "}
+                              ${" "}
                               {formatPrice(
                                 discountedItem.basePrice * item.quantity
                               )}
                             </span>
                             <span>
-                              Rs.{" "}
+                              ${" "}
                               {formatPrice(
                                 discountedItem.discountedUnitPrice *
                                   item.quantity
@@ -299,7 +308,7 @@ const CartSidebar = () => {
                           </>
                         ) : (
                           <span className="text-[#00d9ff] font-medium">
-                            Rs. {formatPrice(discountedItem.totalPrice)}
+                            ${formatPrice(discountedItem.totalPrice)}
                           </span>
                         )}
                       </div>
@@ -314,7 +323,7 @@ const CartSidebar = () => {
           <div className="py-4 border-t border-[#fff3]">
             <div className="flex justify-between text-white text-[18px] font-semibold">
               <span>Total:</span>
-              <span>Rs. &nbsp;{getCartTotal().toFixed(2)}</span>
+              <span>${getCartTotal().toFixed(2)}</span>
             </div>
             <Link href="/checkout">
               <Button

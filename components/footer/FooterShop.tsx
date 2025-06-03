@@ -1,17 +1,17 @@
-import { getProductsByAverageReviewRating } from "@/utils/review-utils";
-import Link from "next/link";
+// import { getProductsByAverageReviewRating } from "@/utils/review-utils";
+// import Link from "next/link";
 
 const FooterShop = async () => {
-  let ratedProducts: Awaited<
-    ReturnType<typeof getProductsByAverageReviewRating>
-  > = [];
-  try {
-    // Fetch and slice the top 6 rated products
-    ratedProducts = (await getProductsByAverageReviewRating(3.2)).slice(0, 6);
-  } catch (error) {
-    // Optionally log error for debugging
-    console.error("Failed to load rated products:", error);
-  }
+  // let ratedProducts: Awaited<
+  //   ReturnType<typeof getProductsByAverageReviewRating>
+  // > = [];
+  // try {
+  //   // Fetch and slice the top 6 rated products
+  //   ratedProducts = (await getProductsByAverageReviewRating(3.2)).slice(0, 6);
+  // } catch (error) {
+  //   // Optionally log error for debugging
+  //   console.error("Failed to load rated products:", error);
+  // }
 
   return (
     <div className="pl-[70px] max-w-[250px] max-[666px]:pl-0 max-[800px]:w-[250px] max-[542px]:w-[50%] max-[466px]:w-full">
@@ -19,7 +19,7 @@ const FooterShop = async () => {
         Shop
       </h2>
       <ul className="flex flex-col">
-        {ratedProducts.length > 0 ? (
+        {/* {ratedProducts.length > 0 ? (
           ratedProducts.map((product) => (
             <li key={product.id}>
               <Link
@@ -36,7 +36,7 @@ const FooterShop = async () => {
               No top-rated products found.
             </span>
           </li>
-        )}
+        )} */}
       </ul>
     </div>
   );

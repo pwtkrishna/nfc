@@ -42,6 +42,7 @@ export interface Product {
   type?: string[];
   smart_cards?: string[];
   quantity: number;
+  maxStock: number;
   image: string;
   product_galleries: {
     id: number;

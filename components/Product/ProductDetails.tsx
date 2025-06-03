@@ -99,46 +99,49 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
         />
 
         <ProductTags tags={product.tags} />
-        {Array.isArray(product.colors) &&
-          product.colors.filter((c) => c && c.trim() !== "").length > 0 && (
-            <ColorSelector
-              colors={product.colors}
-              selectedColor={selectedColor}
-              onColorSelect={onColorSelect}
-            />
-          )}
-
-        {((Array.isArray(product.packs) &&
-          product.packs.length > 0 &&
-          product.packs.some((p) => p && p !== "")) ||
-          (Array.isArray(product.type) &&
-            product.type.length > 0 &&
-            product.type.some((t) => t && t !== "")) ||
-          (Array.isArray(product.smart_cards) &&
-            product.smart_cards.length > 0 &&
-            product.smart_cards.some((s) => s && s !== ""))) && (
-          <CardVariant
-            packs={product.packs ?? []}
-            type={product.type ?? []}
-            smartCard={product.smart_cards ?? []}
-            selectedPack={selectedPack}
-            selectedType={selectedType}
-            selectedSmartCard={selectedSmartCard}
-            onSelect={(variant, value) => {
-              if (variant === "packs") setSelectedPack(value);
-              else if (variant === "type") setSelectedType(value);
-              else if (variant === "smartCard") setSelectedSmartCard(value);
-            }}
-          />
-        )}
-
         {disabled ? (
-          <div className="text-red-500 font-semibold mt-2 -mb-6">
+          <div className="text-red-500 text-3xl font-semibold mt-2">
             Out of Stock
           </div>
         ) : (
           <>
-            <Quantity onQuantityChange={setQuantity} />
+            {Array.isArray(product.colors) &&
+              product.colors.filter((c) => c && c.trim() !== "").length > 0 && (
+                <ColorSelector
+                  colors={product.colors}
+                  selectedColor={selectedColor}
+                  onColorSelect={onColorSelect}
+                />
+              )}
+
+            {((Array.isArray(product.packs) &&
+              product.packs.length > 0 &&
+              product.packs.some((p) => p && p !== "")) ||
+              (Array.isArray(product.type) &&
+                product.type.length > 0 &&
+                product.type.some((t) => t && t !== "")) ||
+              (Array.isArray(product.smart_cards) &&
+                product.smart_cards.length > 0 &&
+                product.smart_cards.some((s) => s && s !== ""))) && (
+              <CardVariant
+                packs={product.packs ?? []}
+                type={product.type ?? []}
+                smartCard={product.smart_cards ?? []}
+                selectedPack={selectedPack}
+                selectedType={selectedType}
+                selectedSmartCard={selectedSmartCard}
+                onSelect={(variant, value) => {
+                  if (variant === "packs") setSelectedPack(value);
+                  else if (variant === "type") setSelectedType(value);
+                  else if (variant === "smartCard") setSelectedSmartCard(value);
+                }}
+              />
+            )}
+
+            <Quantity
+              productId={product.id}
+              onQuantityChange={(product.id, setQuantity)}
+            />
             <div className="flex max-w-full gap-[16px] mb-6">
               <AddToCart
                 product={product}

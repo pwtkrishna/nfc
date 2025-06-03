@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const HeaderIcons = () => {
   const { setIsCartOpen, cart } = useCartStore();
-  const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0); // Total items in cart
+  const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <div className="flex gap-2">

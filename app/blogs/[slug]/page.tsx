@@ -1,6 +1,11 @@
 import { notFound } from "next/navigation";
 import BlogPageContent from "@/components/BlogPageContent";
 import { getBlogBySlug, getRelatedBlogs } from "@/lib/blogService";
+import Header from "@/components/header/Header";
+import { Toaster } from "react-hot-toast";
+import CartSidebar from "@/components/cart/CartSidebar";
+import Footer from "@/components/footer/Footer";
+import WhatsAppFloatButton from "@/components/WhatsAppFloatButton";
 
 export default async function Page({
   params,
@@ -31,12 +36,19 @@ export default async function Page({
   };
 
   return (
-    <BlogPageContent
-      blog={blog}
-      relatedBlogs={relatedBlogs}
-      publishDate={publishDate}
-      readingTime={readingTime}
-      author={author}
-    />
+    <>
+      <Header />
+      <Toaster position="top-center" containerClassName="z-[999999]" />
+      <CartSidebar />
+      <BlogPageContent
+        blog={blog}
+        relatedBlogs={relatedBlogs}
+        publishDate={publishDate}
+        readingTime={readingTime}
+        author={author}
+      />
+      <Footer />
+      <WhatsAppFloatButton />
+    </>
   );
 }

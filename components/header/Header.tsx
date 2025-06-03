@@ -44,13 +44,9 @@ const Header = () => {
           showHeader ? "translate-y-0" : "-translate-y-full"
         }`}
       >
-        {showBanner && (
-          <div className="bg-[#141518]">
-            <HeaderBanner />
-          </div>
-        )}
+        {showBanner && <HeaderBanner />}
 
-        <header className="bg-[#1f2128] py-2 px-6 -mb-0.5 relative z-50">
+        <header className="bg-[#1f2128] border-b-[0.1rem] border-[rgba(255,255,255,0.08)] py-2 px-6 -mb-0.5 relative z-50">
           <div className="flex items-center justify-between">
             <div className="hidden max-[969px]:block h-[2.8rem] w-[2.8rem]">
               <button

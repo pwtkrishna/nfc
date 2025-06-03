@@ -21,6 +21,7 @@ export interface ProfileData {
   job_title: string;
   industry: string;
   skills: string[];
+  services: string[];
   linkedin_url: string;
   instagram_url: string;
   facebook_url: string;

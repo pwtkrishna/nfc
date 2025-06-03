@@ -26,6 +26,8 @@ type Props = {
   setProfileData: React.Dispatch<React.SetStateAction<ProfileData>>;
   newSkill: string;
   setNewSkill: React.Dispatch<React.SetStateAction<string>>;
+  newService: string;
+  setNewService: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const Steps = ({
@@ -33,6 +35,8 @@ const Steps = ({
   profileData,
   newSkill,
   setNewSkill,
+  newService,
+  setNewService,
   step,
 }: Props) => {
   const [newCustomLink, setNewCustomLink] = useState({
@@ -67,6 +71,29 @@ const Steps = ({
       ...profileData,
       skills: profileData.skills.filter(
         (skill: string) => skill !== skillToRemove
+      ),
+    });
+  };
+
+  const addService = () => {
+    const service = newService.trim();
+    if (service) {
+      setProfileData((prev) => {
+        if (prev.services.includes(service)) return prev;
+        return {
+          ...prev,
+          services: [...prev.services, service],
+        };
+      });
+      setNewService("");
+    }
+  };
+
+  const removeService = (serviceToRemove: string) => {
+    setProfileData({
+      ...profileData,
+      services: profileData.services.filter(
+        (service: string) => service !== serviceToRemove
       ),
     });
   };
@@ -291,6 +318,42 @@ const Steps = ({
               />
               <Button
                 onClick={addSkill}
+                variant="outline"
+                className="border-gray-700 hover:bg-[rgba(4,206,250,0.1)] text-white cursor-pointer"
+              >
+                <Plus className="h-4 w-7" />
+              </Button>
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label className="text-white mb-2 inline-block">Services</Label>
+            <div className="flex flex-wrap gap-2 mb-3">
+              {profileData.services.map((service: string, index: number) => (
+                <span
+                  key={index}
+                  className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-[rgba(4,206,250,0.1)] text-[rgb(4,206,250)] border border-[rgba(4,206,250,0.3)]"
+                >
+                  {service}
+                  <button
+                    onClick={() => removeService(service)}
+                    className="ml-2 hover:text-red-400"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
+                </span>
+              ))}
+            </div>
+            <div className="flex gap-2">
+              <Input
+                value={newService}
+                onChange={(e) => setNewService(e.target.value)}
+                placeholder="Add a service"
+                className="bg-[#1f2128] border-gray-700 focus:border-[rgb(4,206,250)] text-white"
+                onKeyUp={(e) => e.key === "Enter" && addService()}
+              />
+              <Button
+                onClick={addService}
                 variant="outline"
                 className="border-gray-700 hover:bg-[rgba(4,206,250,0.1)] text-white cursor-pointer"
               >

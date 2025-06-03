@@ -109,19 +109,17 @@ const RecentProducts = () => {
                 {product.sale_price && (
                   <>
                     <span className="text-xl font-semibold leading-[36.98px] text-white">
-                      Rs. {product.sale_price}
+                      ${product.sale_price}
                     </span>
                     <span className="text-[#b0adad] text-lg font-semibold leading-[36.98px] text-left">
-                      Rs.
-                      {product.regular_price}
+                      ${product.regular_price}
                     </span>
                   </>
                 )}
 
                 {!product.sale_price && (
                   <span className="text-white text-lg font-semibold leading-[36.98px] text-left">
-                    Rs.
-                    {product.regular_price}
+                    ${product.regular_price}
                   </span>
                 )}
               </div>

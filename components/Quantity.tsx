@@ -1,38 +1,57 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Button from "./Button";
 import Input from "./Input";
 import { useProductStore } from "@/store/productStore";
 
 interface QuantityProps {
-  onQuantityChange: (quantity: number) => void;
+  quantity?: number;
+  productId: number;
+  maxQuantity?: number;
+  allowZero?: boolean;
+  onQuantityChange: (
+    productId: number,
+    quantity: number,
+    newQuantity?: number
+  ) => void;
 }
 
-const Quantity: React.FC<QuantityProps> = ({ onQuantityChange }) => {
+const Quantity: React.FC<QuantityProps> = ({
+  onQuantityChange,
+  productId,
+  allowZero = false,
+}) => {
   const [quantity, setQuantity] = useState(1);
   const maxQuantity = useProductStore((state) => state.maxQuantity);
 
-  useEffect(() => {
-    onQuantityChange(quantity);
-  }, [onQuantityChange, quantity]);
+  // useEffect(() => {
+  //   onQuantityChange(quantity);
+  // }, [quantity, onQuantityChange]);
 
   const handleIncrement = () => {
-    setQuantity((prev) =>
-      maxQuantity ? Math.min(prev + 1, maxQuantity) : prev + 1
-    );
+    const inc = maxQuantity
+      ? Math.min(quantity + 1, maxQuantity)
+      : quantity + 1;
+    setQuantity(inc);
+    onQuantityChange(productId, inc);
   };
 
   const handleDecrement = () => {
-    setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
+    const min = allowZero ? 0 : 1;
+    const dec = quantity > min ? quantity - 1 : min;
+    setQuantity(dec);
+    onQuantityChange(productId, dec);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = parseInt(e.target.value);
-    if (isNaN(value)) value = 1;
-    if (value < 1) value = 1;
+    let value = parseInt(e.target.value, 10);
+    if (isNaN(value)) value = allowZero ? 0 : 1;
     if (maxQuantity && value > maxQuantity) value = maxQuantity;
+    if (!allowZero && value < 1) value = 1;
+    if (allowZero && value < 0) value = 0;
     setQuantity(value);
+    onQuantityChange(productId, value);
   };
 
   return (
@@ -50,7 +69,9 @@ const Quantity: React.FC<QuantityProps> = ({ onQuantityChange }) => {
           type="button"
           variant="none"
           className={`shrink-0 text-[18px] flex items-center justify-center ${
-            quantity === 1 ? "cursor-not-allowed" : "cursor-pointer"
+            quantity === (allowZero ? 0 : 1)
+              ? "cursor-not-allowed"
+              : "cursor-pointer"
           }`}
           onClick={handleDecrement}
           style={{ width: "45px" }}

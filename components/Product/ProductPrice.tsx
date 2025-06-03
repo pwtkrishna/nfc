@@ -11,7 +11,7 @@ const ProductPrice = ({ product }: ProductPriceProps) => {
         <>
           {product.sale_price !== 0 && (
             <span className="text-white font-medium leading-[24px] text-left text-[28px] mr-[15px]">
-              Rs. {product.sale_price}
+              ${product.sale_price}
             </span>
           )}
           {product.regular_price !== 0 && (
@@ -19,14 +19,14 @@ const ProductPrice = ({ product }: ProductPriceProps) => {
               className="text-[20px] text-[#ffffffbf] mr-[15px] line-through"
               style={{ textDecorationThickness: "1px" }}
             >
-              Rs. {product.regular_price}
+              ${product.regular_price}
             </span>
           )}
         </>
       ) : (
         product.regular_price !== 0 && (
           <span className="text-white font-medium leading-[24px] text-left text-[28px] mr-[15px]">
-            Rs. {product.regular_price}
+            ${product.regular_price}
           </span>
         )
       )}
