@@ -8,14 +8,14 @@ import {
   Truck,
   CheckCircle,
   ChevronRight,
-  ChevronLeft,
+  // ChevronLeft,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Card } from "@/components/ui/card";
 import Button from "@/components/Button";
-import Input from "@/components/Input";
-import { Label } from "@/components/ui/label";
+// import Input from "@/components/Input";
+// import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { useRouter } from "next/navigation";
 import { CartItem, useCartStore } from "@/store/cartStore";
@@ -23,14 +23,14 @@ import { getApplicableDiscount } from "@/utils/getCoupons";
 import Quantity from "@/components/Quantity";
 
 const CheckOutPage = () => {
-  const { cart, removeFromCart } = useCartStore();
+  const { cart, removeFromCart, updateQuantity } = useCartStore();
 
-  const [step, setStep] = useState(1);
+  const [step] = useState(1);
   const [loading, setLoading] = useState(false);
   const [orderComplete] = useState(false);
-  const [cartItems, setCartItems] = useState(cart);
+  // const [cartItems] = useState(cart);
 
-  const [shippingInfo, setShippingInfo] = useState({
+  const [shippingInfo] = useState({
     firstName: "",
     lastName: "",
     email: "",
@@ -43,6 +43,7 @@ const CheckOutPage = () => {
   });
 
   const [shippingMethod] = useState("standard");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [paymentError, setPaymentError] = useState<string | null>(null);
   const router = useRouter();
 
@@ -63,55 +64,49 @@ const CheckOutPage = () => {
   const total = subtotal;
 
   const handleQuantityChange = (productId: number, newQuantity: number) => {
-    setCartItems((cartItems) =>
-      cartItems.map((item) =>
-        item.product.id === productId
-          ? { ...item, quantity: newQuantity }
-          : item
-      )
-    );
+    updateQuantity(productId, newQuantity);
   };
 
   const handleRemoveItem = (item: CartItem) => {
     removeFromCart(item);
   };
 
-  const handleShippingInfoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setShippingInfo({
-      ...shippingInfo,
-      [e.target.name]: e.target.value,
-    });
-  };
+  // const handleShippingInfoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setShippingInfo({
+  //     ...shippingInfo,
+  //     [e.target.name]: e.target.value,
+  //   });
+  // };
 
-  const nextStep = () => {
-    window.scrollTo(0, 0);
-    setStep(step + 1);
-  };
+  // const nextStep = () => {
+  //   window.scrollTo(0, 0);
+  //   setStep(step + 1);
+  // };
 
-  const prevStep = () => {
-    window.scrollTo(0, 0);
-    setStep(step - 1);
-  };
+  // const prevStep = () => {
+  //   window.scrollTo(0, 0);
+  //   setStep(step - 1);
+  // };
 
   const handleStripeCheckout = async () => {
     setPaymentError(null);
-    const requiredFields: (keyof typeof shippingInfo)[] = [
-      "firstName",
-      "lastName",
-      "email",
-      "address",
-      "city",
-      "state",
-      "zipCode",
-      "country",
-    ];
+    // const requiredFields: (keyof typeof shippingInfo)[] = [
+    //   "firstName",
+    //   "lastName",
+    //   "email",
+    //   "address",
+    //   "city",
+    //   "state",
+    //   "zipCode",
+    //   "country",
+    // ];
 
-    for (const key of requiredFields) {
-      if (!shippingInfo[key]) {
-        setPaymentError("Please fill in all required shipping details.");
-        return;
-      }
-    }
+    // for (const key of requiredFields) {
+    //   if (!shippingInfo[key]) {
+    //     setPaymentError("Please fill in all required shipping details.");
+    //     return;
+    //   }
+    // }
 
     setLoading(true);
     try {
@@ -242,7 +237,7 @@ const CheckOutPage = () => {
                 ) : (
                   <>
                     <div className="space-y-4">
-                      {cartItems.map((item) => {
+                      {cart.map((item) => {
                         return (
                           <div
                             key={`${item.product.id}-${
@@ -300,9 +295,9 @@ const CheckOutPage = () => {
 
                             <div className="flex items-center">
                               <Quantity
-                                quantity={item.quantity}
                                 productId={item.product.id}
-                                maxQuantity={item.product.maxStock}
+                                quantity={item.quantity}
+                                allowZero={true}
                                 onQuantityChange={handleQuantityChange}
                               />
                             </div>
@@ -311,10 +306,8 @@ const CheckOutPage = () => {
                               <p className="text-base font-medium text-white">
                                 $
                                 {(!item.product.sale_price
-                                  ? item.product.regular_price *
-                                    item.product.quantity
-                                  : item.product.sale_price *
-                                    item.product.quantity
+                                  ? item.product.regular_price * item.quantity
+                                  : item.product.sale_price * item.quantity
                                 ).toFixed(2)}
                               </p>
                               <button
@@ -330,13 +323,48 @@ const CheckOutPage = () => {
                     </div>
 
                     <div className="mt-8 flex justify-end">
-                      <Button
+                      {/* <Button
                         onClick={nextStep}
                         className="bg-[rgb(4,206,250)] hover:bg-[rgb(4,186,230)] text-white cursor-pointer px-3 py-3 flex items-center"
                         disabled={cart.length === 0}
                       >
                         Continue to Shipping
                         <ChevronRight className="ml-2 h-4 w-4" />
+                      </Button> */}
+                      <Button
+                        onClick={handleStripeCheckout}
+                        className="bg-[rgb(4,206,250)] hover:bg-[rgb(4,186,230)] text-white cursor-pointer px-3 py-3 flex items-center"
+                        disabled={loading}
+                      >
+                        {loading ? (
+                          <>
+                            <svg
+                              className="animate-spin h-5 w-5 mr-2 text-white"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                            >
+                              <circle
+                                className="opacity-25"
+                                cx="12"
+                                cy="12"
+                                r="10"
+                                stroke="currentColor"
+                                strokeWidth="4"
+                              ></circle>
+                              <path
+                                className="opacity-75"
+                                fill="currentColor"
+                                d="M4 12a8 8 0 018-8v8z"
+                              ></path>
+                            </svg>
+                            Redirecting...
+                          </>
+                        ) : (
+                          <>
+                            Pay Now <ChevronRight className="ml-2 h-4 w-4" />
+                          </>
+                        )}
                       </Button>
                     </div>
                   </>
@@ -344,7 +372,7 @@ const CheckOutPage = () => {
               </Card>
             )}
 
-            {step === 2 && (
+            {/* {step === 2 && (
               <Card className="bg-[#282a33] border-none shadow-xl shadow-black/10 p-6 rounded-xl">
                 <h2 className="text-xl font-bold mb-6 flex items-center text-white">
                   <Truck className="mr-2 h-5 w-5 text-[rgb(4,206,250)]" />
@@ -503,16 +531,15 @@ const CheckOutPage = () => {
                   </Button>
                 </div>
               </Card>
-            )}
+            )} */}
 
-            {step === 3 && (
+            {/* {step === 3 && (
               <Card className="bg-[#282a33] border-none shadow-xl shadow-black/10 p-6 rounded-xl">
                 <h2 className="text-xl font-bold mb-6 flex items-center text-white">
                   <CreditCard className="mr-2 h-5 w-5 text-[rgb(4,206,250)]" />
                   Payment
                 </h2>
 
-                {/* Show shipping summary */}
                 <div className="mb-6">
                   <h3 className="font-semibold mb-2 text-white">
                     Shipping Details
@@ -539,7 +566,6 @@ const CheckOutPage = () => {
                   </div>
                 </div>
 
-                {/* Payment error message */}
                 {paymentError && (
                   <div className="mb-4 text-red-400 text-sm">
                     {paymentError}
@@ -592,7 +618,7 @@ const CheckOutPage = () => {
                   </Button>
                 </div>
               </Card>
-            )}
+            )} */}
 
             {step === 4 && (
               <Card className="bg-[#282a33] border-none shadow-xl shadow-black/10 p-6 rounded-xl">
@@ -656,7 +682,7 @@ const CheckOutPage = () => {
                       $
                       {(!item.product.sale_price
                         ? item.product.regular_price
-                        : item.product.sale_price * item.product.quantity
+                        : item.product.sale_price * item.quantity
                       ).toFixed(2)}
                     </span>
                   </div>
