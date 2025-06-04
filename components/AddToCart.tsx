@@ -11,6 +11,7 @@ interface AddToCartProps {
   selectedType?: string;
   selectedSmartCard?: string;
   quantity: number;
+  onAdded: () => void;
 }
 
 const AddToCart: React.FC<AddToCartProps> = ({
@@ -20,6 +21,7 @@ const AddToCart: React.FC<AddToCartProps> = ({
   selectedType,
   selectedSmartCard,
   quantity,
+  onAdded,
 }) => {
   const { addToCart, openCart } = useCartStore();
 
@@ -35,7 +37,7 @@ const AddToCart: React.FC<AddToCartProps> = ({
       },
       quantity,
     };
-
+    if (onAdded) onAdded();
     addToCart(cartItem);
     openCart();
   };

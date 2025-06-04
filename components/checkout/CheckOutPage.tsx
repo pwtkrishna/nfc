@@ -106,7 +106,6 @@ const CheckOutPage = () => {
       "country",
     ];
 
-    // Validate shipping fields before payment
     for (const key of requiredFields) {
       if (!shippingInfo[key]) {
         setPaymentError("Please fill in all required shipping details.");
@@ -121,7 +120,7 @@ const CheckOutPage = () => {
           nfc_card_id: item.product.id,
           quantity: item.quantity,
         })),
-        shipping_info: shippingInfo, // Send shipping info if your API accepts it
+        shipping_info: shippingInfo,
       };
 
       const res = await fetch("https://nfc.aardana.com/api/stripe-payments", {
@@ -255,11 +254,11 @@ const CheckOutPage = () => {
                           >
                             <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-md">
                               <Image
-                                src={item.product.image || "/avatar.webp"}
+                                src={item.product.card_image || "/avatar.webp"}
                                 alt={item.product.name}
                                 width={80}
                                 height={80}
-                                className="h-full w-full object-cover object-center"
+                                className="h-full w-full object-cover object-center text-white"
                               />
                             </div>
 
@@ -304,9 +303,7 @@ const CheckOutPage = () => {
                                 quantity={item.quantity}
                                 productId={item.product.id}
                                 maxQuantity={item.product.maxStock}
-                                onQuantityChange={
-                                  (item.product.id, handleQuantityChange)
-                                }
+                                onQuantityChange={handleQuantityChange}
                               />
                             </div>
 

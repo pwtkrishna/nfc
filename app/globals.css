@@ -96,6 +96,7 @@ html {
 .allCollection-list-wrapp {
   display: flex;
   flex-wrap: wrap;
+  align-items: flex-start;
   margin-right: -14px;
   margin-left: -14px;
 }

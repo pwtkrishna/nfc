@@ -69,7 +69,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
   return (
     <div className="product-info-wrapper pl-[3rem] max-[729px]:pl-[0]">
       <div className="block lg:sticky lg:top-[3rem]">
-        <h2 className="text-white text-[42px] font-semibold leading-[50.4px] text-left mb-[1.1rem]">
+        <h2 className="text-white text-[42px] font-semibold leading-[50.4px] text-left mb-[1.1rem] capitalize">
           {product.name}
         </h2>
         <div className="flex items-center gap-[8px] mt-[16px] mb-[10px]">
@@ -139,9 +139,13 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
             )}
 
             <Quantity
+              quantity={quantity}
               productId={product.id}
-              onQuantityChange={(product.id, setQuantity)}
+              onQuantityChange={(productId, newQuantity) =>
+                setQuantity(newQuantity)
+              }
             />
+
             <div className="flex max-w-full gap-[16px] mb-6">
               <AddToCart
                 product={product}
@@ -150,6 +154,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
                 selectedType={selectedType}
                 selectedSmartCard={selectedSmartCard}
                 quantity={quantity}
+                onAdded={() => setQuantity(1)}
               />
               <div className="w-[50%]"></div>
             </div>

@@ -134,11 +134,11 @@ const CartSidebar = () => {
                   >
                     <div className="w-[100px]">
                       <Image
-                        src={item.product.image || "/avatar.webp"}
+                        src={item.product.card_image || "/avatar.webp"}
                         alt={item.product.name}
                         width={100}
                         height={50}
-                        className="w-full h-auto"
+                        className="w-full h-auto text-white"
                       />
                     </div>
                     <div className="max-[375px]:max-w-[120px] max-[375px]:pl-2">
@@ -213,59 +213,31 @@ const CartSidebar = () => {
                         </p>
                       )}
                       <div className="flex items-center gap-1.5">
-                        {/* <div
-                          className="flex items-center border border-[#04cefa] rounded-[65px] w-[160px] text-white relative mt-2"
-                          style={{ minHeight: "calc((1px * 2) + 45px)" }}
-                        > */}
                         <Quantity
                           productId={item.product.id}
+                          quantity={item.quantity}
                           allowZero={true}
-                          onQuantityChange={(productId) =>
-                            updateQuantity(productId, item.quantity)
-                          }
-                        />
-
-                        {/* <Button
-                            type="button"
-                            variant="none"
-                            className="shrink-0 text-[18px]  flex items-center justify-center cursor-pointer"
-                            style={{ width: "calc(45px / 1.0)" }}
-                            onClick={() => {
-                              if (item.quantity <= 1) {
-                                removeFromCart(item);
+                          onQuantityChange={(productId, newQuantity) => {
+                            if (newQuantity === 0) {
+                              removeFromCart(item);
+                              toast.success(
+                                `${item.product.name} removed from cart`
+                              );
+                            } else {
+                              updateQuantity(productId, newQuantity);
+                              if (newQuantity > item.quantity) {
                                 toast.success(
-                                  `${item.product.name} removed from cart`
+                                  `Increased quantity for ${item.product.name}`
                                 );
-                              } else {
-                                updateQuantity(
-                                  item.product.id,
-                                  item.quantity - 1
-                                );
+                              } else if (newQuantity < item.quantity) {
                                 toast.success(
                                   `Decreased quantity for ${item.product.name}`
                                 );
                               }
-                            }}
-                          >
-                            -
-                          </Button>
-                          <span className="text-white text-[16px] font-medium opacity-[0.85] text-center px-[5px] w-full shrink grow basis-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none">
-                            {item.quantity}
-                          </span>
-                          <Button
-                            type="button"
-                            variant="none"
-                            className="shrink-0 text-[18px] flex items-center justify-center cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-                            style={{ width: "calc(45px / 1.0)" }}
-                            onClick={() =>
-                              item.quantity < item.product.quantity &&
-                              updateQuantity(item.product.id, item.quantity + 1)
+                              // If equal, no toast (shouldn't happen)
                             }
-                            disabled={item.quantity >= item.product.quantity}
-                          >
-                            +
-                          </Button> */}
-                        {/* </div> */}
+                          }}
+                        />
 
                         <button
                           className="text-[#A1DBEA] mt-4 mr-[4px] cursor-pointer"

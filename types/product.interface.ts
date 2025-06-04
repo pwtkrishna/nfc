@@ -43,7 +43,6 @@ export interface Product {
   smart_cards?: string[];
   quantity: number;
   maxStock: number;
-  image: string;
   product_galleries: {
     id: number;
     color?: string;

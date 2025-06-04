@@ -127,15 +127,11 @@ const CreateProfile = () => {
         body: JSON.stringify(payload),
       });
 
-      console.log(res);
-
       if (!res.ok) {
         throw new Error("Failed to create profile");
       }
 
       const result = await res.json();
-
-      console.log(result);
 
       // Redirect to the created profile (use username or slug)
       router.push(`/profile/${result.data.username || result.data.slug}`);

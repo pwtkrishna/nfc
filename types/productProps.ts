@@ -8,8 +8,10 @@ export type ProductProps = {
 };
 
 export type ProductImageGalleryType = {
+  id: number;
   type: "image" | "video";
   image: string;
+  color?: string;
 };
 
 export type ColorProps = {

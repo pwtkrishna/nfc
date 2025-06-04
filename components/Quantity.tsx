@@ -1,12 +1,9 @@
-"use client";
-
-import { useState } from "react";
 import Button from "./Button";
 import Input from "./Input";
 import { useProductStore } from "@/store/productStore";
 
 interface QuantityProps {
-  quantity?: number;
+  quantity: number;
   productId: number;
   maxQuantity?: number;
   allowZero?: boolean;
@@ -21,8 +18,8 @@ const Quantity: React.FC<QuantityProps> = ({
   onQuantityChange,
   productId,
   allowZero = false,
+  quantity = 1,
 }) => {
-  const [quantity, setQuantity] = useState(1);
   const maxQuantity = useProductStore((state) => state.maxQuantity);
 
   // useEffect(() => {
@@ -33,14 +30,14 @@ const Quantity: React.FC<QuantityProps> = ({
     const inc = maxQuantity
       ? Math.min(quantity + 1, maxQuantity)
       : quantity + 1;
-    setQuantity(inc);
+
     onQuantityChange(productId, inc);
   };
 
   const handleDecrement = () => {
     const min = allowZero ? 0 : 1;
     const dec = quantity > min ? quantity - 1 : min;
-    setQuantity(dec);
+
     onQuantityChange(productId, dec);
   };
 
@@ -50,7 +47,7 @@ const Quantity: React.FC<QuantityProps> = ({
     if (maxQuantity && value > maxQuantity) value = maxQuantity;
     if (!allowZero && value < 1) value = 1;
     if (allowZero && value < 0) value = 0;
-    setQuantity(value);
+
     onQuantityChange(productId, value);
   };
 
@@ -100,7 +97,7 @@ const Quantity: React.FC<QuantityProps> = ({
           type="number"
           value={quantity}
           onChange={handleChange}
-          min={1}
+          min={allowZero ? 0 : 1}
           max={maxQuantity}
           className="text-white text-[16px] font-medium opacity-[0.85] text-center px-[5px] w-full shrink grow basis-0 appearance-none bg-transparent [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
         />
