@@ -3,8 +3,9 @@ import { persist } from "zustand/middleware";
 import { getApplicableDiscount } from "@/utils/getCoupons";
 import { Product } from "@/types/product.interface";
 import toast from "react-hot-toast";
+import { nanoid } from "nanoid";
 
-type Variant = {
+export type Variant = {
   selectedColor?: string;
   selectedPack?: string;
   selectedType?: string;
@@ -12,6 +13,7 @@ type Variant = {
 };
 
 export type CartItem = {
+  cartItemId: string;
   productId: number;
   quantity: number;
   variant: Variant;
@@ -36,7 +38,12 @@ type CartState = {
   closeCart: () => void;
   addToCart: (item: CartItem) => void;
   removeFromCart: (item: CartItem) => void;
-  updateQuantity: (productId: number, quantity: number) => void;
+  updateQuantity: (
+    productId: number,
+    variant: Variant,
+    quantity: number
+  ) => void;
+
   clearCart: () => void;
   getCartTotal: () => number;
   getProductDiscountedPrice: () => DiscountedItem[];
@@ -71,11 +78,13 @@ export const useCartStore = create<CartState>()(
         }
 
         if (existingIndex !== -1) {
+          // Update quantity, keep same cartItemId
           const updatedCart = [...cart];
           updatedCart[existingIndex].quantity = newQty;
           set({ cart: updatedCart });
         } else {
-          set({ cart: [...cart, item] });
+          // Always assign a new, unique cartItemId
+          set({ cart: [...cart, { ...item, cartItemId: nanoid() }] });
         }
 
         get().openCart();
@@ -94,15 +103,24 @@ export const useCartStore = create<CartState>()(
         });
       },
 
-      updateQuantity: (productId, quantity) => {
+      updateQuantity: (productId, variant, quantity) => {
         if (quantity < 1) {
           set((state) => ({
-            cart: state.cart.filter((item) => item.productId !== productId),
+            cart: state.cart.filter(
+              (item) =>
+                !(
+                  item.productId === productId &&
+                  JSON.stringify(item.variant) === JSON.stringify(variant)
+                )
+            ),
           }));
         } else {
           set((state) => ({
             cart: state.cart.map((item) =>
-              item.productId === productId ? { ...item, quantity } : item
+              item.productId === productId &&
+              JSON.stringify(item.variant) === JSON.stringify(variant)
+                ? { ...item, quantity }
+                : item
             ),
           }));
         }

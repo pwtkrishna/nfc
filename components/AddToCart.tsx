@@ -3,6 +3,7 @@
 import Button from "./Button";
 import { useCartStore } from "@/store/cartStore";
 import { Product } from "@/types/product.interface";
+import { nanoid } from "nanoid";
 
 interface AddToCartProps {
   product: Product;
@@ -27,6 +28,7 @@ const AddToCart: React.FC<AddToCartProps> = ({
 
   const handleAddToCart = () => {
     const cartItem = {
+      cartItemId: nanoid(),
       productId: product.id,
       product: product,
       variant: {

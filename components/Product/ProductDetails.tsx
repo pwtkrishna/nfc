@@ -66,6 +66,13 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
     setMaxQuantity,
   ]);
 
+  const variant = {
+    selectedColor,
+    selectedPack,
+    selectedType,
+    selectedSmartCard,
+  };
+
   return (
     <div className="product-info-wrapper pl-[3rem] max-[729px]:pl-[0]">
       <div className="block lg:sticky lg:top-[3rem]">
@@ -141,7 +148,8 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
             <Quantity
               quantity={quantity}
               productId={product.id}
-              onQuantityChange={(productId, newQuantity) =>
+              variant={variant}
+              onQuantityChange={(productId, variant, newQuantity) =>
                 setQuantity(newQuantity)
               }
             />

@@ -215,16 +215,21 @@ const CartSidebar = () => {
                       <div className="flex items-center gap-1.5">
                         <Quantity
                           productId={item.product.id}
+                          variant={item.variant}
                           quantity={item.quantity}
                           allowZero={true}
-                          onQuantityChange={(productId, newQuantity) => {
+                          onQuantityChange={(
+                            productId,
+                            variant,
+                            newQuantity
+                          ) => {
                             if (newQuantity === 0) {
                               removeFromCart(item);
                               toast.success(
                                 `${item.product.name} removed from cart`
                               );
                             } else {
-                              updateQuantity(productId, newQuantity);
+                              updateQuantity(productId, variant, newQuantity);
                               if (newQuantity > item.quantity) {
                                 toast.success(
                                   `Increased quantity for ${item.product.name}`
@@ -234,7 +239,6 @@ const CartSidebar = () => {
                                   `Decreased quantity for ${item.product.name}`
                                 );
                               }
-                              // If equal, no toast (shouldn't happen)
                             }
                           }}
                         />

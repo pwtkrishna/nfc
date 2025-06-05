@@ -21,6 +21,7 @@ import { useRouter } from "next/navigation";
 import { CartItem, useCartStore } from "@/store/cartStore";
 import { getApplicableDiscount } from "@/utils/getCoupons";
 import Quantity from "@/components/Quantity";
+import toast from "react-hot-toast";
 
 const CheckOutPage = () => {
   const { cart, removeFromCart, updateQuantity } = useCartStore();
@@ -63,9 +64,13 @@ const CheckOutPage = () => {
 
   const total = subtotal;
 
-  const handleQuantityChange = (productId: number, newQuantity: number) => {
-    updateQuantity(productId, newQuantity);
-  };
+  // const handleQuantityChange = (
+  //   productId: number,
+  //   variant: Variant,
+  //   newQuantity: number
+  // ) => {
+  //   updateQuantity(productId, variant, newQuantity);
+  // };
 
   const handleRemoveItem = (item: CartItem) => {
     removeFromCart(item);
@@ -238,13 +243,14 @@ const CheckOutPage = () => {
                   <>
                     <div className="space-y-4">
                       {cart.map((item) => {
+                        console.log(item.cartItemId);
+
                         return (
                           <div
-                            key={`${item.product.id}-${
-                              item.variant.selectedColor || ""
-                            }-${item.variant.selectedPack || ""}-${
-                              item.variant.selectedType || ""
-                            }-${item.variant.selectedSmartCard || ""}`}
+                            // key={`${item.product.id}-${JSON.stringify(
+                            //   item.variant
+                            // )}`}
+                            key={item.cartItemId}
                             className="flex items-center py-4 border-b border-gray-700"
                           >
                             <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-md">
@@ -296,9 +302,36 @@ const CheckOutPage = () => {
                             <div className="flex items-center">
                               <Quantity
                                 productId={item.product.id}
+                                variant={item.variant}
                                 quantity={item.quantity}
                                 allowZero={true}
-                                onQuantityChange={handleQuantityChange}
+                                onQuantityChange={(
+                                  productId,
+                                  variant,
+                                  newQuantity
+                                ) => {
+                                  if (newQuantity === 0) {
+                                    removeFromCart(item);
+                                    toast.success(
+                                      `${item.product.name} removed from cart`
+                                    );
+                                  } else {
+                                    updateQuantity(
+                                      productId,
+                                      variant,
+                                      newQuantity
+                                    );
+                                    if (newQuantity > item.quantity) {
+                                      toast.success(
+                                        `Increased quantity for ${item.product.name}`
+                                      );
+                                    } else if (newQuantity < item.quantity) {
+                                      toast.success(
+                                        `Decreased quantity for ${item.product.name}`
+                                      );
+                                    }
+                                  }
+                                }}
                               />
                             </div>
 

@@ -1,22 +1,24 @@
+import { Variant } from "@/store/cartStore";
 import Button from "./Button";
 import Input from "./Input";
 import { useProductStore } from "@/store/productStore";
 
-interface QuantityProps {
-  quantity: number;
+type QuantityProps = {
   productId: number;
-  maxQuantity?: number;
+  variant: Variant;
+  quantity: number;
   allowZero?: boolean;
   onQuantityChange: (
     productId: number,
-    quantity: number,
-    newQuantity?: number
+    variant: Variant,
+    newQuantity: number
   ) => void;
-}
+};
 
 const Quantity: React.FC<QuantityProps> = ({
   onQuantityChange,
   productId,
+  variant,
   allowZero = false,
   quantity = 1,
 }) => {
@@ -31,14 +33,14 @@ const Quantity: React.FC<QuantityProps> = ({
       ? Math.min(quantity + 1, maxQuantity)
       : quantity + 1;
 
-    onQuantityChange(productId, inc);
+    onQuantityChange(productId, variant, inc);
   };
 
   const handleDecrement = () => {
     const min = allowZero ? 0 : 1;
     const dec = quantity > min ? quantity - 1 : min;
 
-    onQuantityChange(productId, dec);
+    onQuantityChange(productId, variant, dec);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,7 +50,7 @@ const Quantity: React.FC<QuantityProps> = ({
     if (!allowZero && value < 1) value = 1;
     if (allowZero && value < 0) value = 0;
 
-    onQuantityChange(productId, value);
+    onQuantityChange(productId, variant, value);
   };
 
   return (
