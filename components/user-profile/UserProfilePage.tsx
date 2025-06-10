@@ -243,9 +243,9 @@ export default function UserProfilePage({ profile }: any) {
     <div className="min-h-screen bg-[#1f2128] text-white mb-14">
       <div className="relative h-64 md:h-80 w-full">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#1f2128] z-10"></div>
-        {profile.profile_photo_path ? (
+        {profile.avatar_original ? (
           <Image
-            src={profile.profile_photo_path || "/avatar.webp"}
+            src={profile.avatar_original || "/avatar.webp"}
             alt="Cover"
             fill
             className="object-cover"
@@ -286,7 +286,7 @@ export default function UserProfilePage({ profile }: any) {
         {/* View Counter */}
         <div className="absolute bottom-4 left-4 z-20 flex items-center text-white/80 text-sm">
           <Eye className="h-4 w-4 mr-1" />
-          {profile.views_count.toLocaleString()} views
+          {profile.views_count?.toLocaleString()} views
         </div>
       </div>
 
@@ -354,7 +354,7 @@ export default function UserProfilePage({ profile }: any) {
             )}
 
             {/* Skills Section */}
-            {profile.skills.length > 0 && (
+            {profile.skills?.length > 0 && (
               <Card className="bg-[#282a33] border-none p-6 rounded-xl">
                 <h2 className="text-xl font-bold mb-4 text-white">Skills</h2>
                 <div className="flex flex-wrap gap-2">
@@ -394,7 +394,7 @@ export default function UserProfilePage({ profile }: any) {
             )} */}
 
             {/* Custom Links */}
-            {profile.custom_links.length > 0 && (
+            {profile.custom_links?.length > 0 && (
               <Card className="bg-[#282a33] border-none p-6 rounded-xl">
                 <h2 className="text-xl font-bold mb-4 text-white">Links</h2>
                 <div className="space-y-3">
