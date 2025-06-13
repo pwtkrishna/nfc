@@ -30,7 +30,7 @@ const NavBarSubMenu = ({ subMenu, isOpen, onClose, showCategories }: Props) => {
   // SWR hook (fetches only if showCategories && isOpen)
   const { data, isLoading } = useSWR(
     showCategories && isOpen
-      ? "https://nfc.aardana.com/api/nfc-product-categories"
+      ? "https://nfc.premierwebtechservices.com/api/nfc-product-categories"
       : null,
     fetcher
   );

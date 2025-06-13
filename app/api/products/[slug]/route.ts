@@ -6,7 +6,7 @@ export async function GET(request: NextRequest, context: any) {
   const { slug } = await context.params;
 
   // Fetch all products
-  const url = `https://nfc.aardana.com/api/nfc-products/`;
+  const url = `https://nfc.premierwebtechservices.com/api/nfc-products/`;
   const apiRes = await fetch(url);
 
   if (!apiRes.ok) {

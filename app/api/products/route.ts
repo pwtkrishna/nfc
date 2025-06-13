@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  const url = "https://nfc.aardana.com/api/nfc-products/";
+  const url = "https://nfc.premierwebtechservices.com/api/nfc-products/";
   const apiRes = await fetch(url, { method: "GET" });
 
   // Check content-type and status

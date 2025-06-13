@@ -12,7 +12,7 @@ export async function GET(req: NextRequest) {
   try {
     // Call the external API with the token
     const response = await axios.get(
-      "https://nfc.aardana.com/api/get-user-order-details",
+      "https://nfc.premierwebtechservices.com/api/get-user-order-details",
       {
         headers: {
           Authorization: `Bearer ${authToken}`,

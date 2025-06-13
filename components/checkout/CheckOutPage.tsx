@@ -123,11 +123,14 @@ const CheckOutPage = () => {
         shipping_info: shippingInfo,
       };
 
-      const res = await fetch("https://nfc.aardana.com/api/stripe-payments", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      const res = await fetch(
+        "https://nfc.premierwebtechservices.com/api/stripe-payments",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        }
+      );
 
       const data = await res.json();
       if (res.ok && data.session_url) {

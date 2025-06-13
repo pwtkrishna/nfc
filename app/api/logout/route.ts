@@ -17,12 +17,15 @@ export async function GET() {
     const cookieHeader = `auth-token=${token.value}`;
     console.log("Sending cookie:", cookieHeader);
 
-    const response = await fetch("https://nfc.aardana.com/api/logout/me", {
-      method: "GET",
-      headers: {
-        Cookie: cookieHeader,
-      },
-    });
+    const response = await fetch(
+      "https://nfc.premierwebtechservices.com/api/logout/me",
+      {
+        method: "GET",
+        headers: {
+          Cookie: cookieHeader,
+        },
+      }
+    );
 
     const backendText = await response.text();
     console.log("Backend response:", response.status, backendText);

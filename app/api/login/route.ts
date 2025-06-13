@@ -5,12 +5,15 @@ export async function POST(req: NextRequest) {
   const body = await req.json();
 
   // Call your backend login API
-  const response = await axios.post("https://nfc.aardana.com/api/login", {
-    username: body.email,
-    user_type: "customer",
-    password: body.password,
-    login_type: "email",
-  });
+  const response = await axios.post(
+    "https://nfc.premierwebtechservices.com/api/login",
+    {
+      username: body.email,
+      user_type: "customer",
+      password: body.password,
+      login_type: "email",
+    }
+  );
 
   const token = response.data.token;
 

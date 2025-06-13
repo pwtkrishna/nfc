@@ -31,10 +31,13 @@ export default function OrderDetailsPage() {
 
   const handleLogout = async () => {
     try {
-      const res = await fetch("https://nfc.aardana.com/api/logout/me", {
-        method: "POST",
-        credentials: "include",
-      });
+      const res = await fetch(
+        "https://nfc.premierwebtechservices.com/api/logout/me",
+        {
+          method: "POST",
+          credentials: "include",
+        }
+      );
       if (!res.ok) throw new Error("Logout failed");
 
       setIsLoggedIn(false);

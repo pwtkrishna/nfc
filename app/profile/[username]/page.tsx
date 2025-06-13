@@ -7,8 +7,10 @@ interface Props {
 
 async function getUser(username: string) {
   const res = await fetch(
-    // `https://nfc.aardana.com/api/users/${encodeURIComponent(username)}`
-    `https://nfc.aardana.com/api/user-profiles/${encodeURIComponent(username)}`
+    // `https://nfc.premierwebtechservices.com/api/users/${encodeURIComponent(username)}`
+    `https://nfc.premierwebtechservices.com/api/user-profiles/${encodeURIComponent(
+      username
+    )}`
   );
   if (!res.ok) return null;
   const { data } = await res.json();

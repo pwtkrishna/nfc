@@ -36,7 +36,7 @@ const OffCanvas: React.FC<OffCanvasProps> = ({ isOpen, onClose }) => {
       navBarItems[openSubMenuIndex].title === "Shop Now"
     ) {
       setLoadingCategories(true);
-      fetch("https://nfc.aardana.com/api/nfc-product-categories")
+      fetch("https://nfc.premierwebtechservices.com/api/nfc-product-categories")
         .then((res) => res.json())
         .then((data) => {
           const filter = Array.isArray(data.data)

@@ -11,7 +11,7 @@ interface Category {
 
 async function getCategories(): Promise<Category[]> {
   const res = await fetch(
-    "https://nfc.aardana.com/api/nfc-product-categories",
+    "https://nfc.premierwebtechservices.com/api/nfc-product-categories",
     {
       cache: "no-store", // or "force-cache" if you want caching
     }
